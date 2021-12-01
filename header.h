@@ -6,6 +6,7 @@
 
 void GotoXY(int x, int y);
 void FixConsoleWindow();
+void PrintMenu(int x, int y);
 
 class CPeople {
 private:
