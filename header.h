@@ -14,7 +14,7 @@ using namespace std;
 void GotoXY(int x, int y);
 void FixConsoleWindow();
 void PrintMenu(int x, int y);
-
+/*
 void DrawBird(int x, int y);
 void DrawDinausor(int x, int y);
 
@@ -22,22 +22,23 @@ void DrawCar(int x, int y);
 void DrawTruck(int x, int y);
 
 void DrawPeople(int x, int y);
-
+*/
 void DrawRect(int x, int y, int width, int height, bool hasDividers, int curPosX = 0, int curPosY = 0);
 
 class CMenu {
 private:
     int w;
     int h;
+    int space;
     int selected;
-
     string title;
     vector<string> opt;
 public:
-    CMenu(string title, int w = 23, int h = 6);
+    CMenu(string title, int space=1, int w = 23, int h = 6);
     void addOpt(string opt);
     int getOpt();
-    void drawMenu(int x, int y, int space = 1);
+    void drawMenu(int x, int y);
+    void move(int x, int y, int color);
 };
 
 class CPeople {
@@ -63,6 +64,12 @@ private:
     CDinausor* akl;
     CBird* ac;
     CPeople cn;
+
+    void drawBird(int x, int y);
+    void drawDinausor(int x, int y);
+    void drawCar(int x, int y);
+    void drawTruck(int x, int y);
+    void drawPeople(int x, int y);
 public:
     CGame();
     void drawGame();

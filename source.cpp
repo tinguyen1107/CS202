@@ -1,11 +1,6 @@
 #define _WIN32_WINNT 0x0500
 
 #include "header.h"
-#include <windows.h>
-
-#include <iostream>
-
-using namespace std;
 
 void GotoXY(int x, int y) {
     COORD c = {x, y};
@@ -30,7 +25,6 @@ void DrawRect(int x, int y, int width, int height, bool hasDividers, int curPosX
         if (hasDividers && (i - y) % 5 == 0) cout << char(185);
         else cout << char(186);
     }
-
     GotoXY(curPosX, curPosY);
 }
 
@@ -51,95 +45,39 @@ void FixConsoleWindow() {
 }
 
 void PrintMenu(int x, int y) {
-    CMenu menu("Menu", 17, 5);
+    CMenu menu("Menu", 2, 17, 5);
     menu.addOpt("New game");
     menu.addOpt("Load game");
     menu.addOpt("Settings");
 
-    menu.drawMenu(x, y, 2);
-}
-
-void DrawBird(int x, int y) {
-    GotoXY(x, y - 1);
-    cout << char(219) << char(219);
-
-    GotoXY(x + 2, y);
-    cout << char(219) << char(219);
-
-    GotoXY(x + 4, y - 1);
-    cout << char(219) << char(219);
-}
-
-void DrawDinausor(int x, int y) {
-    GotoXY(x, y);
-    cout << char(219) << char(219);
-    cout << char(219) << char(219);
-
-    GotoXY(x + 2, y - 1);
-    cout << char(219) << char(219);
-    cout << char(219) << char(219);
-
-    GotoXY(x + 4, y - 2);
-    cout << char(219) << char(219);
-}
-
-void DrawCar(int x, int y) {
-    GotoXY(x, y);
-    cout << char(219) << char(219);
-    cout << char(219) << char(219);
-    cout << char(219) << char(219);
-    cout << char(219) << char(219);
-
-    GotoXY(x + 2, y - 1);
-    cout << char(219) << char(219);
-    cout << char(219) << char(219);
-}
-
-void DrawTruck(int x, int y) {
-    GotoXY(x, y);
-    cout << char(219) << char(219);
-    cout << char(219) << char(219);
-    cout << char(219) << char(219);
-
-    GotoXY(x + 2, y - 1);
-    cout << char(219) << char(219);
-    cout << char(219) << char(219);
-}
-
-void DrawPeople(int x, int y) {
-    GotoXY(x, y);
-    cout << char(62) << char(60);
-    GotoXY(x, y - 1);
-    cout << char(219) << char(219);
+    menu.drawMenu(x, y);
 }
 
 /*-------------------------------------------------------------*/
-/* MENU */
+/* CLASS MENU */
 /*-------------------------------------------------------------*/
 
-CMenu::CMenu(string title, int w, int h) : title(title), w(w), h(h), selected(0) {}
+CMenu::CMenu(string title, int space, int w, int h) : title(title), w(w), h(h), selected(0), space(space) {}
 
 void CMenu::addOpt(string opt) { this->opt.push_back(opt); }
 
 int CMenu::getOpt() { return selected; }
 
-void drawMenu(int x, int y, int space) {
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+void CMenu::drawMenu(int x, int y) {
     DrawRect(x, y, w, h, false, x + (w + 1 - title.length()) / 2, y + 1);
     cout << title;
     for (int i = 0; i != opt.size(); ++i) {
         GotoXY(x + space, y + h - (opt.size() - i));
-        cout << i << ". " + opt[i] + ".";
+        cout << i + 1 << ". " + opt[i] + ".";
     }
     selected = 0;
+    move(x, y, 10);
 
     bool didConfirm = false;
     do {
         if (getch() == 13) didConfirm = true;
         else {
-            SetConsoleTextAttribute(hConsole, 15);
-            GotoXY(x + space, y + h - (opt.size() - selected));
-            cout << selected << ". " + opt[selected] + ".";
+            move(x, y, 15);
             switch (getch()) {
             case 72:
                 selected--; // up
@@ -152,10 +90,80 @@ void drawMenu(int x, int y, int space) {
                 //case 77: right
             }
             selected = selected % opt.size();
-            SetConsoleTextAttribute(hConsole, 10);
-            GotoXY(x + space, y + h - (opt.size() - selected));
-            cout << selected << ". " + opt[selected] + ".";
+            move(x, y, 10);
         }
     } while (!didConfirm);
-    SetConsoleTextAttribute(hConsole, 15);
+}
+
+void CMenu::move(int x, int y, int color) {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, color);
+    GotoXY(x + space, y + h - (opt.size() - selected));
+    cout << selected << ". " + opt[selected] + ".";
+    GotoXY(x, y + h - (opt.size() - selected));
+    if(color != 15) SetConsoleTextAttribute(hConsole, 15);
+}
+
+/*-------------------------------------------------------------*/
+/* CLASS PEOPLE */
+/*-------------------------------------------------------------*/
+
+
+
+/*-------------------------------------------------------------*/
+/* CLASS GAME */
+/*-------------------------------------------------------------*/
+
+void CGame::drawBird(int x, int y) {
+    GotoXY(x, y - 1);
+    cout << char(219) << char(219);
+
+    GotoXY(x + 2, y);
+    cout << char(219) << char(219);
+
+    GotoXY(x + 4, y - 1);
+    cout << char(219) << char(219);
+}
+
+void CGame::drawDinausor(int x, int y) {
+    GotoXY(x, y);
+    cout << char(219) << char(219);
+    cout << char(219) << char(219);
+
+    GotoXY(x + 2, y - 1);
+    cout << char(219) << char(219);
+    cout << char(219) << char(219);
+
+    GotoXY(x + 4, y - 2);
+    cout << char(219) << char(219);
+}
+
+void CGame::drawCar(int x, int y) {
+    GotoXY(x, y);
+    cout << char(219) << char(219);
+    cout << char(219) << char(219);
+    cout << char(219) << char(219);
+    cout << char(219) << char(219);
+
+    GotoXY(x + 2, y - 1);
+    cout << char(219) << char(219);
+    cout << char(219) << char(219);
+}
+
+void CGame::drawTruck(int x, int y) {
+    GotoXY(x, y);
+    cout << char(219) << char(219);
+    cout << char(219) << char(219);
+    cout << char(219) << char(219);
+
+    GotoXY(x + 2, y - 1);
+    cout << char(219) << char(219);
+    cout << char(219) << char(219);
+}
+
+void CGame::drawPeople(int x, int y) {
+    GotoXY(x, y);
+    cout << char(62) << char(60);
+    GotoXY(x, y - 1);
+    cout << char(219) << char(219);
 }
