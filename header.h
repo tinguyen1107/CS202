@@ -14,19 +14,21 @@ using namespace std;
 void GotoXY(int x, int y);
 void FixConsoleWindow(int w, int h);
 void DrawRect(int x, int y, int width, int height, bool hasDividers, int curPosX = 0, int curPosY = 0);
+void clear(int x, int y, int w, int h);
 
 class CMenu {
 private:
     int w, h, space, selected;
+    bool isMultiplechoice;
     string title;
     vector<string> opt;
 public:
-    CMenu(string title, int space=1, int w = 23, int h = 6);
+    CMenu(string title, int space=1, int w = 23, int h = 6, bool isMultiplechoice=true);
     void addOpt(string opt);
     int getSelected();
     void drawMenu(int x, int y);
     void move(int x, int y, int color);
-    void clear(int x, int y);
+    
 };
 
 class CPeople {

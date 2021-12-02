@@ -7,16 +7,18 @@ int main() {
     /* PREPARE */
     /*------------------------------------*/
     /* Set Console */
-    FixConsoleWindow(1070, 570);
+    FixConsoleWindow(900, 570);
     
-    /* First Menu*/
-    CMenu firstMenu("Menu", 2, 17, 5);
-    firstMenu.addOpt("New game");
-    firstMenu.addOpt("Load game");
-    firstMenu.addOpt("Settings");
+    /* Primary Menu*/
+    CMenu primaryMenu("Menu", 2, 17, 5);
+    primaryMenu.addOpt("New game");
+    primaryMenu.addOpt("Load game");
+    primaryMenu.addOpt("Settings");
 
-    CMenu secondaryMenu("Load data", 2, 17, 3);
+    /* Secondary Menu */
+    CMenu secondaryMenu("Load data", 2, 30, 4, false);
     secondaryMenu.addOpt("Please input path to file:");
+    string path;
     
     /* Clear */
     system("cls");
@@ -24,17 +26,18 @@ int main() {
     /*------------------------------------*/
     /* PRINT OUT */
     /*------------------------------------*/
-    /* Print Playground */
-    DrawRect(3, 1, 101, 30, true, 20, 5);
+    /* Print Primary Menu */
+    primaryMenu.drawMenu(45, 12);
 
-    /* Print First Menu */
-    firstMenu.drawMenu(108, 1);
-
-    switch (firstMenu.getSelected()) {
+    switch (primaryMenu.getSelected()) {
     case 0:
+        /* Print Playground */
+        DrawRect(3, 1, 101, 30, true, 20, 5);
         break;
     case 1:
-        secondaryMenu.drawMenu(108, 1);
+        /* Print Secondary Menu */
+        secondaryMenu.drawMenu(40, 1);
+        cin >> path;
         break;
     case 2:
         break;

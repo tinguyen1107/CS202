@@ -18,7 +18,7 @@ void DrawRect(int x, int y, int width, int height, bool hasDividers, int curPosX
         GotoXY(x, i);
         if (hasDividers && (i - y) % 5 == 0) {
             cout << char(204);
-            for (int i = 1; i < width; i++)cout << char(196);
+            for (int i = 1; i < width; i++) cout << "-"; //char(196);
         }
         else cout << char(186);
         GotoXY(x + width, i);
@@ -42,7 +42,8 @@ void FixConsoleWindow(int w, int h) {
 /* CLASS MENU */
 /*-------------------------------------------------------------*/
 
-CMenu::CMenu(string title, int space, int w, int h) : title(title), w(w), h(h), selected(0), space(space) {}
+CMenu::CMenu(string title, int space, int w, int h, bool isMultiplechoice) 
+    : title(title), w(w), h(h), selected(0), space(space), isMultiplechoice(isMultiplechoice) {}
 
 void CMenu::addOpt(string opt) { this->opt.push_back(opt); }
 
@@ -51,13 +52,19 @@ int CMenu::getSelected() { return selected; }
 void CMenu::drawMenu(int x, int y) {
     DrawRect(x, y, w, h, false, x + (w + 1 - title.length()) / 2, y + 1);
     cout << title;
+    if (!isMultiplechoice) {
+        GotoXY(x + space, y + 2);
+        cout << opt[0];
+        GotoXY(x + space, y + 3);
+        return;
+    }
     for (int i = 0; i != opt.size(); ++i) {
         GotoXY(x + space, y + h - (opt.size() - i));
         cout << i + 1 << ". " + opt[i] + ".";
     }
+
     selected = 0;
     move(x, y, 10);
-
     bool didConfirm = false;
     do {
         int c = getch();
@@ -84,7 +91,7 @@ void CMenu::drawMenu(int x, int y) {
             move(x, y, 10);
         }
     } while (!didConfirm);
-    clear(x, y);
+    clear(x, y, w, h);
 }
 
 void CMenu::move(int x, int y, int color) {
@@ -96,7 +103,7 @@ void CMenu::move(int x, int y, int color) {
     if(color != 15) SetConsoleTextAttribute(hConsole, 15);
 }
 
-void CMenu::clear(int x, int y) {
+void clear(int x, int y, int w, int h) {
     for (int i = y; i <= y + h; i++) {
         GotoXY(x, i);
         for (int j = x-1; j < x + w; j++)
