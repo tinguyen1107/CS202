@@ -7,12 +7,12 @@ void GotoXY(int x, int y) {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), c); 
 }
 
-void DrawRect(int x, int y, int width, int height, bool hasDividers, int curPosX, int curPosY) {
+void DrawRect(int x, int y, int width, int height, bool hasDividers, int curPosX, int curPosY, bool isThin) {
     GotoXY(x, y); cout << char(201);
-    for (int i = 1; i < width; i++)cout << char(205);
+    for (int i = 1; i < width; i++)cout << char(isThin ? 196 : 205);
     cout << char(187);
     GotoXY(x, height + y); cout << char(200);
-    for (int i = 1; i < width; i++)cout << char(205);
+    for (int i = 1; i < width; i++)cout << char(isThin ? 196 : 205);
     cout << char(188);
     for (int i = y + 1; i < height + y; i++) {
         GotoXY(x, i);
@@ -36,6 +36,31 @@ void FixConsoleWindow(int w, int h) {
     LONG style = GetWindowLong(console, GWL_STYLE);
     style = style & ~(WS_MAXIMIZEBOX) & ~(WS_THICKFRAME) & ~(WS_MINIMIZEBOX);
     SetWindowLong(console, GWL_STYLE, style);
+}
+
+void Welcome(int x, int y) {
+    GotoXY(x, y);
+    cout << "**                ** ******* **       ******   *******  **        ** *******";
+    GotoXY(x, y + 1);
+    cout << " **      **      **  **      **      ***   ** ***   *** ***      *** **     ";
+    GotoXY(x, y + 2);
+    cout << "  **   **  **   **   *****   **      **       **     ** ** **  ** ** *****  ";
+    GotoXY(x, y + 3);
+    cout << "   ****      ****    **      **      ***   ** ***   *** **   **   ** **     ";
+    GotoXY(x, y + 4);
+    cout << "    **        **     ******* *******  ******   *******  **        ** *******";
+}
+
+
+void Loading(int x, int y, int w, int h) {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    DrawRect(x, y, w, h, false, x + 1, y + 1, true);
+    for (int i = 1; i < w; i++) {
+        Sleep(70);
+        SetConsoleTextAttribute(hConsole, i%2==0 ? 0 : 11);
+        cout << char(177);
+    }
+    SetConsoleTextAttribute(hConsole, 15);
 }
 
 /*-------------------------------------------------------------*/
@@ -91,7 +116,7 @@ void CMenu::drawMenu(int x, int y) {
             move(x, y, 10);
         }
     } while (!didConfirm);
-    clear(x, y, w, h);
+    Clear(x, y, w, h);
 }
 
 void CMenu::move(int x, int y, int color) {
@@ -103,7 +128,7 @@ void CMenu::move(int x, int y, int color) {
     if(color != 15) SetConsoleTextAttribute(hConsole, 15);
 }
 
-void clear(int x, int y, int w, int h) {
+void Clear(int x, int y, int w, int h) {
     for (int i = y; i <= y + h; i++) {
         GotoXY(x, i);
         for (int j = x-1; j < x + w; j++)

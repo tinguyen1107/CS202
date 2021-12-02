@@ -5,6 +5,7 @@
 #include <vector>
 #include <conio.h>
 #include <windows.h>
+#include <dos.h>
 
 #include "./Animal/CAnimal.h"
 #include "./Vehicle/CVehicle.h"
@@ -13,8 +14,10 @@ using namespace std;
 
 void GotoXY(int x, int y);
 void FixConsoleWindow(int w, int h);
-void DrawRect(int x, int y, int width, int height, bool hasDividers, int curPosX = 0, int curPosY = 0);
-void clear(int x, int y, int w, int h);
+void DrawRect(int x, int y, int width, int height, bool hasDividers, int curPosX = 0, int curPosY = 0, bool isThin = false);
+void Clear(int x, int y, int w, int h);
+void Welcome(int x, int y);
+void Loading(int x, int y, int w=40, int h=2);
 
 class CMenu {
 private:

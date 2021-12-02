@@ -2,6 +2,7 @@
 
 //CGame cg;
 
+
 int main() {
     /*------------------------------------*/
     /* PREPARE */
@@ -26,12 +27,18 @@ int main() {
     /*------------------------------------*/
     /* PRINT OUT */
     /*------------------------------------*/
+    Welcome(16, 5);
+    Loading(35, 15);
+    Clear(16, 5, 80, 15);
+
     /* Print Primary Menu */
     primaryMenu.drawMenu(45, 12);
 
     switch (primaryMenu.getSelected()) {
     case 0:
         /* Print Playground */
+        Loading(35, 15);
+        Clear(35, 15, 40, 2);
         DrawRect(3, 1, 101, 30, true, 20, 5);
         break;
     case 1:
