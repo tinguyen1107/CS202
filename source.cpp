@@ -28,29 +28,14 @@ void DrawRect(int x, int y, int width, int height, bool hasDividers, int curPosX
     GotoXY(curPosX, curPosY);
 }
 
-void FixConsoleWindow() {
+void FixConsoleWindow(int w, int h) {
     HWND console = GetConsoleWindow();
     RECT ConsoleRect;
     GetWindowRect(console, &ConsoleRect);
-
-    MoveWindow(console, ConsoleRect.left, ConsoleRect.top, 1070, 570, TRUE);
-
+    MoveWindow(console, ConsoleRect.left, ConsoleRect.top, w, h, TRUE);
     LONG style = GetWindowLong(console, GWL_STYLE);
-    style = style & ~(WS_MAXIMIZEBOX) & ~(WS_THICKFRAME);
+    style = style & ~(WS_MAXIMIZEBOX) & ~(WS_THICKFRAME) & ~(WS_MINIMIZEBOX);
     SetWindowLong(console, GWL_STYLE, style);
-
-    system("cls");
-
-    DrawRect(3, 1, 101, 30, true, 20, 5);
-}
-
-void PrintMenu(int x, int y) {
-    CMenu menu("Menu", 2, 17, 5);
-    menu.addOpt("New game");
-    menu.addOpt("Load game");
-    menu.addOpt("Settings");
-
-    menu.drawMenu(x, y);
 }
 
 /*-------------------------------------------------------------*/
@@ -61,7 +46,7 @@ CMenu::CMenu(string title, int space, int w, int h) : title(title), w(w), h(h), 
 
 void CMenu::addOpt(string opt) { this->opt.push_back(opt); }
 
-int CMenu::getOpt() { return selected; }
+int CMenu::getSelected() { return selected; }
 
 void CMenu::drawMenu(int x, int y) {
     DrawRect(x, y, w, h, false, x + (w + 1 - title.length()) / 2, y + 1);
@@ -75,15 +60,21 @@ void CMenu::drawMenu(int x, int y) {
 
     bool didConfirm = false;
     do {
-        if (getch() == 13) didConfirm = true;
+        int c = getch();
+        if (c == 224) continue;
+        else if (c == 13) didConfirm = true;
         else {
             move(x, y, 15);
-            switch (getch()) {
+            switch (c) {
             case 72:
+            case 'W':
+            case 'w':
                 selected--; // up
                 if (selected < 0) selected = opt.size() - 1;
                 break;
             case 80:
+            case 'S':
+            case 's':
                 selected++; // down
                 break;
                 //case 75: left
@@ -99,7 +90,7 @@ void CMenu::move(int x, int y, int color) {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, color);
     GotoXY(x + space, y + h - (opt.size() - selected));
-    cout << selected << ". " + opt[selected] + ".";
+    cout << selected + 1 << ". " + opt[selected] + ".";
     GotoXY(x, y + h - (opt.size() - selected));
     if(color != 15) SetConsoleTextAttribute(hConsole, 15);
 }
@@ -108,7 +99,41 @@ void CMenu::move(int x, int y, int color) {
 /* CLASS PEOPLE */
 /*-------------------------------------------------------------*/
 
+CPeople::CPeople() {
 
+}
+
+void CPeople::up(int n) {
+
+}
+
+void CPeople::left(int n) {
+
+}
+
+void CPeople::right(int n) {
+
+}
+
+void CPeople::down(int n) {
+
+}
+
+bool CPeople::isImpact(const CVehicle*& vehicle) {
+
+}
+
+bool CPeople::isImpact(const CAnimal*& animal) {
+
+}
+
+bool CPeople::isFinish() {
+
+}
+
+bool CPeople::isDead() {
+
+}
 
 /*-------------------------------------------------------------*/
 /* CLASS GAME */
@@ -166,4 +191,71 @@ void CGame::drawPeople(int x, int y) {
     cout << char(62) << char(60);
     GotoXY(x, y - 1);
     cout << char(219) << char(219);
+}
+
+CGame::CGame() {
+
+}
+
+void CGame::drawGame() {
+
+}
+
+CGame::~CGame() {
+    delete[] axt;
+    delete[] axh;
+    delete[] akl;
+    delete[] ac;
+}
+
+CPeople CGame::getPeople() {
+
+}
+
+CVehicle* CGame::getVehicle() {
+
+}
+
+CAnimal* CGame::getAnimal() {
+
+}
+
+void CGame::resetGame() {
+
+}
+
+void CGame::exitGame() {
+
+}
+
+void CGame::startGame() {
+
+}
+
+void CGame::loadGame() {
+
+}
+
+void CGame::saveGame() {
+
+}
+
+void CGame::pauseGame() {
+
+}
+
+void CGame::resumeGame() {
+
+}
+
+void CGame::updatePosPeople(char) {
+
+}
+
+void CGame::updatePosVehicle() {
+
+}
+
+void CGame::updatePosAnimal() {
+
 }

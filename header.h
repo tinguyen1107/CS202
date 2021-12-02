@@ -12,31 +12,18 @@
 using namespace std;
 
 void GotoXY(int x, int y);
-void FixConsoleWindow();
-void PrintMenu(int x, int y);
-/*
-void DrawBird(int x, int y);
-void DrawDinausor(int x, int y);
-
-void DrawCar(int x, int y);
-void DrawTruck(int x, int y);
-
-void DrawPeople(int x, int y);
-*/
+void FixConsoleWindow(int w, int h);
 void DrawRect(int x, int y, int width, int height, bool hasDividers, int curPosX = 0, int curPosY = 0);
 
 class CMenu {
 private:
-    int w;
-    int h;
-    int space;
-    int selected;
+    int w, h, space, selected;
     string title;
     vector<string> opt;
 public:
     CMenu(string title, int space=1, int w = 23, int h = 6);
     void addOpt(string opt);
-    int getOpt();
+    int getSelected();
     void drawMenu(int x, int y);
     void move(int x, int y, int color);
 };
