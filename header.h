@@ -26,6 +26,7 @@ public:
     int getSelected();
     void drawMenu(int x, int y);
     void move(int x, int y, int color);
+    void clear(int x, int y);
 };
 
 class CPeople {

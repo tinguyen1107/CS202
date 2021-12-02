@@ -84,6 +84,7 @@ void CMenu::drawMenu(int x, int y) {
             move(x, y, 10);
         }
     } while (!didConfirm);
+    clear(x, y);
 }
 
 void CMenu::move(int x, int y, int color) {
@@ -93,6 +94,14 @@ void CMenu::move(int x, int y, int color) {
     cout << selected + 1 << ". " + opt[selected] + ".";
     GotoXY(x, y + h - (opt.size() - selected));
     if(color != 15) SetConsoleTextAttribute(hConsole, 15);
+}
+
+void CMenu::clear(int x, int y) {
+    for (int i = y; i <= y + h; i++) {
+        GotoXY(x, i);
+        for (int j = x-1; j < x + w; j++)
+            cout << " ";
+    }
 }
 
 /*-------------------------------------------------------------*/

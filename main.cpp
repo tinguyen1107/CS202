@@ -10,10 +10,13 @@ int main() {
     FixConsoleWindow(1070, 570);
     
     /* First Menu*/
-    CMenu menu("Menu", 2, 17, 5);
-    menu.addOpt("New game");
-    menu.addOpt("Load game");
-    menu.addOpt("Settings");
+    CMenu firstMenu("Menu", 2, 17, 5);
+    firstMenu.addOpt("New game");
+    firstMenu.addOpt("Load game");
+    firstMenu.addOpt("Settings");
+
+    CMenu secondaryMenu("Load data", 2, 17, 3);
+    secondaryMenu.addOpt("Please input path to file:");
     
     /* Clear */
     system("cls");
@@ -25,12 +28,13 @@ int main() {
     DrawRect(3, 1, 101, 30, true, 20, 5);
 
     /* Print First Menu */
-    menu.drawMenu(108, 1);
+    firstMenu.drawMenu(108, 1);
 
-    switch (menu.getSelected()) {
+    switch (firstMenu.getSelected()) {
     case 0:
         break;
     case 1:
+        secondaryMenu.drawMenu(108, 1);
         break;
     case 2:
         break;
