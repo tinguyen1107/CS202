@@ -63,6 +63,14 @@ void Loading(int x, int y, int w, int h) {
     SetConsoleTextAttribute(hConsole, 15);
 }
 
+void Clear(int x, int y, int w, int h) {
+    for (int i = y; i <= y + h; i++) {
+        GotoXY(x, i);
+        for (int j = x - 1; j < x + w; j++)
+            cout << " ";
+    }
+}
+
 /*-------------------------------------------------------------*/
 /* CLASS MENU */
 /*-------------------------------------------------------------*/
@@ -81,42 +89,39 @@ void CMenu::drawMenu(int x, int y) {
         GotoXY(x + space, y + 2);
         cout << opt[0];
         GotoXY(x + space, y + 3);
-        return;
     }
-    for (int i = 0; i != opt.size(); ++i) {
-        GotoXY(x + space, y + h - (opt.size() - i));
-        cout << i + 1 << ". " + opt[i] + ".";
-    }
+    else {
+        for (int i = 0; i != opt.size(); ++i) {
+            GotoXY(x + space, y + h - (opt.size() - i));
+            cout << i + 1 << ". " + opt[i] + ".";
+        }
 
-    selected = 0;
-    move(x, y, 10);
-    bool didConfirm = false;
-    do {
-        int c = getch();
-        if (c == 224) continue;
-        else if (c == 13) didConfirm = true;
-        else {
-            move(x, y, 15);
-            switch (c) {
-            case 72:
-            case 'W':
-            case 'w':
-                selected--; // up
-                if (selected < 0) selected = opt.size() - 1;
-                break;
-            case 80:
-            case 'S':
-            case 's':
-                selected++; // down
-                break;
+        selected = 0;
+        move(x, y, 10);
+        bool didConfirm = false;
+        do {
+            int c = getch();
+            if (c == 224) continue;
+            else if (c == 13) didConfirm = true;
+            else {
+                move(x, y, 15);
+                switch (c) {
+                case 72: case 'W': case 'w':
+                    selected--; // up
+                    if (selected < 0) selected = opt.size() - 1;
+                    break;
+                case 80: case 'S': case 's':
+                    selected++; // down
+                    break;
                 //case 75: left
                 //case 77: right
+                }
+                selected = selected % opt.size();
+                move(x, y, 10);
             }
-            selected = selected % opt.size();
-            move(x, y, 10);
-        }
-    } while (!didConfirm);
-    Clear(x, y, w, h);
+        } while (!didConfirm);
+        Clear(x, y, w, h);
+    }
 }
 
 void CMenu::move(int x, int y, int color) {
@@ -128,37 +133,19 @@ void CMenu::move(int x, int y, int color) {
     if(color != 15) SetConsoleTextAttribute(hConsole, 15);
 }
 
-void Clear(int x, int y, int w, int h) {
-    for (int i = y; i <= y + h; i++) {
-        GotoXY(x, i);
-        for (int j = x-1; j < x + w; j++)
-            cout << " ";
-    }
-}
-
 /*-------------------------------------------------------------*/
 /* CLASS PEOPLE */
 /*-------------------------------------------------------------*/
 
-CPeople::CPeople() {
+CPeople::CPeople(int x, int y) : mX(x), mY(y) {}
 
-}
+void CPeople::up(int n) { mY -= n; }
 
-void CPeople::up(int n) {
+void CPeople::left(int n) { mX -= n; }
 
-}
+void CPeople::right(int n) { mX += n; }
 
-void CPeople::left(int n) {
-
-}
-
-void CPeople::right(int n) {
-
-}
-
-void CPeople::down(int n) {
-
-}
+void CPeople::down(int n) { mY += n; }
 
 bool CPeople::isImpact(const CVehicle*& vehicle) {
 
@@ -168,13 +155,9 @@ bool CPeople::isImpact(const CAnimal*& animal) {
 
 }
 
-bool CPeople::isFinish() {
+bool CPeople::isFinish() { return this->mY < 7; }
 
-}
-
-bool CPeople::isDead() {
-
-}
+bool CPeople::isDead() { return mState; }
 
 /*-------------------------------------------------------------*/
 /* CLASS GAME */
@@ -239,7 +222,11 @@ CGame::CGame() {
 }
 
 void CGame::drawGame() {
-
+    drawPeople(54, 30);
+    drawBird(30, 9);
+    drawDinausor(70, 15);
+    drawCar(80, 20);
+    drawTruck(10, 25);
 }
 
 CGame::~CGame() {

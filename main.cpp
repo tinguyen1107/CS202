@@ -1,7 +1,6 @@
 #include "header.h"
 
-//CGame cg;
-
+CGame cg;
 
 int main() {
     /*------------------------------------*/
@@ -40,6 +39,7 @@ int main() {
         Loading(35, 15);
         Clear(35, 15, 40, 2);
         DrawRect(3, 1, 101, 30, true, 20, 5);
+        cg.drawGame();
         break;
     case 1:
         /* Print Secondary Menu */

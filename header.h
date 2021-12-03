@@ -39,7 +39,7 @@ private:
     int mX, mY;
     bool mState;
 public:
-    CPeople();
+    CPeople(int x=54, int y=30);
     void up(int);
     void left(int);
     void right(int);
