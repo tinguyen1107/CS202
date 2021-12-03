@@ -9,6 +9,13 @@ using namespace std;
 /*-------------------------------------------------------------*/
 CAnimal::CAnimal(int x, int y) : mX(x), mY(y) {}
 
+pair<int, int> CAnimal::getPos() {
+	pair<int, int> pos;
+	pos.first = mX;
+	pos.second = mY;
+	return pos;
+}
+
 void CAnimal::move(int x, int y) { mX += x; mY += y; }
 
 /*-------------------------------------------------------------*/

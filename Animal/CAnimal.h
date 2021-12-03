@@ -1,11 +1,16 @@
 #ifndef CAnimal_h
 #define CAnimal_h
 
+#include <iostream>
+
+using namespace std;
+
 class CAnimal {
 private:
     int mX, mY;
 public:
     CAnimal(int x, int y);
+    pair<int, int> getPos();
     void move(int, int);
     virtual void tell() = 0;
 };

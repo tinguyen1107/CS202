@@ -1,20 +1,26 @@
 #ifndef CVehicle_h
 #define CVehicle_h
 
+#include <iostream>
+using namespace std;
+
 class CVehicle {
 private:
     int mX, mY;
 public:
-    virtual void move(int, int) = 0;
+    CVehicle(int x, int y);
+    pair<int, int> getPos();
+    void move(int, int);
 };
 
 class CTruck : CVehicle {
 public:
-    void move(int, int);
+    CTruck(int x, int y);
 };
 
 class CCar : CVehicle {
-    void move(int, int);
+public:
+    CCar(int x, int y);
 };
 
 #endif
