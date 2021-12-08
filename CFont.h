@@ -2,16 +2,15 @@
 #define CFont_h
 
 #include <SFML/Graphics.hpp>
-#include <iostream>
-#include <string.h>
 
 class CFont {
 private:
-	const std::string path = "Resource/Font/Montserrat-";
-	void initFonts();
+	bool initFonts();
 public:
 	CFont();
+	sf::Font Bold;
 	sf::Font SemiBold;
+	sf::Font Regular;
 };
 
 #endif

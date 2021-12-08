@@ -24,12 +24,18 @@
     <ClCompile Include="CFont.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CFont.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

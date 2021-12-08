@@ -23,13 +23,6 @@ void CGame::initEnemies()
 	this->enemy.setOutlineThickness(1.f);
 }
 
-void CGame::initFonts()
-{
-	if (font.loadFromFile("Resource/Font/Montserrat-ExtraBold.ttf"))
-		cout << "CC" << endl;
-	else cout << "CL" << endl;
-}
-
 void CGame::initTexts() {
 	text.setFont(localFont.SemiBold);
 	text.setString("Welcome");
@@ -43,15 +36,14 @@ void CGame::initTexts() {
 	text.setPosition(sf::Vector2f(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f));
 }
 
-CGame::CGame()
-{
+CGame::CGame() {
 	this->state = GameState::welcome;
 
 	this->initVariable();
 	this->initWindow();
 	this->initEnemies();
+	this->initPrimaryMenu();
 
-	initFonts();
 	initTexts();
 }
 
@@ -65,6 +57,7 @@ CGame::CGame()
 CGame::~CGame()
 {
 	delete this->window;
+	delete this->primaryMenu;
 }
 
 const bool CGame::isRuning() const
@@ -75,6 +68,12 @@ const bool CGame::isRuning() const
 void CGame::welcome()
 {
 	this->window->draw(text);
+}
+
+void CGame::initPrimaryMenu()
+{
+	vector<string> opt = { "New game", "Load game", "Setting" };
+	primaryMenu = new CMenu(opt, 100, 100);
 }
 
 void CGame::drawGame()
@@ -91,11 +90,41 @@ void CGame::pollEvent()
 			this->window->close();
 			break;
 		case sf::Event::KeyPressed:
-			if (this->event.key.code == sf::Keyboard::Escape)
-				this->window->close();
+			switch (this->state) {
+			case GameState::welcome:
+				handleWelcomeState();
+				break;
+			case GameState::primaryMenu:
+				handlePrimaryMenuState();
+				break;
+			}
 		default:
 			break;
 		}
+	}
+}
+
+void CGame::handleWelcomeState() {
+	if (this->event.key.code == sf::Keyboard::Escape)
+		this->window->close();
+	else if (this->event.key.code == sf::Keyboard::Enter)
+		this->state = GameState::primaryMenu;
+}
+
+void CGame::handlePrimaryMenuState() {
+	switch (this->event.key.code) {
+	case sf::Keyboard::W:
+	case sf::Keyboard::Up:
+		primaryMenu->MoveUp();
+		break;
+	case sf::Keyboard::S:
+	case sf::Keyboard::Down:
+		primaryMenu->MoveDown();
+		break;
+	case sf::Keyboard::Enter:
+		int choice = primaryMenu->GetPressedItem();
+		cout << "Choice: " << choice << endl;
+		break;
 	}
 }
 
@@ -107,12 +136,14 @@ void CGame::update()
 void CGame::render()
 {
 	this->window->clear();
-	//this->welcome();
+	
 	switch (state) {
 	case GameState::welcome:
 		welcome();
 		break;
-	//case 
+	case GameState::primaryMenu:
+		primaryMenu->draw(*this->window);
+		break;
 	default:
 		break;
 	}	

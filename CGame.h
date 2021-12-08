@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include "CFont.h"
+#include "CMenu.h"
 
 using namespace std;
 
@@ -35,7 +36,8 @@ private:
 
 	// Object
 	sf::Text text;
-	sf::Font font;
+
+	CMenu* primaryMenu;
 	
 	// User interface
 	CFont localFont;
@@ -48,7 +50,6 @@ private:
 	void initVariable();
 	void initWindow();
 	void initEnemies();
-	void initFonts();
 	void initTexts();
 	
 public:
@@ -61,11 +62,14 @@ public:
 	// Functions
 	void welcome();
 
-	void menu();
+	void initPrimaryMenu();
 
 	void drawGame();
 
 	void pollEvent();
+	void handleWelcomeState();
+	void handlePrimaryMenuState();
+
 	void update();
 	void render();
 };

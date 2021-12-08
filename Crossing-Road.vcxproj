@@ -153,11 +153,13 @@
   <ItemGroup>
     <ClCompile Include="CFont.cpp" />
     <ClCompile Include="CGame.cpp" />
+    <ClCompile Include="CMenu.cpp" />
     <ClCompile Include="Crossing-Road.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGame.h" />
     <ClInclude Include="CFont.h" />
+    <ClInclude Include="CMenu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
