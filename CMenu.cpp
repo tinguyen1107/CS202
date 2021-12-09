@@ -15,7 +15,6 @@ CMenu::CMenu(vector<string> optString, float width, float height) {
 	selectedIndex = 0;
 }
 
-
 CMenu::~CMenu() {}
 
 void CMenu::draw(sf::RenderWindow& window) {
@@ -24,8 +23,7 @@ void CMenu::draw(sf::RenderWindow& window) {
 }
 
 void CMenu::MoveUp() {
-	if (selectedIndex - 1 >= 0)
-	{
+	if (selectedIndex - 1 >= 0) {
 		optText[selectedIndex].setFillColor(sf::Color::White);
 		selectedIndex--;
 		optText[selectedIndex].setFillColor(sf::Color::Red);
@@ -33,8 +31,7 @@ void CMenu::MoveUp() {
 }
 
 void CMenu::MoveDown() {
-	if (selectedIndex + 1 < MAX_NUM_OF_OPT)
-	{
+	if (selectedIndex + 1 < MAX_NUM_OF_OPT) {
 		optText[selectedIndex].setFillColor(sf::Color::White);
 		selectedIndex++;
 		optText[selectedIndex].setFillColor(sf::Color::Red);

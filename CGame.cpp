@@ -2,20 +2,17 @@
 
 // CGame* CGame::instancePtr = nullptr;
 
-void CGame::initVariable()
-{
+void CGame::initVariable() {
 	this->window = nullptr;
 }
 
-void CGame::initWindow()
-{
+void CGame::initWindow() {
 	this->videoMode.height = SCREEN_HEIGHT;
 	this->videoMode.width = SCREEN_WIDTH;
 	this->window = new sf::RenderWindow(this->videoMode, "Crossing road", sf::Style::Titlebar | sf::Style::Close);
 }
 
-void CGame::initEnemies()
-{
+void CGame::initEnemies() {
 	this->enemy.setPosition(20.f, 10.f);
 	this->enemy.setSize(sf::Vector2f(100.f, 100.f));
 	this->enemy.setFillColor(sf::Color::Cyan);
@@ -36,6 +33,29 @@ void CGame::initTexts() {
 	text.setPosition(sf::Vector2f(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f));
 }
 
+void CGame::initVertexs() {
+	const int horizontal = 50;
+	const int numOfLines = 5;
+	const float space = 60;
+	for (int i = 0; i < numOfLines; i++) {
+		sf::VertexArray  line(sf::LinesStrip, 2);
+		line[0].position = sf::Vector2f(horizontal, (i + 1) * space);
+		line[1].position = sf::Vector2f(SCREEN_WIDTH - horizontal, (i + 1) * space);
+
+		//line[0].color = sf::Color::Red;
+
+		this->lines.push_back(line);
+	}
+}
+
+void CGame::initCars() {
+
+}
+
+void CGame::drawCar(int x, int y) {
+
+}
+
 CGame::CGame() {
 	this->state = GameState::welcome;
 
@@ -43,46 +63,41 @@ CGame::CGame() {
 	this->initWindow();
 	this->initEnemies();
 	this->initPrimaryMenu();
+	this->initVertexs();
 
 	initTexts();
 }
 
-/*CGame* CGame::getInstance()
-{
+/*
+CGame* CGame::getInstance() {
 	if (instancePtr == nullptr)
 		instancePtr = new CGame;
 	return instancePtr;
-}*/
+}
+*/
 
-CGame::~CGame()
-{
+CGame::~CGame() {
 	delete this->window;
 	delete this->primaryMenu;
 }
 
-const bool CGame::isRuning() const
-{
-	return this->window->isOpen();
-}
+const bool CGame::isRuning() const { return this->window->isOpen(); }
 
-void CGame::welcome()
-{
+void CGame::welcome() {
 	this->window->draw(text);
 }
 
-void CGame::initPrimaryMenu()
-{
+void CGame::initPrimaryMenu() {
 	vector<string> opt = { "New game", "Load game", "Setting" };
-	primaryMenu = new CMenu(opt, 100, 100);
+	primaryMenu = new CMenu(opt, 100, 150);
 }
 
-void CGame::drawGame()
-{
-	cout << "Draw game." << endl;
+void CGame::drawGame() {
+	for (int i = 0; i < this->lines.size(); i++)
+		this->window->draw(this->lines[i]);
 }
 
-void CGame::pollEvent()
-{
+void CGame::pollEvent() {
 	while (this->window->pollEvent(this->event)) {
 		switch (this->event.type)
 		{
@@ -124,17 +139,20 @@ void CGame::handlePrimaryMenuState() {
 	case sf::Keyboard::Enter:
 		int choice = primaryMenu->GetPressedItem();
 		cout << "Choice: " << choice << endl;
+		if (choice == 0)
+			this->state = GameState::newGame;
 		break;
 	}
 }
 
-void CGame::update()
-{
+void CGame::update() {
 	pollEvent();
+	sf::Vector2f pos = this->enemy.getPosition();
+	pos.x += 0.01;
+	this->enemy.setPosition(pos);
 }
 
-void CGame::render()
-{
+void CGame::render() {
 	this->window->clear();
 	
 	switch (state) {
@@ -143,6 +161,10 @@ void CGame::render()
 		break;
 	case GameState::primaryMenu:
 		primaryMenu->draw(*this->window);
+		break;
+	case GameState::newGame:
+		drawGame();
+		this->window->draw(this->enemy);
 		break;
 	default:
 		break;

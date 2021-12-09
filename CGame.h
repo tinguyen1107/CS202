@@ -18,8 +18,9 @@ using namespace std;
 
 enum GameState {
 	welcome,
-	primaryMenu
-	// playing, loadGame
+	primaryMenu,
+	newGame,
+	//playing, loadGame
 };
 
 class CGame {
@@ -36,6 +37,7 @@ private:
 
 	// Object
 	sf::Text text;
+	vector<sf::VertexArray> lines;
 
 	CMenu* primaryMenu;
 	
@@ -51,6 +53,11 @@ private:
 	void initWindow();
 	void initEnemies();
 	void initTexts();
+	void initVertexs();
+
+	void initCars();
+
+	void drawCar(int x, int y);
 	
 public:
 	CGame();
@@ -61,7 +68,6 @@ public:
 
 	// Functions
 	void welcome();
-
 	void initPrimaryMenu();
 
 	void drawGame();

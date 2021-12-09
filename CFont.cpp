@@ -11,6 +11,11 @@ bool CFont::initFonts() {
 		&& Regular.loadFromFile(path + "Regular.ttf");
 }
 
+//CFont* CFont::getInstance() {
+//	if (!instance) instance = new CFont;
+//	return instance;
+//}
+
 CFont::CFont() {
 	if (initFonts()) std::cout << "Load font success.";
 }

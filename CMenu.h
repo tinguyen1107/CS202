@@ -2,9 +2,8 @@
 #define CMenu_h
 
 #include "CFont.h"
+
 #include <SFML/Graphics.hpp>
-
-
 #include <vector>
 #include <iostream>
 
