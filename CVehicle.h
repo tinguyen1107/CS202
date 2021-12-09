@@ -1,5 +1,5 @@
-#ifndef Vehicle_h
-#define Vehicle_h
+#ifndef CVehicle_h
+#define CVehicle_h
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
@@ -12,7 +12,6 @@ protected:
 public:
     CVehicle(float x, float y);
     sf::ConvexShape getShape();
-    //pair<int, int> getPos();
     virtual void move(int, int) = 0;
 };
 

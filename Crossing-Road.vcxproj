@@ -151,17 +151,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CAnimal.cpp" />
     <ClCompile Include="CFont.cpp" />
     <ClCompile Include="CGame.cpp" />
     <ClCompile Include="CMenu.cpp" />
     <ClCompile Include="Crossing-Road.cpp" />
-    <ClCompile Include="Vehicle.cpp" />
+    <ClCompile Include="CVehicle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CAnimal.h" />
     <ClInclude Include="CGame.h" />
     <ClInclude Include="CFont.h" />
     <ClInclude Include="CMenu.h" />
-    <ClInclude Include="Vehicle.h" />
+    <ClInclude Include="CVehicle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

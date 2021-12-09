@@ -2,10 +2,8 @@
 
 #include <iostream>
 
-using namespace std;
-
 bool CFont::initFonts() {
-	string path = "Resource/Font/Montserrat-";
+	std::string path = "Resource/Font/Montserrat-";
 	return Bold.loadFromFile(path + "Bold.ttf")
 		&& SemiBold.loadFromFile(path + "SemiBold.ttf")
 		&& Regular.loadFromFile(path + "Regular.ttf");
@@ -17,5 +15,6 @@ bool CFont::initFonts() {
 //}
 
 CFont::CFont() {
-	if (initFonts()) std::cout << "Load font success.";
+	if (initFonts()) std::cout << "Load font success." << std::endl;
+	else std::cout << "Load font failed" << std::endl;
 }

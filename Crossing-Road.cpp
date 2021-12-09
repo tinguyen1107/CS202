@@ -1,16 +1,4 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
-
-#include <iostream>
 #include "CGame.h"
-
-using namespace std;
-
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
 
 int main() {
     CGame* game;

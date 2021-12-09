@@ -3,22 +3,32 @@
 // CGame* CGame::instancePtr = nullptr;
 
 void CGame::initVariable() {
+	this->state = GameState::welcome;
 	this->window = nullptr;
 }
 
 void CGame::initWindow() {
 	this->videoMode.height = SCREEN_HEIGHT;
 	this->videoMode.width = SCREEN_WIDTH;
-	this->window = new sf::RenderWindow(this->videoMode, "Crossing road", sf::Style::Titlebar | sf::Style::Close);
+
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = 8;
+
+	this->window = new sf::RenderWindow(
+		this->videoMode, 
+		"Crossing road", 
+		sf::Style::Titlebar | sf::Style::Close, 
+		settings
+	);
 }
 
-void CGame::initEnemies() {
-	this->enemy.setPosition(20.f, 10.f);
-	this->enemy.setSize(sf::Vector2f(100.f, 100.f));
-	this->enemy.setFillColor(sf::Color::Cyan);
-	this->enemy.setOutlineColor(sf::Color::Green);
-	this->enemy.setOutlineThickness(1.f);
-}
+//void CGame::initEnemies() {
+//	this->enemy.setPosition(20.f, 10.f);
+//	this->enemy.setSize(sf::Vector2f(100.f, 100.f));
+//	this->enemy.setFillColor(sf::Color::Cyan);
+//	this->enemy.setOutlineColor(sf::Color::Green);
+//	this->enemy.setOutlineThickness(1.f);
+//}
 
 void CGame::initTexts() {
 	text.setFont(localFont.SemiBold);
@@ -55,6 +65,9 @@ void CGame::initCars() {
 		this->cars.push_back(car);
 		this->trucks.push_back(truck);
 	}
+
+	bird = CBird(600, 200);
+	dinausor = CDinausor(400, 350);
 }
 
 void CGame::initTrucks()
@@ -69,11 +82,9 @@ void CGame::drawCar() {
 }
 
 CGame::CGame() {
-	this->state = GameState::welcome;
-
 	this->initVariable();
 	this->initWindow();
-	this->initEnemies();
+	//this->initEnemies();
 	this->initPrimaryMenu();
 	this->initVertexs();
 	this->initCars();
@@ -109,6 +120,8 @@ void CGame::drawGame() {
 	for (int i = 0; i < this->lines.size(); i++)
 		this->window->draw(this->lines[i]);
 	drawCar();
+	this->window->draw(this->bird.getShape());
+	this->window->draw(this->dinausor.getShape());
 }
 
 void CGame::pollEvent() {
@@ -161,9 +174,9 @@ void CGame::handlePrimaryMenuState() {
 
 void CGame::update() {
 	pollEvent();
-	sf::Vector2f pos = this->enemy.getPosition();
+	/*sf::Vector2f pos = this->enemy.getPosition();
 	pos.x += (float)0.01;
-	this->enemy.setPosition(pos);
+	this->enemy.setPosition(pos);*/
 
 	this->cars[0].move(0, 0);
 	this->trucks[1].move(0, 0);
@@ -181,7 +194,6 @@ void CGame::render() {
 		break;
 	case GameState::newGame:
 		drawGame();
-		this->window->draw(this->enemy);
 		break;
 	default:
 		break;

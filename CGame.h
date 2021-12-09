@@ -10,7 +10,8 @@
 #include <iostream>
 #include "CFont.h"
 #include "CMenu.h"
-#include "Vehicle.h"
+#include "CVehicle.h"
+#include "CAnimal.h"
 
 using namespace std;
 
@@ -48,19 +49,19 @@ private:
 	vector<CTruck> trucks;
 
 	// Animal
-	
+	CBird bird;
+	CDinausor dinausor;
 	
 	// User interface
 	CFont localFont;
 
-
-	sf::RectangleShape enemy;
 	//CGame();
 
 	// Private Functions
 	void initVariable();
 	void initWindow();
-	void initEnemies();
+
+	//void initEnemies();
 	void initTexts();
 	void initVertexs();
 

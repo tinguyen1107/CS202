@@ -1,4 +1,4 @@
-#include "Vehicle.h"
+#include "CVehicle.h"
 
 CVehicle::CVehicle(float x, float y): mX(x), mY(y) {}
 

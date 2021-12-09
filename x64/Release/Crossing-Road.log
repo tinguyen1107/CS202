@@ -1,7 +1,7 @@
-﻿  CGame.cpp
+﻿  CAnimal.cpp
   Generating code
-  115 of 370 functions (31.1%) were compiled, the rest were copied from previous compilation.
-    97 functions were new in current compilation
-    41 functions had inline decision re-evaluated but remain unchanged
+  1 of 385 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Crossing-Road.vcxproj -> C:\Users\tinnguyen\Desktop\CS202\x64\Release\Crossing-Road.exe
