@@ -1,4 +1,5 @@
 #include "CGame.h"
+#include <Windows.h>
 
 // CGame* CGame::instancePtr = nullptr;
 
@@ -21,7 +22,9 @@ void CGame::initWindow() {
 		settings
 	);
 
-	this->window->setFramerateLimit(1000);
+	this->window->setActive(false);
+
+	this->window->setFramerateLimit(500);
 }
 
 //void CGame::initEnemies() {
@@ -115,6 +118,8 @@ CGame::CGame() {
 	this->people = CPeople(400, 300);
 
 	initTexts();
+
+	cout << "DID INIT !!" << endl;
 }
 
 /*
@@ -166,26 +171,20 @@ void CGame::pollEvent() {
 				switch (this->event.key.code) {
 				case sf::Keyboard::W:
 				case sf::Keyboard::Up:
-					this->people.up(0.1);
+					this->people.up(2);
 					break;
 				case sf::Keyboard::S:
 				case sf::Keyboard::Down:
-					this->people.down(0.1);
+					this->people.down(2);
 					break;
 				case sf::Keyboard::A:
 				case sf::Keyboard::Left:
-					this->people.left(0.1);
+					this->people.left(2);
 					break;
 				case sf::Keyboard::D:
 				case sf::Keyboard::Right:
-					this->people.right(0.1);
+					this->people.right(2);
 					break;
-				/*case sf::Keyboard::Enter:
-					int choice = primaryMenu->GetPressedItem();
-					cout << "Choice: " << choice << endl;
-					if (choice == 0)
-						this->state = GameState::newGame;
-					break;*/
 				}
 				break;
 			}
@@ -222,22 +221,27 @@ void CGame::handlePrimaryMenuState() {
 }
 
 void CGame::update() {
+	float carStep = 0.0008;
+	float truckStep = -0.001;
+	float birdStep = -0.0004;
+	float dinausorStep = 0.0006;
+
 	pollEvent();
 	if (this->state == GameState::newGame) {
 		for (int i = 1; i < 5; i++) {
 			if (cars[i - 1].getShape().getPosition().x - cars[i].getShape().getPosition().x > 200)
-				this->cars[i].move(0.03, 0);
+				this->cars[i].move(carStep, 0);
 			if (trucks[i - 1].getShape().getPosition().x - trucks[i].getShape().getPosition().x < -200)
-				this->trucks[i].move(-0.035, 0);
+				this->trucks[i].move(truckStep, 0);
 			if (birds[i - 1].getShape().getPosition().x - birds[i].getShape().getPosition().x < -200)
-				this->birds[i].move(-0.018, 0);
+				this->birds[i].move(birdStep, 0);
 			if (dinausors[i - 1].getShape().getPosition().x - dinausors[i].getShape().getPosition().x > 200)
-				this->dinausors[i].move(0.018, 0);
+				this->dinausors[i].move(dinausorStep, 0);
 		}
-		this->cars[0].move(0.03, 0);
-		this->trucks[0].move(-0.035, 0);
-		this->birds[0].move(-0.018, 0);
-		this->dinausors[0].move(0.018, 0);
+		this->cars[0].move(carStep, 0);
+		this->trucks[0].move(truckStep, 0);
+		this->birds[0].move(birdStep, 0);
+		this->dinausors[0].move(dinausorStep, 0);
 
 		if (cars[0].getShape().getPosition().x > 800) {
 			cars.erase(cars.begin());

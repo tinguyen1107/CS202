@@ -8,7 +8,7 @@
 
 class CPeople {
 private:
-    int mX, mY;
+    float mX, mY;
     bool mState;
 
     sf::RectangleShape shape;
