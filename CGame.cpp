@@ -96,6 +96,8 @@ void CGame::drawCar() {
 		this->window->draw(this->birds[i].getShape());
 		this->window->draw(this->dinausors[i].getShape());
 	}
+
+	this->window->draw(this->people.getShape());
 }
 
 CGame::CGame() {
@@ -109,6 +111,8 @@ CGame::CGame() {
 	this->initTrucks();
 	this->initBirds();
 	this->initDinausors();
+
+	this->people = CPeople(400, 300);
 
 	initTexts();
 }
@@ -157,6 +161,32 @@ void CGame::pollEvent() {
 				break;
 			case GameState::primaryMenu:
 				handlePrimaryMenuState();
+				break;
+			case GameState::newGame:
+				switch (this->event.key.code) {
+				case sf::Keyboard::W:
+				case sf::Keyboard::Up:
+					this->people.up(0.1);
+					break;
+				case sf::Keyboard::S:
+				case sf::Keyboard::Down:
+					this->people.down(0.1);
+					break;
+				case sf::Keyboard::A:
+				case sf::Keyboard::Left:
+					this->people.left(0.1);
+					break;
+				case sf::Keyboard::D:
+				case sf::Keyboard::Right:
+					this->people.right(0.1);
+					break;
+				/*case sf::Keyboard::Enter:
+					int choice = primaryMenu->GetPressedItem();
+					cout << "Choice: " << choice << endl;
+					if (choice == 0)
+						this->state = GameState::newGame;
+					break;*/
+				}
 				break;
 			}
 		default:

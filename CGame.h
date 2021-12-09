@@ -40,10 +40,14 @@ private:
 	sf::Event event;
 	sf::VideoMode videoMode;
 
-	// Object
+	/*
+	* Object
+	*/
 	sf::Text text;
 	vector<sf::VertexArray> lines;
 	CMenu* primaryMenu;
+
+	CPeople people;
 
 	// Vehicle
 	vector<CCar> cars;

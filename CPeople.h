@@ -11,6 +11,7 @@ private:
     int mX, mY;
     bool mState;
 
+    sf::RectangleShape shape;
 
 public:
     CPeople(float x = 54, float y = 30);
@@ -22,6 +23,8 @@ public:
     bool isImpact(const CAnimal*&);
     bool isFinish();
     bool isDead();
+
+    sf::RectangleShape getShape();
 };
 
 #endif
