@@ -12,21 +12,24 @@ protected:
 public:
     CVehicle(float x, float y);
     sf::ConvexShape getShape();
-    virtual void move(int, int) = 0;
+    virtual void move(float, float) = 0;
 };
 
 class CCar : public CVehicle {
 public:
     CCar();
     CCar(float x, float y);
-    void move(int, int);
+    void move(float, float);
+    void setPos(float x, float y) {
+        this->convex.setPosition(x, y);
+    }
 };
 
 class CTruck : public CVehicle {
 public:
     CTruck();
     CTruck(float x, float y);
-    void move(int, int);
+    void move(float, float);
 };
 
 

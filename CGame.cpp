@@ -54,30 +54,39 @@ void CGame::initVertexs() {
 		line[0].position = sf::Vector2f(horizontal, (i + 1) * space);
 		line[1].position = sf::Vector2f(SCREEN_WIDTH - horizontal, (i + 1) * space);
 
-		//line[0].color = sf::Color::Red;
+		line[0].color = sf::Color::Red;
+		line[1].color = sf::Color::Blue;
 
 		this->lines.push_back(line);
 	}
 }
 
-void CGame::initCars() {
-	for (int i = 0; i < 5; i++) {
-		CCar car(0, 0);
-		CTruck truck(700, 100);
-
-		CBird bird(600, 200);
-		CDinausor dinausor(400, 350);
-
+void CGame::initCars(int number) {
+	for (int i = 0; i < number; i++) {
+		CCar car(-60, 215);
 		this->cars.push_back(car);
-		this->trucks.push_back(truck);
-
-		this->birds.push_back(bird);
-		this->dinausors.push_back(dinausor);
 	}
 }
 
-void CGame::initTrucks()
-{
+void CGame::initTrucks(int number) {
+	for (int i = 0; i < number; i++) {
+		CTruck truck(801, 270);
+		this->trucks.push_back(truck);
+	}
+}
+
+void CGame::initBirds(int number) {
+	for (int i = 0; i < number; i++) {
+		CBird bird(801, 75);
+		this->birds.push_back(bird);
+	}
+}
+
+void CGame::initDinausors(int number) {
+	for (int i = 0; i < number; i++) {
+		CDinausor dinausor(-56, 135);
+		this->dinausors.push_back(dinausor);
+	}
 }
 
 void CGame::drawCar() {
@@ -95,7 +104,11 @@ CGame::CGame() {
 	//this->initEnemies();
 	this->initPrimaryMenu();
 	this->initVertexs();
+
 	this->initCars();
+	this->initTrucks();
+	this->initBirds();
+	this->initDinausors();
 
 	initTexts();
 }
@@ -180,12 +193,42 @@ void CGame::handlePrimaryMenuState() {
 
 void CGame::update() {
 	pollEvent();
-	/*sf::Vector2f pos = this->enemy.getPosition();
-	pos.x += (float)0.01;
-	this->enemy.setPosition(pos);*/
+	if (this->state == GameState::newGame) {
+		for (int i = 1; i < 5; i++) {
+			if (cars[i - 1].getShape().getPosition().x - cars[i].getShape().getPosition().x > 200)
+				this->cars[i].move(0.03, 0);
+			if (trucks[i - 1].getShape().getPosition().x - trucks[i].getShape().getPosition().x < -200)
+				this->trucks[i].move(-0.035, 0);
+			if (birds[i - 1].getShape().getPosition().x - birds[i].getShape().getPosition().x < -200)
+				this->birds[i].move(-0.018, 0);
+			if (dinausors[i - 1].getShape().getPosition().x - dinausors[i].getShape().getPosition().x > 200)
+				this->dinausors[i].move(0.018, 0);
+		}
+		this->cars[0].move(0.03, 0);
+		this->trucks[0].move(-0.035, 0);
+		this->birds[0].move(-0.018, 0);
+		this->dinausors[0].move(0.018, 0);
 
-	this->cars[0].move(0, 0);
-	this->trucks[1].move(0, 0);
+		if (cars[0].getShape().getPosition().x > 800) {
+			cars.erase(cars.begin());
+			initCars(1);
+		}
+
+		if (trucks[0].getShape().getPosition().x < -60) {
+			trucks.erase(trucks.begin());
+			initTrucks(1);
+		}
+
+		if (birds[0].getShape().getPosition().x < -60) {
+			birds.erase(birds.begin());
+			initBirds(1);
+		}
+
+		if (dinausors[0].getShape().getPosition().x > 800) {
+			dinausors.erase(dinausors.begin());
+			initDinausors(1);
+		}
+	}
 }
 
 void CGame::render() {

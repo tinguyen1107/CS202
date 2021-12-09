@@ -155,6 +155,7 @@
     <ClCompile Include="CFont.cpp" />
     <ClCompile Include="CGame.cpp" />
     <ClCompile Include="CMenu.cpp" />
+    <ClCompile Include="CPeople.cpp" />
     <ClCompile Include="Crossing-Road.cpp" />
     <ClCompile Include="CVehicle.cpp" />
   </ItemGroup>
@@ -163,6 +164,7 @@
     <ClInclude Include="CGame.h" />
     <ClInclude Include="CFont.h" />
     <ClInclude Include="CMenu.h" />
+    <ClInclude Include="CPeople.h" />
     <ClInclude Include="CVehicle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

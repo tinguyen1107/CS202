@@ -23,7 +23,7 @@ CBird::CBird(float x, float y) : CAnimal(x, y) {
 	this->convex.setPoint(10, sf::Vector2f(20, 20));
 	this->convex.setPoint(11, sf::Vector2f(0, 20));
 
-	this->convex.setOutlineColor(sf::Color::Cyan);
+	this->convex.setOutlineColor(sf::Color::Magenta);
 	this->convex.setFillColor(sf::Color::Black);
 	this->convex.setOutlineThickness(1);
 	this->convex.setPosition(x, y);
@@ -56,7 +56,7 @@ CDinausor::CDinausor(float x, float y) : CAnimal(x, y) {
 	this->convex.setPoint(8, sf::Vector2f(20, 33));
 	this->convex.setPoint(9, sf::Vector2f(0, 33));
 
-	this->convex.setOutlineColor(sf::Color::Cyan);
+	this->convex.setOutlineColor(sf::Color::Green);
 	this->convex.setFillColor(sf::Color::Black);
 	this->convex.setOutlineThickness(1);
 	this->convex.setPosition(x, y);
@@ -65,6 +65,8 @@ CDinausor::CDinausor(float x, float y) : CAnimal(x, y) {
 void CDinausor::move(float x, float y) {
 	this->mX += x;
 	this->mY += y;
+
+	this->convex.setPosition(this->mX, this->mY);
 }
 
 void CDinausor::tell() {

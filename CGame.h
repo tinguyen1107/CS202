@@ -12,6 +12,7 @@
 #include "CMenu.h"
 #include "CVehicle.h"
 #include "CAnimal.h"
+#include "CPeople.h"
 
 using namespace std;
 
@@ -65,8 +66,11 @@ private:
 	void initTexts();
 	void initVertexs();
 
-	void initCars();
-	void initTrucks();
+	void initCars(int number = 5);
+	void initTrucks(int number = 5);
+	void initBirds(int number = 5);
+	void initDinausors(int number = 5);
+
 
 	void drawCar();
 	
