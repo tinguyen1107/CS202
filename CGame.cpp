@@ -20,6 +20,8 @@ void CGame::initWindow() {
 		sf::Style::Titlebar | sf::Style::Close, 
 		settings
 	);
+
+	this->window->setFramerateLimit(1000);
 }
 
 //void CGame::initEnemies() {
@@ -62,12 +64,16 @@ void CGame::initCars() {
 	for (int i = 0; i < 5; i++) {
 		CCar car(0, 0);
 		CTruck truck(700, 100);
+
+		CBird bird(600, 200);
+		CDinausor dinausor(400, 350);
+
 		this->cars.push_back(car);
 		this->trucks.push_back(truck);
-	}
 
-	bird = CBird(600, 200);
-	dinausor = CDinausor(400, 350);
+		this->birds.push_back(bird);
+		this->dinausors.push_back(dinausor);
+	}
 }
 
 void CGame::initTrucks()
@@ -78,6 +84,8 @@ void CGame::drawCar() {
 	for (int i = 0; i < 5; i++) {
 		this->window->draw(this->cars[i].getShape());
 		this->window->draw(this->trucks[i].getShape());
+		this->window->draw(this->birds[i].getShape());
+		this->window->draw(this->dinausors[i].getShape());
 	}
 }
 
@@ -120,8 +128,6 @@ void CGame::drawGame() {
 	for (int i = 0; i < this->lines.size(); i++)
 		this->window->draw(this->lines[i]);
 	drawCar();
-	this->window->draw(this->bird.getShape());
-	this->window->draw(this->dinausor.getShape());
 }
 
 void CGame::pollEvent() {

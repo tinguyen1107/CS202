@@ -49,8 +49,8 @@ private:
 	vector<CTruck> trucks;
 
 	// Animal
-	CBird bird;
-	CDinausor dinausor;
+	vector<CBird> birds;
+	vector<CDinausor> dinausors;
 	
 	// User interface
 	CFont localFont;
