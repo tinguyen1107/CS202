@@ -10,11 +10,14 @@
 #include <iostream>
 #include "CFont.h"
 #include "CMenu.h"
+#include "Vehicle.h"
 
 using namespace std;
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
+
+#define WIDTH 400
 
 enum GameState {
 	welcome,
@@ -38,8 +41,14 @@ private:
 	// Object
 	sf::Text text;
 	vector<sf::VertexArray> lines;
-
 	CMenu* primaryMenu;
+
+	// Vehicle
+	vector<CCar> cars;
+	vector<CTruck> trucks;
+
+	// Animal
+	
 	
 	// User interface
 	CFont localFont;
@@ -56,8 +65,9 @@ private:
 	void initVertexs();
 
 	void initCars();
+	void initTrucks();
 
-	void drawCar(int x, int y);
+	void drawCar();
 	
 public:
 	CGame();

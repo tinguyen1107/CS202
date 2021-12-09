@@ -49,11 +49,23 @@ void CGame::initVertexs() {
 }
 
 void CGame::initCars() {
-
+	for (int i = 0; i < 5; i++) {
+		CCar car(0, 0);
+		CTruck truck(700, 100);
+		this->cars.push_back(car);
+		this->trucks.push_back(truck);
+	}
 }
 
-void CGame::drawCar(int x, int y) {
+void CGame::initTrucks()
+{
+}
 
+void CGame::drawCar() {
+	for (int i = 0; i < 5; i++) {
+		this->window->draw(this->cars[i].getShape());
+		this->window->draw(this->trucks[i].getShape());
+	}
 }
 
 CGame::CGame() {
@@ -64,6 +76,7 @@ CGame::CGame() {
 	this->initEnemies();
 	this->initPrimaryMenu();
 	this->initVertexs();
+	this->initCars();
 
 	initTexts();
 }
@@ -95,6 +108,7 @@ void CGame::initPrimaryMenu() {
 void CGame::drawGame() {
 	for (int i = 0; i < this->lines.size(); i++)
 		this->window->draw(this->lines[i]);
+	drawCar();
 }
 
 void CGame::pollEvent() {
@@ -148,8 +162,11 @@ void CGame::handlePrimaryMenuState() {
 void CGame::update() {
 	pollEvent();
 	sf::Vector2f pos = this->enemy.getPosition();
-	pos.x += 0.01;
+	pos.x += (float)0.01;
 	this->enemy.setPosition(pos);
+
+	this->cars[0].move(0, 0);
+	this->trucks[1].move(0, 0);
 }
 
 void CGame::render() {
