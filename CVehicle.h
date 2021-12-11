@@ -3,34 +3,31 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "CImage.h"
 using namespace std;
 
 class CVehicle {
 protected:
     float mX, mY;
-    sf::ConvexShape convex;
+    sf::Sprite sprite;
 public:
     CVehicle(float x, float y);
-    sf::ConvexShape getShape();
+    sf::Sprite getSprite();
     virtual void move(float, float) = 0;
 };
 
 class CCar : public CVehicle {
 public:
     CCar();
-    CCar(float x, float y);
+    CCar(sf::Texture& texture, float x, float y);
     void move(float, float);
-    void setPos(float x, float y) {
-        this->convex.setPosition(x, y);
-    }
 };
 
 class CTruck : public CVehicle {
 public:
     CTruck();
-    CTruck(float x, float y);
+    CTruck(sf::Texture& texture, float x, float y);
     void move(float, float);
 };
-
 
 #endif

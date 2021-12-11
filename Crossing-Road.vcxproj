@@ -154,18 +154,22 @@
     <ClCompile Include="CAnimal.cpp" />
     <ClCompile Include="CFont.cpp" />
     <ClCompile Include="CGame.cpp" />
+    <ClCompile Include="CImage.cpp" />
     <ClCompile Include="CMenu.cpp" />
     <ClCompile Include="CPeople.cpp" />
     <ClCompile Include="Crossing-Road.cpp" />
     <ClCompile Include="CVehicle.cpp" />
+    <ClCompile Include="CLevel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimal.h" />
     <ClInclude Include="CGame.h" />
     <ClInclude Include="CFont.h" />
+    <ClInclude Include="CImage.h" />
     <ClInclude Include="CMenu.h" />
     <ClInclude Include="CPeople.h" />
     <ClInclude Include="CVehicle.h" />
+    <ClInclude Include="CLevel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

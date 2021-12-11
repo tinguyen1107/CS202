@@ -24,6 +24,8 @@ private:
 	int selectedIndex;
 	CFont font;
 	vector<sf::Text> optText;
+
+	sf::Sprite sprite;
 };
 
 #endif

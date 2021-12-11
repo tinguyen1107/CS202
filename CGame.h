@@ -10,9 +10,11 @@
 #include <iostream>
 #include "CFont.h"
 #include "CMenu.h"
-#include "CVehicle.h"
-#include "CAnimal.h"
+//#include "CVehicle.h"
+//#include "CAnimal.h"
 #include "CPeople.h"
+#include "CLevel.h"
+//#include "CImage.h"
 
 using namespace std;
 
@@ -22,10 +24,11 @@ using namespace std;
 #define WIDTH 400
 
 enum GameState {
-	welcome,
-	primaryMenu,
-	newGame,
-	//playing, loadGame
+	welcome_state,
+	primary_menu_state,
+	playing_state,
+	collision_state,
+	pause_state,
 };
 
 class CGame {
@@ -34,6 +37,7 @@ private:
 
 	// Special properties
 	GameState state;
+	CLevel level;
 	
 	// Window
 	sf::RenderWindow* window;
@@ -59,12 +63,14 @@ private:
 	
 	// User interface
 	CFont localFont;
+	CImage localImage;
 
 	//CGame();
 
 	// Private Functions
 	void initVariable();
 	void initWindow();
+	void initPrimaryMenu();
 
 	//void initEnemies();
 	void initTexts();
@@ -75,10 +81,16 @@ private:
 	void initBirds(int number = 5);
 	void initDinausors(int number = 5);
 
-
 	void drawCar();
+
+	/*------- POLL EVENT -------*/
+	void handleWelcomeState();
+	void handlePrimaryMenuState();
+	void handlePlayingState();
 	
 public:
+	sf::Sprite sprite;
+
 	CGame();
 	//static CGame* getInstance();
 	~CGame();
@@ -87,14 +99,10 @@ public:
 
 	// Functions
 	void welcome();
-	void initPrimaryMenu();
 
 	void drawGame();
 
 	void pollEvent();
-	void handleWelcomeState();
-	void handlePrimaryMenuState();
-
 	void update();
 	void render();
 };

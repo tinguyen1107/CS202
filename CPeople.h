@@ -10,21 +10,28 @@ class CPeople {
 private:
     float mX, mY;
     bool mState;
+    sf::Sprite sprite;
 
-    sf::RectangleShape shape;
+    inline sf::IntRect FToIRect(const sf::FloatRect& f);
+    bool PixelPerfectCollision(const sf::Sprite& a, const sf::Sprite& b,
+        const sf::Image& imgA, const sf::Image& imgB);
 
 public:
-    CPeople(float x = 54, float y = 30);
+    CPeople() {}
+
+    CPeople(sf::Texture& texture, float x = 54, float y = 30);
     void up(float);
     void left(float);
     void right(float);
     void down(float);
     bool isImpact(const CVehicle*&);
     bool isImpact(const CAnimal*&);
+
+    bool isImpact(const CCar, CImage&);
+
     bool isFinish();
     bool isDead();
-
-    sf::RectangleShape getShape();
+    sf::Sprite getSprite();
 };
 
 #endif
