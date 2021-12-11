@@ -151,25 +151,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CAnimal.cpp" />
-    <ClCompile Include="CFont.cpp" />
-    <ClCompile Include="CGame.cpp" />
-    <ClCompile Include="CImage.cpp" />
-    <ClCompile Include="CMenu.cpp" />
+    <ClCompile Include="Source\CAnimal.cpp" />
+    <ClCompile Include="Source\CFont.cpp" />
+    <ClCompile Include="Source\CGame.cpp" />
+    <ClCompile Include="Source\CImage.cpp" />
+    <ClCompile Include="Source\CMenu.cpp" />
     <ClCompile Include="CPeople.cpp" />
-    <ClCompile Include="Crossing-Road.cpp" />
-    <ClCompile Include="CVehicle.cpp" />
-    <ClCompile Include="CLevel.cpp" />
+    <ClCompile Include="Source\Crossing-Road.cpp" />
+    <ClCompile Include="Source\CVehicle.cpp" />
+    <ClCompile Include="Source\CLevel.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CAnimal.h" />
-    <ClInclude Include="CGame.h" />
-    <ClInclude Include="CFont.h" />
-    <ClInclude Include="CImage.h" />
-    <ClInclude Include="CMenu.h" />
+    <ClInclude Include="Header\CAnimal.h" />
+    <ClInclude Include="Header\CGame.h" />
+    <ClInclude Include="Header\CFont.h" />
+    <ClInclude Include="Header\CImage.h" />
+    <ClInclude Include="Header\CMenu.h" />
     <ClInclude Include="CPeople.h" />
-    <ClInclude Include="CVehicle.h" />
-    <ClInclude Include="CLevel.h" />
+    <ClInclude Include="Header\CVehicle.h" />
+    <ClInclude Include="Header\CLevel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

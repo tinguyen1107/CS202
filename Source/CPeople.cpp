@@ -1,4 +1,4 @@
-#include "CPeople.h"
+#include "../Header/CPeople.h"
 
 CPeople::CPeople(sf::Texture& texture, float x, float y) : mX(x), mY(y), mState(true) {
 	this->sprite.setTexture(texture);

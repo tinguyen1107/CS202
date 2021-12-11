@@ -1,5 +1,4 @@
-#include "CAnimal.h"
-#include "CAnimal.h"
+#include "../Header/CAnimal.h"
 
 CAnimal::CAnimal(float x, float y) : mX(x), mY(y) {}
 

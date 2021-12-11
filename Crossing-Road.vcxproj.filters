@@ -15,57 +15,57 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Crossing-Road.cpp">
+    <ClCompile Include="Source\Crossing-Road.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CGame.cpp">
+    <ClCompile Include="Source\CGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CFont.cpp">
+    <ClCompile Include="Source\CFont.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CMenu.cpp">
+    <ClCompile Include="Source\CMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CVehicle.cpp">
+    <ClCompile Include="Source\CVehicle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CAnimal.cpp">
+    <ClCompile Include="Source\CAnimal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CPeople.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CLevel.cpp">
+    <ClCompile Include="Source\CLevel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CImage.cpp">
+    <ClCompile Include="Source\CImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CGame.h">
+    <ClInclude Include="Header\CGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CFont.h">
+    <ClInclude Include="Header\CFont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CMenu.h">
+    <ClInclude Include="Header\CMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CVehicle.h">
+    <ClInclude Include="Header\CVehicle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAnimal.h">
+    <ClInclude Include="Header\CAnimal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CPeople.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CLevel.h">
+    <ClInclude Include="Header\CLevel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CImage.h">
+    <ClInclude Include="Header\CImage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
