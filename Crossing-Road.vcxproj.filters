@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Crossing-Road.cpp">
+    <ClCompile Include="Source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\CGame.cpp">
@@ -33,13 +33,13 @@
     <ClCompile Include="Source\CAnimal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CPeople.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CLevel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\CImage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CPeople.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,13 +59,13 @@
     <ClInclude Include="Header\CAnimal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CPeople.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Header\CLevel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header\CImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\CPeople.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

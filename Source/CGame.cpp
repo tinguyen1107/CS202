@@ -249,8 +249,8 @@ void CGame::update() {
 			//cout << cars[i - 1].getSprite().getPosition().x - cars[i].getSprite().getPosition().x << endl;
 			if (this->people.isImpact(cars[i], localImage)) cout << "Collision Pixels" << endl;
 
-			CAnimal* abc = nullptr;
-			this->people.isImpact(abc);
+			//CAnimal* abc = nullptr;
+			//this->people.isImpact(abc);
 
 			if (cars[i - 1].getSprite().getPosition().x - cars[i].getSprite().getPosition().x > 200)
 				this->cars[i].move(carStep+0.001f*i, 0.0f);
