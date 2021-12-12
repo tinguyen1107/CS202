@@ -27,7 +27,8 @@ public:
     bool isImpact(const CVehicle*&);
     bool isImpact(const CAnimal*&);
 
-    bool isImpact(const CCar, CImage&);
+    bool isImpact(vector<CCar>, CImage&);
+    bool isImpact(vector<CTruck>, CImage&);
 
     bool isFinish();
     bool isDead();

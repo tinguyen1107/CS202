@@ -238,27 +238,18 @@ void CGame::handlePlayingState() {
 }
 
 void CGame::update() {
-	float carStep = 0.002f;
-		//this->level.getCarStep();
+	float carStep = this->level.getCarStep();
 	float truckStep = this->level.getTruckStep();
 	float birdStep = this->level.getBirdStep();
 	float dinausorStep = this->level.getDinausorStep();
 
 	pollEvent();
 	if (this->state == GameState::playing_state) {
-		sf::FloatRect people = this->people.getSprite().getGlobalBounds();
+		if (this->people.isImpact(cars, localImage)
+			|| this->people.isImpact(trucks, localImage))
+			cout << "COLLISION" << endl;
 
 		for (int i = 1; i < 5; i++) {
-			if (this->people.isImpact(cars[i], localImage)
-				//trucks[i].getSprite().getGlobalBounds().intersects(people)
-				//|| cars[i].getShape().getGlobalBounds().intersects(people)
-				//|| 
-				|| birds[i].getShape().getGlobalBounds().intersects(people)
-				|| dinausors[i].getShape().getGlobalBounds().intersects(people))
-				cout << "COLLISION" << endl;
-
-			if (this->people.isImpact(cars[i], localImage)) cout << "Collision Pixels" << endl;
-
 			if (cars[i - 1].getSprite().getPosition().x - cars[i].getSprite().getPosition().x > 200)
 				this->cars[i].move(carStep+0.001f*i, 0.0f);
 			if (trucks[i - 1].getSprite().getPosition().x - trucks[i].getSprite().getPosition().x < -200)

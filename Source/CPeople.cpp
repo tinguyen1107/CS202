@@ -33,9 +33,18 @@ bool CPeople::isImpact(const CAnimal*&) {
 	return false;
 }
 
-bool CPeople::isImpact(CCar car, CImage& img)
-{
-	return PixelPerfectCollision(sprite, car.getSprite(), img.getPeopleImg(), img.getCarImage());
+bool CPeople::isImpact(vector<CCar> cars, CImage& img) {
+	for (int i = 0; i < cars.size(); ++i)
+		if (PixelPerfectCollision(sprite, cars[i].getSprite(), img.getPeopleImg(), img.getCarImage()))
+			return true;
+	return false;
+}
+
+bool CPeople::isImpact(vector<CTruck> trucks, CImage& img) {
+	for (int i = 0; i < trucks.size(); ++i)
+		if (PixelPerfectCollision(sprite, trucks[i].getSprite(), img.getPeopleImg(), img.getTruckImage()))
+			return true;
+	return false;
 }
 
 bool CPeople::isFinish() {

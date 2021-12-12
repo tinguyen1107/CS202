@@ -8,11 +8,9 @@ using namespace std;
 class CAnimal {
 protected:
     float mX, mY;
-    sf::ConvexShape convex;
     sf::Sprite sprite;
 public:
     CAnimal(float x, float y);
-    sf::ConvexShape getShape();
     sf::Sprite getSprite();
     virtual void move(float, float) = 0;
     virtual void tell() = 0;
@@ -33,6 +31,5 @@ public:
     void move(float x, float y);
     void tell();
 };
-
 
 #endif

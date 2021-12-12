@@ -2,8 +2,6 @@
 
 CAnimal::CAnimal(float x, float y) : mX(x), mY(y) {}
 
-sf::ConvexShape CAnimal::getShape() { return this->convex; }
-
 sf::Sprite CAnimal::getSprite()
 {
 	return this->sprite;
