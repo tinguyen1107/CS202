@@ -10,37 +10,32 @@ private:
 	sf::Image carImg;
 	sf::Texture* carTt;
 
+	sf::Image truckImg;
+	sf::Texture* truckTt;
+
+	sf::Image dinausorImg;
+	sf::Texture* dinausorTt;
+
 	sf::Image peopleImg;
 	sf::Texture* peopleTt;
 
-	bool initImage() {
-		const string path = "Resource/Image/";
-		return carImg.loadFromFile(path + "car.png")
-			&& peopleImg.loadFromFile(path + "people.png");
-	}
+	bool initImage();
 
 public:
-	CImage() {
-		if (this->initImage()) cout << "LOAD IMG SUCCESS!!" << endl;
-		else cout << "LOAD IMG FAILED" << endl;
+	CImage();
+	~CImage();
 
-		carTt = new sf::Texture[5];
-		for (int i = 0; i < 5; ++i) carTt[i].loadFromImage(carImg);
+	sf::Image getCarImage() const;
+	sf::Texture* getCarTexture() const;
 
-		peopleTt = new sf::Texture;
-		peopleTt->loadFromImage(peopleImg);
-	}
+	sf::Image getTruckImage() const;
+	sf::Texture* getTruckTexture() const;
 
-	~CImage() {
-		delete [] carTt;
-		delete peopleTt;
-	}
+	sf::Image getDinausorImage() const;
+	sf::Texture* getDinausorTexture() const;
 
-	sf::Image getCarImage() const { return carImg; }
-	sf::Texture* getCarTexture() const { return carTt; }
-
-	sf::Image getPeopleImg() const { return peopleImg; }
-	sf::Texture* getPeopleTexture() const { return peopleTt; }
+	sf::Image getPeopleImg() const;
+	sf::Texture* getPeopleTexture() const;
 };
 
 #endif

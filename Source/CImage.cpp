@@ -1,1 +1,50 @@
 #include "../Header/CImage.h"
+
+bool CImage::initImage() {
+	const string path = "Resource/Image/";
+	return carImg.loadFromFile(path + "car.png")
+		&& truckImg.loadFromFile(path + "truck.png")
+		&& dinausorImg.loadFromFile(path + "dinausor.png")
+
+		&& peopleImg.loadFromFile(path + "people.png");
+}
+
+CImage::CImage() {
+	if (this->initImage()) cout << "LOAD IMG SUCCESS" << endl;
+	else cout << "LOAD IMG FAILED" << endl;
+
+	carTt = new sf::Texture[5];
+	truckTt = new sf::Texture[5];
+	dinausorTt = new sf::Texture[5];
+
+	for (int i = 0; i < 5; ++i) {
+		carTt[i].loadFromImage(carImg);
+		truckTt[i].loadFromImage(truckImg);
+		dinausorTt[i].loadFromImage(dinausorImg);
+	}
+
+	peopleTt = new sf::Texture;
+	peopleTt->loadFromImage(peopleImg);
+}
+
+CImage::~CImage() {
+	delete[] carTt;
+	delete[] truckTt;
+	delete[] dinausorTt;
+
+	delete peopleTt;
+}
+
+sf::Image CImage::getCarImage() const { return carImg; }
+sf::Texture* CImage::getCarTexture() const { return carTt; }
+
+sf::Image CImage::getTruckImage() const { return truckImg; }
+
+sf::Texture* CImage::getTruckTexture() const { return truckTt; }
+
+sf::Image CImage::getDinausorImage() const { return dinausorImg; }
+
+sf::Texture* CImage::getDinausorTexture() const { return dinausorTt; }
+
+sf::Image CImage::getPeopleImg() const { return peopleImg; }
+sf::Texture* CImage::getPeopleTexture() const { return peopleTt; }
