@@ -51,7 +51,7 @@ void CGame::initTexts() {
 void CGame::initVertexs() {
 	const int horizontal = 50;
 	const int numOfLines = 5;
-	const float space = 60;
+	const float space = 120;
 	for (int i = 0; i < numOfLines; i++) {
 		sf::VertexArray  line(sf::LinesStrip, 2);
 		line[0].position = sf::Vector2f(horizontal, (i + 1) * space);
@@ -66,29 +66,36 @@ void CGame::initVertexs() {
 
 void CGame::initCars(int number) {
 	sf::Texture* pCarTexture = localImage.getCarTexture();
-	float carPos = (-1.0f) * localImage.getCarImage().getSize().x;
+	sf::Vector2u carSize = localImage.getCarImage().getSize();
+	float carPosX = (-1.0f) * (float)carSize.x;
+	float carPosY = 480.0f - (float)carSize.y;
+
 	for (int i = 0; i < number; i++) {
-		CCar car(pCarTexture[i], carPos, 215);
+		CCar car(pCarTexture[i], carPosX, carPosY);
 		this->cars.push_back(car);
 	}
 }
 
 void CGame::initTrucks(int number) {
 	sf::Texture* pTruckTexture = localImage.getTruckTexture();
-	float truckPos = SCREEN_WIDTH + 1.0f;
+	sf::Vector2u truckSize = localImage.getTruckImage().getSize();
+	float truckPosX = SCREEN_WIDTH + 1.0f;
+	float truckPosY = 600.0f - (float)truckSize.y;
 
 	for (int i = 0; i < number; i++) {
-		CTruck truck(pTruckTexture[i], truckPos, 270);
+		CTruck truck(pTruckTexture[i], truckPosX, truckPosY);
 		this->trucks.push_back(truck);
 	}
 }
 
 void CGame::initBirds(int number) {
 	sf::Texture* pBirdTexture = localImage.getBirdTexture();
-	float birdPos = SCREEN_WIDTH + 1.0f;
+	sf::Vector2u birdSize = localImage.getBirdImage().getSize();
+	float birdPosX = SCREEN_WIDTH + 1.0f;
+	float birdPosY = 200.0f - (float)birdSize.y;
 
 	for (int i = 0; i < number; i++) {
-		CBird bird(pBirdTexture[i], birdPos, 75);
+		CBird bird(pBirdTexture[i], birdPosX, birdPosY);
 		this->birds.push_back(bird);
 	}
 }
@@ -97,8 +104,12 @@ void CGame::initDinausors(int number) {
 	sf::Texture* pDinausorTexture = localImage.getDinausorTexture();
 	float dinausorPos = (-1.0f) * pDinausorTexture[0].getSize().x;
 
+	sf::Vector2u dinausorSize = localImage.getDinausorImage().getSize();
+	float dinausorPosX = (-1.0f) * dinausorSize.x;
+	float dinausorPosY = 360.0f - (float)dinausorSize.y;
+
 	for (int i = 0; i < number; i++) {
-		CDinausor dinausor(pDinausorTexture[1], dinausorPos, 135);
+		CDinausor dinausor(pDinausorTexture[1], dinausorPosX, dinausorPosY);
 		this->dinausors.push_back(dinausor);
 	}
 }
