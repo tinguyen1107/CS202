@@ -9,9 +9,11 @@ class CAnimal {
 protected:
     float mX, mY;
     sf::ConvexShape convex;
+    sf::Sprite sprite;
 public:
     CAnimal(float x, float y);
     sf::ConvexShape getShape();
+    sf::Sprite getSprite();
     virtual void move(float, float) = 0;
     virtual void tell() = 0;
 };
@@ -19,7 +21,7 @@ public:
 class CBird : public CAnimal {
 public:
     CBird();
-    CBird(float x, float y);
+    CBird(sf::Texture& texture, float x, float y);
     void move(float, float);
     void tell();
 };
@@ -27,7 +29,7 @@ public:
 class CDinausor : public CAnimal {
 public:
     CDinausor();
-    CDinausor(float x, float y);
+    CDinausor(sf::Texture& texture, float x, float y);
     void move(float x, float y);
     void tell();
 };

@@ -10,11 +10,8 @@
 #include <iostream>
 #include "CFont.h"
 #include "CMenu.h"
-//#include "CVehicle.h"
-//#include "CAnimal.h"
 #include "CPeople.h"
 #include "CLevel.h"
-//#include "CImage.h"
 
 using namespace std;
 

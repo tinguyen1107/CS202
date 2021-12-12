@@ -5,7 +5,7 @@ bool CImage::initImage() {
 	return carImg.loadFromFile(path + "car.png")
 		&& truckImg.loadFromFile(path + "truck.png")
 		&& dinausorImg.loadFromFile(path + "dinausor.png")
-
+		&& birdImg.loadFromFile(path + "bird.png")
 		&& peopleImg.loadFromFile(path + "people.png");
 }
 
@@ -16,11 +16,13 @@ CImage::CImage() {
 	carTt = new sf::Texture[5];
 	truckTt = new sf::Texture[5];
 	dinausorTt = new sf::Texture[5];
+	birdTt = new sf::Texture[5];
 
 	for (int i = 0; i < 5; ++i) {
 		carTt[i].loadFromImage(carImg);
 		truckTt[i].loadFromImage(truckImg);
 		dinausorTt[i].loadFromImage(dinausorImg);
+		birdTt[i].loadFromImage(birdImg);
 	}
 
 	peopleTt = new sf::Texture;
@@ -39,12 +41,13 @@ sf::Image CImage::getCarImage() const { return carImg; }
 sf::Texture* CImage::getCarTexture() const { return carTt; }
 
 sf::Image CImage::getTruckImage() const { return truckImg; }
-
 sf::Texture* CImage::getTruckTexture() const { return truckTt; }
 
 sf::Image CImage::getDinausorImage() const { return dinausorImg; }
-
 sf::Texture* CImage::getDinausorTexture() const { return dinausorTt; }
+
+sf::Image CImage::getBirdImage() const { return birdImg; }
+sf::Texture* CImage::getBirdTexture() const { return birdTt; }
 
 sf::Image CImage::getPeopleImg() const { return peopleImg; }
 sf::Texture* CImage::getPeopleTexture() const { return peopleTt; }

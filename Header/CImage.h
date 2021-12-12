@@ -16,6 +16,9 @@ private:
 	sf::Image dinausorImg;
 	sf::Texture* dinausorTt;
 
+	sf::Image birdImg;
+	sf::Texture* birdTt;
+
 	sf::Image peopleImg;
 	sf::Texture* peopleTt;
 
@@ -33,6 +36,9 @@ public:
 
 	sf::Image getDinausorImage() const;
 	sf::Texture* getDinausorTexture() const;
+
+	sf::Image getBirdImage() const;
+	sf::Texture* getBirdTexture() const;
 
 	sf::Image getPeopleImg() const;
 	sf::Texture* getPeopleTexture() const;

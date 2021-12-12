@@ -65,30 +65,40 @@ void CGame::initVertexs() {
 }
 
 void CGame::initCars(int number) {
-	sf::Texture* pointer = localImage.getCarTexture();
+	sf::Texture* pCarTexture = localImage.getCarTexture();
+	float carPos = (-1.0f) * localImage.getCarImage().getSize().x;
 	for (int i = 0; i < number; i++) {
-		CCar car(pointer[i], 10, 215);
+		CCar car(pCarTexture[i], carPos, 215);
 		this->cars.push_back(car);
 	}
 }
 
 void CGame::initTrucks(int number) {
+	sf::Texture* pTruckTexture = localImage.getTruckTexture();
+	float truckPos = SCREEN_WIDTH + 1.0f;
+
 	for (int i = 0; i < number; i++) {
-		//CTruck truck(801, 270);
-		//this->trucks.push_back(truck);
+		CTruck truck(pTruckTexture[i], truckPos, 270);
+		this->trucks.push_back(truck);
 	}
 }
 
 void CGame::initBirds(int number) {
+	sf::Texture* pBirdTexture = localImage.getBirdTexture();
+	float birdPos = SCREEN_WIDTH + 1.0f;
+
 	for (int i = 0; i < number; i++) {
-		CBird bird(801, 75);
+		CBird bird(pBirdTexture[i], birdPos, 75);
 		this->birds.push_back(bird);
 	}
 }
 
 void CGame::initDinausors(int number) {
+	sf::Texture* pDinausorTexture = localImage.getDinausorTexture();
+	float dinausorPos = (-1.0f) * pDinausorTexture[0].getSize().x;
+
 	for (int i = 0; i < number; i++) {
-		CDinausor dinausor(-56, 135);
+		CDinausor dinausor(pDinausorTexture[1], dinausorPos, 135);
 		this->dinausors.push_back(dinausor);
 	}
 }
@@ -96,11 +106,10 @@ void CGame::initDinausors(int number) {
 void CGame::drawCar() {
 	for (int i = 0; i < 5; i++) {
 		this->window->draw(this->cars[i].getSprite());
-		//this->window->draw(this->trucks[i].getSprite());
-		this->window->draw(this->birds[i].getShape());
-		this->window->draw(this->dinausors[i].getShape());
+		this->window->draw(this->trucks[i].getSprite());
+		this->window->draw(this->birds[i].getSprite());
+		this->window->draw(this->dinausors[i].getSprite());
 	}
-	//this->window->draw(this->cars[0].getSprite());
 	this->window->draw(this->people.getSprite());
 }
 
@@ -240,55 +249,50 @@ void CGame::update() {
 		sf::FloatRect people = this->people.getSprite().getGlobalBounds();
 
 		for (int i = 1; i < 5; i++) {
-			if (//trucks[i].getSprite().getGlobalBounds().intersects(people)
+			if (this->people.isImpact(cars[i], localImage)
+				//trucks[i].getSprite().getGlobalBounds().intersects(people)
 				//|| cars[i].getShape().getGlobalBounds().intersects(people)
 				//|| 
-				birds[i].getShape().getGlobalBounds().intersects(people)
+				|| birds[i].getShape().getGlobalBounds().intersects(people)
 				|| dinausors[i].getShape().getGlobalBounds().intersects(people))
 				cout << "COLLISION" << endl;
-			//cout << cars[i - 1].getSprite().getPosition().x - cars[i].getSprite().getPosition().x << endl;
-			if (this->people.isImpact(cars[i], localImage)) cout << "Collision Pixels" << endl;
 
-			//CAnimal* abc = nullptr;
-			//this->people.isImpact(abc);
+			if (this->people.isImpact(cars[i], localImage)) cout << "Collision Pixels" << endl;
 
 			if (cars[i - 1].getSprite().getPosition().x - cars[i].getSprite().getPosition().x > 200)
 				this->cars[i].move(carStep+0.001f*i, 0.0f);
-			//if (trucks[i - 1].getSprite().getPosition().x - trucks[i].getSprite().getPosition().x < -200)
-				//this->trucks[i].move(truckStep, 0);
-			if (birds[i - 1].getShape().getPosition().x - birds[i].getShape().getPosition().x < -200)
+			if (trucks[i - 1].getSprite().getPosition().x - trucks[i].getSprite().getPosition().x < -200)
+				this->trucks[i].move(truckStep, 0);
+			if (birds[i - 1].getSprite().getPosition().x - birds[i].getSprite().getPosition().x < -200)
 				this->birds[i].move(birdStep, 0);
-			if (dinausors[i - 1].getShape().getPosition().x - dinausors[i].getShape().getPosition().x > 200)
+			if (dinausors[i - 1].getSprite().getPosition().x - dinausors[i].getSprite().getPosition().x > 200)
 				this->dinausors[i].move(dinausorStep, 0);
 		}
 
 		this->cars[0].move(carStep, 0);
-		//this->trucks[0].move(truckStep, 0);
+		this->trucks[0].move(truckStep, 0);
 		this->birds[0].move(birdStep, 0);
 		this->dinausors[0].move(dinausorStep, 0);
 
-		if (cars[0].getSprite().getPosition().x > 800) {
+		if (cars[0].getSprite().getPosition().x > SCREEN_WIDTH) {
 			cars.erase(cars.begin());
 			initCars(1);
 		}
 
-		//if (trucks[0].getSprite().getPosition().x < -60) {
-			//trucks.erase(trucks.begin());
-			//initTrucks(1);
-		//}
+		if (trucks[0].getSprite().getPosition().x < (-1.0f) * localImage.getTruckImage().getSize().x) {
+			trucks.erase(trucks.begin());
+			initTrucks(1);
+		}
 
-		if (birds[0].getShape().getPosition().x < -60) {
+		if (birds[0].getSprite().getPosition().x < (-1.0f) * localImage.getBirdImage().getSize().x) {
 			birds.erase(birds.begin());
 			initBirds(1);
 		}
 
-		if (dinausors[0].getShape().getPosition().x > 800) {
+		if (dinausors[0].getSprite().getPosition().x > SCREEN_WIDTH) {
 			dinausors.erase(dinausors.begin());
 			initDinausors(1);
 		}
-
-		
-		//if (this->people.isImpact()) cout << "Collision Pixels" << endl;
 	}
 }
 
