@@ -2,6 +2,9 @@
 
 CPeople::CPeople(sf::Texture& texture, float x, float y) : mX(x), mY(y), mState(true) {
 	this->sprite.setTexture(texture);
+	sf::FloatRect localBounds = this->sprite.getLocalBounds();
+	this->sprite.setOrigin(localBounds.left + localBounds.width / 2.0f,
+		localBounds.top + localBounds.height);
 	this->sprite.setPosition(x, y);
 }
 
@@ -43,6 +46,20 @@ bool CPeople::isImpact(vector<CCar> cars, CImage& img) {
 bool CPeople::isImpact(vector<CTruck> trucks, CImage& img) {
 	for (int i = 0; i < trucks.size(); ++i)
 		if (PixelPerfectCollision(sprite, trucks[i].getSprite(), img.getPeopleImg(), img.getTruckImage()))
+			return true;
+	return false;
+}
+
+bool CPeople::isImpact(vector<CBird> birds, CImage& img) {
+	for (int i = 0; i < birds.size(); ++i)
+		if (PixelPerfectCollision(sprite, birds[i].getSprite(), img.getPeopleImg(), img.getBirdImage()))
+			return true;
+	return false;
+}
+
+bool CPeople::isImpact(vector<CDinausor> dinausors, CImage& img) {
+	for (int i = 0; i < dinausors.size(); ++i)
+		if (PixelPerfectCollision(sprite, dinausors[i].getSprite(), img.getPeopleImg(), img.getDinausorImage()))
 			return true;
 	return false;
 }

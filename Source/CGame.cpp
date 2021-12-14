@@ -139,7 +139,7 @@ CGame::CGame() {
 	this->initBirds();
 	this->initDinausors();
 
-	this->people = CPeople(*this->localImage.getPeopleTexture(), 400, 300);
+	this->people = CPeople(*this->localImage.getPeopleTexture(), SCREEN_WIDTH/2.0f, SCREEN_HEIGHT);
 
 	initTexts();
 
@@ -178,8 +178,7 @@ void CGame::drawGame() {
 
 void CGame::pollEvent() {
 	while (this->window->pollEvent(this->event)) {
-		switch (this->event.type)
-		{
+		switch (this->event.type) {
 		case sf::Event::Closed:
 			this->window->close();
 			break;
@@ -248,6 +247,17 @@ void CGame::handlePlayingState() {
 	}
 }
 
+bool CGame::isImpact() {
+	return this->people.isImpact(cars, localImage)
+		&& this->people.isImpact(trucks, localImage)
+		&& this->people.isImpact(birds, localImage)
+		&& this->people.isImpact(dinausors, localImage);
+}
+
+void CGame::reuseObj() {
+
+}
+
 void CGame::update() {
 	float carStep = this->level.getCarStep();
 	float truckStep = this->level.getTruckStep();
@@ -256,9 +266,10 @@ void CGame::update() {
 
 	pollEvent();
 	if (this->state == GameState::playing_state) {
-		if (this->people.isImpact(cars, localImage)
-			|| this->people.isImpact(trucks, localImage))
+		if (this->isImpact()) {
 			cout << "COLLISION" << endl;
+			this->state = GameState::collision_state;
+		}
 
 		for (int i = 1; i < 5; i++) {
 			if (cars[i - 1].getSprite().getPosition().x - cars[i].getSprite().getPosition().x > 200)

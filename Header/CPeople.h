@@ -30,6 +30,9 @@ public:
     bool isImpact(vector<CCar>, CImage&);
     bool isImpact(vector<CTruck>, CImage&);
 
+    bool isImpact(vector<CBird>, CImage&);
+    bool isImpact(vector<CDinausor>, CImage&);
+
     bool isFinish();
     bool isDead();
     sf::Sprite getSprite();

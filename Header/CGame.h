@@ -20,6 +20,8 @@ using namespace std;
 
 #define WIDTH 400
 
+#define MAX_NUM_OBJ 5
+
 enum GameState {
 	welcome_state,
 	primary_menu_state,
@@ -84,6 +86,10 @@ private:
 	void handleWelcomeState();
 	void handlePrimaryMenuState();
 	void handlePlayingState();
+
+	/*------- UPDATE EVENT -------*/
+	bool isImpact();
+	void reuseObj();
 	
 public:
 	sf::Sprite sprite;
