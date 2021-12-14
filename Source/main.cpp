@@ -2,22 +2,16 @@
 
 CGame* game;
 
-void func() {
+void renderThread() {
     while (game->isRuning())
         game->render();
 }
 
 int main() {
- //   game = CGame::getInstance();
     game = new CGame();
 
-    //game->sprite.setTexture(game->localImage.getCarTexture());
-    ////game->sprite.setScale(f, 0.1f);
-    //game->sprite.setPosition(500.0f, 300.0f);
-    
-    sf::Thread thread(& func);
+    sf::Thread thread(& renderThread);
     thread.launch();
-    //system("pause");
     while (game->isRuning()) {
         game->update();
     }

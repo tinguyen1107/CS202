@@ -74,6 +74,8 @@ private:
 	void initWindow();
 	void initMenu();
 
+	void reInitObj();
+
 	//void initEnemies();
 	void initTexts();
 	void initVertexs();
@@ -93,6 +95,7 @@ private:
 
 	/*------- UPDATE EVENT -------*/
 	bool isImpact();
+	void objMove();
 	void reuseObj();
 	
 public:

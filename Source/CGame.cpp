@@ -1,8 +1,6 @@
 #include "../Header/CGame.h"
 #include <Windows.h>
 
-// CGame* CGame::instancePtr = nullptr;
-
 void CGame::initVariable() {
 	this->state = GameState::welcome_state;
 	this->window = nullptr;
@@ -25,6 +23,20 @@ void CGame::initWindow() {
 	this->window->setActive(false);
 
 	this->window->setFramerateLimit(500);
+}
+
+void CGame::reInitObj() {
+	this->cars.clear();
+	this->trucks.clear();
+	this->birds.clear();
+	this->dinausors.clear();
+
+	this->initCars();
+	this->initTrucks();
+	this->initBirds();
+	this->initDinausors();
+
+	this->people = CPeople(*this->localImage.getPeopleTexture(), SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
 }
 
 //void CGame::initEnemies() {
@@ -266,40 +278,26 @@ void CGame::handleCollisionMenuState() {
 	case sf::Keyboard::Enter:
 		int choice = collisionMenu->GetPressedItem();
 		cout << "Choice: " << choice << endl;
-		if (choice == 0)
-			this->state = GameState::playing_state;
+		if (choice == 0 || choice == 1) {
+			this->reInitObj();
+			if (choice == 0)
+				this->state = GameState::playing_state;
+			else
+				this->state = GameState::intro_menu_state;
+		}
+		else this->window->close();
 		break;
 	}
 }
 
 void CGame::update() {
-	float carStep = this->level.getCarStep();
-	float truckStep = this->level.getTruckStep();
-	float birdStep = this->level.getBirdStep();
-	float dinausorStep = this->level.getDinausorStep();
-
 	pollEvent();
 	if (this->state == GameState::playing_state) {
 		if (this->isImpact()) {
 			cout << "COLLISION" << endl;
 			this->state = GameState::collision_state;
 		}
-
-		for (int i = 1; i < 5; i++) {
-			if (cars[i - 1].getSprite().getPosition().x - cars[i].getSprite().getPosition().x > 200)
-				this->cars[i].move(carStep+0.001f*i, 0.0f);
-			if (trucks[i - 1].getSprite().getPosition().x - trucks[i].getSprite().getPosition().x < -200)
-				this->trucks[i].move(truckStep, 0);
-			if (birds[i - 1].getSprite().getPosition().x - birds[i].getSprite().getPosition().x < -200)
-				this->birds[i].move(birdStep, 0);
-			if (dinausors[i - 1].getSprite().getPosition().x - dinausors[i].getSprite().getPosition().x > 200)
-				this->dinausors[i].move(dinausorStep, 0);
-		}
-
-		this->cars[0].move(carStep, 0);
-		this->trucks[0].move(truckStep, 0);
-		this->birds[0].move(birdStep, 0);
-		this->dinausors[0].move(dinausorStep, 0);
+		objMove();
 		reuseObj();
 	}
 }
@@ -309,6 +307,29 @@ bool CGame::isImpact() {
 		|| this->people.isImpact(trucks, localImage)
 		|| this->people.isImpact(birds, localImage)
 		|| this->people.isImpact(dinausors, localImage);
+}
+
+void CGame::objMove() {
+	float carStep = this->level.getCarStep();
+	float truckStep = this->level.getTruckStep();
+	float birdStep = this->level.getBirdStep();
+	float dinausorStep = this->level.getDinausorStep();
+
+	for (int i = 1; i < 5; i++) {
+		if (cars[i - 1].getSprite().getPosition().x - cars[i].getSprite().getPosition().x > 200)
+			this->cars[i].move(carStep + 0.001f * i, 0.0f);
+		if (trucks[i - 1].getSprite().getPosition().x - trucks[i].getSprite().getPosition().x < -200)
+			this->trucks[i].move(truckStep, 0);
+		if (birds[i - 1].getSprite().getPosition().x - birds[i].getSprite().getPosition().x < -200)
+			this->birds[i].move(birdStep, 0);
+		if (dinausors[i - 1].getSprite().getPosition().x - dinausors[i].getSprite().getPosition().x > 200)
+			this->dinausors[i].move(dinausorStep, 0);
+	}
+
+	this->cars[0].move(carStep, 0);
+	this->trucks[0].move(truckStep, 0);
+	this->birds[0].move(birdStep, 0);
+	this->dinausors[0].move(dinausorStep, 0);
 }
 
 void CGame::reuseObj() {
