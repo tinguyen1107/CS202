@@ -24,7 +24,7 @@ using namespace std;
 
 enum GameState {
 	welcome_state,
-	primary_menu_state,
+	intro_menu_state,
 	playing_state,
 	collision_state,
 	pause_state,
@@ -48,7 +48,10 @@ private:
 	*/
 	sf::Text text;
 	vector<sf::VertexArray> lines;
-	CMenu* primaryMenu;
+
+	/* --- MENU --- */
+	CMenu* introMenu;
+	CMenu* collisionMenu;
 
 	CPeople people;
 
@@ -69,23 +72,24 @@ private:
 	// Private Functions
 	void initVariable();
 	void initWindow();
-	void initPrimaryMenu();
+	void initMenu();
 
 	//void initEnemies();
 	void initTexts();
 	void initVertexs();
 
-	void initCars(int number = 5);
-	void initTrucks(int number = 5);
-	void initBirds(int number = 5);
-	void initDinausors(int number = 5);
+	void initCars(int number = MAX_NUM_OBJ);
+	void initTrucks(int number = MAX_NUM_OBJ);
+	void initBirds(int number = MAX_NUM_OBJ);
+	void initDinausors(int number = MAX_NUM_OBJ);
 
 	void drawCar();
 
 	/*------- POLL EVENT -------*/
 	void handleWelcomeState();
-	void handlePrimaryMenuState();
+	void handleIntroMenuState();
 	void handlePlayingState();
+	void handleCollisionMenuState();
 
 	/*------- UPDATE EVENT -------*/
 	bool isImpact();

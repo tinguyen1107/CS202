@@ -131,7 +131,7 @@ CGame::CGame() {
 	this->initVariable();
 	this->initWindow();
 	//this->initEnemies();
-	this->initPrimaryMenu();
+	this->initMenu();
 	this->initVertexs();
 
 	this->initCars();
@@ -156,7 +156,7 @@ CGame* CGame::getInstance() {
 
 CGame::~CGame() {
 	delete this->window;
-	delete this->primaryMenu;
+	delete this->introMenu;
 }
 
 const bool CGame::isRuning() const { return this->window->isOpen(); }
@@ -165,9 +165,12 @@ void CGame::welcome() {
 	this->window->draw(text);
 }
 
-void CGame::initPrimaryMenu() {
-	vector<string> opt = { "New game", "Load game", "Setting" };
-	primaryMenu = new CMenu(opt, 100, 150);
+void CGame::initMenu() {
+	vector<string> optIntroMenu = { "New game", "Load game", "Setting" };
+	vector<string> optCollisionMenu = { "Play again", "Back to menu", "Quit" };
+
+	introMenu = new CMenu(optIntroMenu, 100, 150);
+	collisionMenu = new CMenu(optCollisionMenu, 200, 200);
 }
 
 void CGame::drawGame() {
@@ -187,11 +190,14 @@ void CGame::pollEvent() {
 			case GameState::welcome_state:
 				this->handleWelcomeState();
 				break;
-			case GameState::primary_menu_state:
-				this->handlePrimaryMenuState();
+			case GameState::intro_menu_state:
+				this->handleIntroMenuState();
 				break;
 			case GameState::playing_state:
 				this->handlePlayingState();
+				break;
+			case GameState::collision_state:
+				this->handleCollisionMenuState();
 				break;
 			}
 		default:
@@ -204,21 +210,21 @@ void CGame::handleWelcomeState() {
 	if (this->event.key.code == sf::Keyboard::Escape)
 		this->window->close();
 	else if (this->event.key.code == sf::Keyboard::Enter)
-		this->state = GameState::primary_menu_state;
+		this->state = GameState::intro_menu_state;
 }
 
-void CGame::handlePrimaryMenuState() {
+void CGame::handleIntroMenuState() {
 	switch (this->event.key.code) {
 	case sf::Keyboard::W:
 	case sf::Keyboard::Up:
-		primaryMenu->MoveUp();
+		introMenu->MoveUp();
 		break;
 	case sf::Keyboard::S:
 	case sf::Keyboard::Down:
-		primaryMenu->MoveDown();
+		introMenu->MoveDown();
 		break;
 	case sf::Keyboard::Enter:
-		int choice = primaryMenu->GetPressedItem();
+		int choice = introMenu->GetPressedItem();
 		cout << "Choice: " << choice << endl;
 		if (choice == 0)
 			this->state = GameState::playing_state;
@@ -247,32 +253,22 @@ void CGame::handlePlayingState() {
 	}
 }
 
-bool CGame::isImpact() {
-	return this->people.isImpact(cars, localImage)
-		|| this->people.isImpact(trucks, localImage)
-		|| this->people.isImpact(birds, localImage)
-		|| this->people.isImpact(dinausors, localImage);
-}
-
-void CGame::reuseObj() {
-	if (cars[0].getSprite().getPosition().x > SCREEN_WIDTH) {
-		cars.erase(cars.begin());
-		initCars(1);
-	}
-
-	if (trucks[0].getSprite().getPosition().x < (-1.0f) * localImage.getTruckImage().getSize().x) {
-		trucks.erase(trucks.begin());
-		initTrucks(1);
-	}
-
-	if (birds[0].getSprite().getPosition().x < (-1.0f) * localImage.getBirdImage().getSize().x) {
-		birds.erase(birds.begin());
-		initBirds(1);
-	}
-
-	if (dinausors[0].getSprite().getPosition().x > SCREEN_WIDTH) {
-		dinausors.erase(dinausors.begin());
-		initDinausors(1);
+void CGame::handleCollisionMenuState() {
+	switch (this->event.key.code) {
+	case sf::Keyboard::W:
+	case sf::Keyboard::Up:
+		collisionMenu->MoveUp();
+		break;
+	case sf::Keyboard::S:
+	case sf::Keyboard::Down:
+		collisionMenu->MoveDown();
+		break;
+	case sf::Keyboard::Enter:
+		int choice = collisionMenu->GetPressedItem();
+		cout << "Choice: " << choice << endl;
+		if (choice == 0)
+			this->state = GameState::playing_state;
+		break;
 	}
 }
 
@@ -308,6 +304,35 @@ void CGame::update() {
 	}
 }
 
+bool CGame::isImpact() {
+	return this->people.isImpact(cars, localImage)
+		|| this->people.isImpact(trucks, localImage)
+		|| this->people.isImpact(birds, localImage)
+		|| this->people.isImpact(dinausors, localImage);
+}
+
+void CGame::reuseObj() {
+	if (cars[0].getSprite().getPosition().x > SCREEN_WIDTH) {
+		cars.erase(cars.begin());
+		initCars(1);
+	}
+
+	if (trucks[0].getSprite().getPosition().x < (-1.0f) * localImage.getTruckImage().getSize().x) {
+		trucks.erase(trucks.begin());
+		initTrucks(1);
+	}
+
+	if (birds[0].getSprite().getPosition().x < (-1.0f) * localImage.getBirdImage().getSize().x) {
+		birds.erase(birds.begin());
+		initBirds(1);
+	}
+
+	if (dinausors[0].getSprite().getPosition().x > SCREEN_WIDTH) {
+		dinausors.erase(dinausors.begin());
+		initDinausors(1);
+	}
+}
+
 void CGame::render() {
 	this->window->clear();
 	
@@ -315,15 +340,15 @@ void CGame::render() {
 	case GameState::welcome_state:
 		welcome();
 		break;
-	case GameState::primary_menu_state:
-		primaryMenu->draw(*this->window);
+	case GameState::intro_menu_state:
+		introMenu->draw(*this->window);
 		this->window->draw(sprite);
 		break;
 	case GameState::playing_state:
 		drawGame();
 		break;
 	case GameState::collision_state:
-		exit(0);
+		collisionMenu->draw(*this->window);
 	default:
 		break;
 	}	
