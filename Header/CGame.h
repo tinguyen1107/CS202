@@ -34,9 +34,12 @@ class CGame {
 private:
 	//static CGame* instancePtr;
 
-	// Special properties
+	// Properties
 	GameState state;
 	CLevel level;
+
+	bool pauseCars;
+	bool pauseTrucks;
 	
 	// Window
 	sf::RenderWindow* window;
@@ -76,7 +79,6 @@ private:
 
 	void reInitObj();
 
-	//void initEnemies();
 	void initTexts();
 	void initVertexs();
 
@@ -94,9 +96,11 @@ private:
 	void handleCollisionMenuState();
 
 	/*------- UPDATE EVENT -------*/
-	bool isImpact();
+	void checkCollision();
 	void objMove();
 	void reuseObj();
+
+	//sf::Thread* thread;
 	
 public:
 	sf::Sprite sprite;

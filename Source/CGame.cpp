@@ -4,6 +4,7 @@
 void CGame::initVariable() {
 	this->state = GameState::welcome_state;
 	this->window = nullptr;
+	this->pauseCars = this->pauseTrucks = false;
 }
 
 void CGame::initWindow() {
@@ -169,6 +170,8 @@ CGame* CGame::getInstance() {
 CGame::~CGame() {
 	delete this->window;
 	delete this->introMenu;
+	delete this->collisionMenu;
+	//delete this->thread;
 }
 
 const bool CGame::isRuning() const { return this->window->isOpen(); }
@@ -238,8 +241,10 @@ void CGame::handleIntroMenuState() {
 	case sf::Keyboard::Enter:
 		int choice = introMenu->GetPressedItem();
 		cout << "Choice: " << choice << endl;
-		if (choice == 0)
+		if (choice == 0) {
 			this->state = GameState::playing_state;
+			//this->thread->launch();
+		}
 		break;
 	}
 }
@@ -293,20 +298,20 @@ void CGame::handleCollisionMenuState() {
 void CGame::update() {
 	pollEvent();
 	if (this->state == GameState::playing_state) {
-		if (this->isImpact()) {
-			cout << "COLLISION" << endl;
-			this->state = GameState::collision_state;
-		}
+		
 		objMove();
 		reuseObj();
 	}
 }
 
-bool CGame::isImpact() {
-	return this->people.isImpact(cars, localImage)
+void CGame::checkCollision() {
+	if (this->people.isImpact(cars, localImage)
 		|| this->people.isImpact(trucks, localImage)
 		|| this->people.isImpact(birds, localImage)
-		|| this->people.isImpact(dinausors, localImage);
+		|| this->people.isImpact(dinausors, localImage)) {
+		cout << "COLLISION" << endl;
+		this->state = GameState::collision_state;
+	}
 }
 
 void CGame::objMove() {
@@ -316,13 +321,15 @@ void CGame::objMove() {
 	float dinausorStep = this->level.getDinausorStep();
 
 	for (int i = 1; i < 5; i++) {
-		if (cars[i - 1].getSprite().getPosition().x - cars[i].getSprite().getPosition().x > 200)
+		if (cars[i - 1].getSprite().getPosition().x - cars[i].getSprite().getPosition().x > this->level.getDistance()
+			&& !pauseCars)
 			this->cars[i].move(carStep + 0.001f * i, 0.0f);
-		if (trucks[i - 1].getSprite().getPosition().x - trucks[i].getSprite().getPosition().x < -200)
+		if (trucks[i - 1].getSprite().getPosition().x - trucks[i].getSprite().getPosition().x < (- 1) * this->level.getDistance()
+			&& !pauseTrucks)
 			this->trucks[i].move(truckStep, 0);
-		if (birds[i - 1].getSprite().getPosition().x - birds[i].getSprite().getPosition().x < -200)
+		if (birds[i - 1].getSprite().getPosition().x - birds[i].getSprite().getPosition().x < (-1) * this->level.getDistance())
 			this->birds[i].move(birdStep, 0);
-		if (dinausors[i - 1].getSprite().getPosition().x - dinausors[i].getSprite().getPosition().x > 200)
+		if (dinausors[i - 1].getSprite().getPosition().x - dinausors[i].getSprite().getPosition().x > this->level.getDistance())
 			this->dinausors[i].move(dinausorStep, 0);
 	}
 
@@ -366,6 +373,7 @@ void CGame::render() {
 		this->window->draw(sprite);
 		break;
 	case GameState::playing_state:
+		this->checkCollision();
 		drawGame();
 		break;
 	case GameState::collision_state:
