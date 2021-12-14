@@ -68,7 +68,7 @@ void CGame::initCars(int number) {
 	sf::Texture* pCarTexture = localImage.getCarTexture();
 	sf::Vector2u carSize = localImage.getCarImage().getSize();
 	float carPosX = (-1.0f) * (float)carSize.x;
-	float carPosY = 480.0f - (float)carSize.y;
+	float carPosY = 120.0f * 4.0f - (float)carSize.y;
 
 	for (int i = 0; i < number; i++) {
 		CCar car(pCarTexture[i], carPosX, carPosY);
@@ -80,7 +80,7 @@ void CGame::initTrucks(int number) {
 	sf::Texture* pTruckTexture = localImage.getTruckTexture();
 	sf::Vector2u truckSize = localImage.getTruckImage().getSize();
 	float truckPosX = SCREEN_WIDTH + 1.0f;
-	float truckPosY = 600.0f - (float)truckSize.y;
+	float truckPosY = 120.0f * 5.0f - (float)truckSize.y;
 
 	for (int i = 0; i < number; i++) {
 		CTruck truck(pTruckTexture[i], truckPosX, truckPosY);
@@ -92,7 +92,7 @@ void CGame::initBirds(int number) {
 	sf::Texture* pBirdTexture = localImage.getBirdTexture();
 	sf::Vector2u birdSize = localImage.getBirdImage().getSize();
 	float birdPosX = SCREEN_WIDTH + 1.0f;
-	float birdPosY = 200.0f - (float)birdSize.y;
+	float birdPosY = 120.0f * 2.0f - 40.0f - (float)birdSize.y;
 
 	for (int i = 0; i < number; i++) {
 		CBird bird(pBirdTexture[i], birdPosX, birdPosY);
@@ -106,7 +106,7 @@ void CGame::initDinausors(int number) {
 
 	sf::Vector2u dinausorSize = localImage.getDinausorImage().getSize();
 	float dinausorPosX = (-1.0f) * dinausorSize.x;
-	float dinausorPosY = 360.0f - (float)dinausorSize.y;
+	float dinausorPosY = 120.0f * 3.0f - (float)dinausorSize.y;
 
 	for (int i = 0; i < number; i++) {
 		CDinausor dinausor(pDinausorTexture[1], dinausorPosX, dinausorPosY);
@@ -249,13 +249,31 @@ void CGame::handlePlayingState() {
 
 bool CGame::isImpact() {
 	return this->people.isImpact(cars, localImage)
-		&& this->people.isImpact(trucks, localImage)
-		&& this->people.isImpact(birds, localImage)
-		&& this->people.isImpact(dinausors, localImage);
+		|| this->people.isImpact(trucks, localImage)
+		|| this->people.isImpact(birds, localImage)
+		|| this->people.isImpact(dinausors, localImage);
 }
 
 void CGame::reuseObj() {
+	if (cars[0].getSprite().getPosition().x > SCREEN_WIDTH) {
+		cars.erase(cars.begin());
+		initCars(1);
+	}
 
+	if (trucks[0].getSprite().getPosition().x < (-1.0f) * localImage.getTruckImage().getSize().x) {
+		trucks.erase(trucks.begin());
+		initTrucks(1);
+	}
+
+	if (birds[0].getSprite().getPosition().x < (-1.0f) * localImage.getBirdImage().getSize().x) {
+		birds.erase(birds.begin());
+		initBirds(1);
+	}
+
+	if (dinausors[0].getSprite().getPosition().x > SCREEN_WIDTH) {
+		dinausors.erase(dinausors.begin());
+		initDinausors(1);
+	}
 }
 
 void CGame::update() {
@@ -286,26 +304,7 @@ void CGame::update() {
 		this->trucks[0].move(truckStep, 0);
 		this->birds[0].move(birdStep, 0);
 		this->dinausors[0].move(dinausorStep, 0);
-
-		if (cars[0].getSprite().getPosition().x > SCREEN_WIDTH) {
-			cars.erase(cars.begin());
-			initCars(1);
-		}
-
-		if (trucks[0].getSprite().getPosition().x < (-1.0f) * localImage.getTruckImage().getSize().x) {
-			trucks.erase(trucks.begin());
-			initTrucks(1);
-		}
-
-		if (birds[0].getSprite().getPosition().x < (-1.0f) * localImage.getBirdImage().getSize().x) {
-			birds.erase(birds.begin());
-			initBirds(1);
-		}
-
-		if (dinausors[0].getSprite().getPosition().x > SCREEN_WIDTH) {
-			dinausors.erase(dinausors.begin());
-			initDinausors(1);
-		}
+		reuseObj();
 	}
 }
 
@@ -323,6 +322,8 @@ void CGame::render() {
 	case GameState::playing_state:
 		drawGame();
 		break;
+	case GameState::collision_state:
+		exit(0);
 	default:
 		break;
 	}	

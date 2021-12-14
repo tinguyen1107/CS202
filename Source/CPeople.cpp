@@ -28,15 +28,15 @@ void CPeople::down(float x) {
 	sprite.setPosition(this->mX, this->mY);
 }
 
-bool CPeople::isImpact(const CVehicle*&) {
-	return false;
-}
+bool CPeople::isImpact(const CVehicle*&) { return false; }
 
-bool CPeople::isImpact(const CAnimal*&) {
-	return false;
-}
+bool CPeople::isImpact(const CAnimal*&) { return false; }
 
 bool CPeople::isImpact(vector<CCar> cars, CImage& img) {
+	sf::FloatRect localBounds = this->sprite.getLocalBounds();
+	if ((this->mY - localBounds.height > 120.0f * 4.0f)
+		|| (this->mY < 120.0f * 3.0f)) return false;
+
 	for (int i = 0; i < cars.size(); ++i)
 		if (PixelPerfectCollision(sprite, cars[i].getSprite(), img.getPeopleImg(), img.getCarImage()))
 			return true;
@@ -44,6 +44,10 @@ bool CPeople::isImpact(vector<CCar> cars, CImage& img) {
 }
 
 bool CPeople::isImpact(vector<CTruck> trucks, CImage& img) {
+	sf::FloatRect localBounds = this->sprite.getLocalBounds();
+	if ((this->mY - localBounds.height > 120.0f * 5.0f)
+		|| (this->mY < 120.0f * 4.0f)) return false;
+
 	for (int i = 0; i < trucks.size(); ++i)
 		if (PixelPerfectCollision(sprite, trucks[i].getSprite(), img.getPeopleImg(), img.getTruckImage()))
 			return true;
@@ -51,6 +55,10 @@ bool CPeople::isImpact(vector<CTruck> trucks, CImage& img) {
 }
 
 bool CPeople::isImpact(vector<CBird> birds, CImage& img) {
+	sf::FloatRect localBounds = this->sprite.getLocalBounds();
+	if ((this->mY - localBounds.height > 120.0f * 2.0f)
+		|| (this->mY < 120.0f * 1.0f)) return false;
+
 	for (int i = 0; i < birds.size(); ++i)
 		if (PixelPerfectCollision(sprite, birds[i].getSprite(), img.getPeopleImg(), img.getBirdImage()))
 			return true;
@@ -58,6 +66,10 @@ bool CPeople::isImpact(vector<CBird> birds, CImage& img) {
 }
 
 bool CPeople::isImpact(vector<CDinausor> dinausors, CImage& img) {
+	sf::FloatRect localBounds = this->sprite.getLocalBounds();
+	if ((this->mY - localBounds.height > 120.0f * 3.0f)
+		|| (this->mY < 120.0f * 2.0f)) return false;
+
 	for (int i = 0; i < dinausors.size(); ++i)
 		if (PixelPerfectCollision(sprite, dinausors[i].getSprite(), img.getPeopleImg(), img.getDinausorImage()))
 			return true;
@@ -65,7 +77,7 @@ bool CPeople::isImpact(vector<CDinausor> dinausors, CImage& img) {
 }
 
 bool CPeople::isFinish() {
-	return false;
+	if (this->mY < 120.0f * 1.0f) return false;
 }
 
 bool CPeople::isDead() {
