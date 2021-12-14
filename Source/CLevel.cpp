@@ -22,7 +22,7 @@ float CLevel::getDistance() {
 float CLevel::getCarStep() {
 	switch (this->lev) {
 	case Level::Level_1:
-		return 0.0005f;
+		return 0.0002f;
 	case Level::Level_2:
 		return 0.0008f;
 	case Level::Level_3:
@@ -38,7 +38,7 @@ float CLevel::getTruckStep()
 {
 	switch (this->lev) {
 	case Level::Level_1:
-		return -0.0007f;
+		return -0.0005f;
 	case Level::Level_2:
 		return -0.001f;
 	case Level::Level_3:
@@ -53,7 +53,7 @@ float CLevel::getTruckStep()
 float CLevel::getBirdStep() {
 	switch (this->lev) {
 	case Level::Level_1:
-		return -0.0004f;
+		return -0.0003f;
 	case Level::Level_2:
 		return -0.0007f;
 	case Level::Level_3:
@@ -68,7 +68,7 @@ float CLevel::getBirdStep() {
 float CLevel::getDinausorStep() {
 	switch (this->lev) {
 	case Level::Level_1:
-		return 0.0005f;
+		return 0.0002f;
 	case Level::Level_2:
 		return 0.0008f;
 	case Level::Level_3:

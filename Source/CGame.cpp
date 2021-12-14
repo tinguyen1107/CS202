@@ -29,13 +29,15 @@ void CGame::initWindow() {
 void CGame::reInitObj() {
 	this->cars.clear();
 	this->trucks.clear();
-	this->birds.clear();
-	this->dinausors.clear();
-
 	this->initCars();
 	this->initTrucks();
-	this->initBirds();
-	this->initDinausors();
+
+	for (int i = 0; i < MAX_NUM_OBJ; i++) {
+		this->birds[i].backToOriginPosision();
+		this->dinausors[i].backToOriginPosision();
+	}
+
+	
 
 	this->people = CPeople(*this->localImage.getPeopleTexture(), SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
 }
@@ -243,7 +245,6 @@ void CGame::handleIntroMenuState() {
 		cout << "Choice: " << choice << endl;
 		if (choice == 0) {
 			this->state = GameState::playing_state;
-			//this->thread->launch();
 		}
 		break;
 	}
@@ -298,9 +299,14 @@ void CGame::handleCollisionMenuState() {
 void CGame::update() {
 	pollEvent();
 	if (this->state == GameState::playing_state) {
-		
 		objMove();
 		reuseObj();
+
+		if (this->people.isFinish()) {
+			cout << "is Finished" << endl;
+			this->level.upLevel();
+			reInitObj();
+		}
 	}
 }
 
@@ -378,6 +384,11 @@ void CGame::render() {
 		break;
 	case GameState::collision_state:
 		collisionMenu->draw(*this->window);
+		break;
+	case GameState::pause_state:
+		break;
+	case GameState::wait_for_level_up:
+
 	default:
 		break;
 	}	

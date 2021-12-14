@@ -28,6 +28,7 @@ enum GameState {
 	playing_state,
 	collision_state,
 	pause_state,
+	wait_for_level_up;
 };
 
 class CGame {

@@ -9,9 +9,11 @@ class CAnimal {
 protected:
     float mX, mY;
     sf::Sprite sprite;
+    sf::Vector2f originPosition;
 public:
     CAnimal(float x, float y);
     sf::Sprite getSprite();
+    void backToOriginPosision();
     virtual void move(float, float) = 0;
     virtual void tell() = 0;
 };

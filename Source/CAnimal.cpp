@@ -1,11 +1,13 @@
 #include "../Header/CAnimal.h"
 
-CAnimal::CAnimal(float x, float y) : mX(x), mY(y) {}
+CAnimal::CAnimal(float x, float y) : mX(x), mY(y), originPosition(sf::Vector2f(x, y)) {}
 
 sf::Sprite CAnimal::getSprite()
 {
 	return this->sprite;
 }
+
+void CAnimal::backToOriginPosision() { this->sprite.setPosition(originPosition); }
 
 CBird::CBird(): CAnimal(0, 0) {}
 

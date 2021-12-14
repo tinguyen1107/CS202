@@ -77,7 +77,7 @@ bool CPeople::isImpact(vector<CDinausor> dinausors, CImage& img) {
 }
 
 bool CPeople::isFinish() {
-	if (this->mY < 120.0f * 1.0f) return false;
+	if (this->mY < 120.0f * 1.0f) return true;
 }
 
 bool CPeople::isDead() {
