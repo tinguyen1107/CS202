@@ -1,8 +1,14 @@
 #include "../Header/CVehicle.h"
 
-CVehicle::CVehicle(float x, float y): mX(x), mY(y) {}
+CVehicle::CVehicle(float x, float y): mX(x), mY(y), originPosition(sf::Vector2f(x, y)) {}
 
 sf::Sprite CVehicle::getSprite() { return this->sprite; }
+
+void CVehicle::backToOriginPosision() {
+	this->mX = originPosition.x;
+	this->mY = originPosition.y;
+	this->sprite.setPosition(originPosition);
+}
 
 CCar::CCar(): CVehicle(0,0) {}
 

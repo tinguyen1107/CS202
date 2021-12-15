@@ -7,7 +7,11 @@ sf::Sprite CAnimal::getSprite()
 	return this->sprite;
 }
 
-void CAnimal::backToOriginPosision() { this->sprite.setPosition(originPosition); }
+void CAnimal::backToOriginPosision() { 
+	this->mX = originPosition.x;
+	this->mY = originPosition.y;
+	this->sprite.setPosition(originPosition); 
+}
 
 CBird::CBird(): CAnimal(0, 0) {}
 

@@ -12,6 +12,7 @@
 #include "CMenu.h"
 #include "CPeople.h"
 #include "CLevel.h"
+#include "CPlayGround.h"
 
 using namespace std;
 
@@ -28,7 +29,7 @@ enum GameState {
 	playing_state,
 	collision_state,
 	pause_state,
-	wait_for_level_up;
+	wait_for_level_up,
 };
 
 class CGame {
@@ -51,13 +52,15 @@ private:
 	* Object
 	*/
 	sf::Text text;
-	vector<sf::VertexArray> lines;
+
+	CPlayground* playground;
 
 	/* --- MENU --- */
 	CMenu* introMenu;
 	CMenu* collisionMenu;
+	CMenu* pauseMenu;
 
-	CPeople people;
+	CPeople* people;
 
 	// Vehicle
 	vector<CCar> cars;
@@ -81,7 +84,6 @@ private:
 	void reInitObj();
 
 	void initTexts();
-	void initVertexs();
 
 	void initCars(int number = MAX_NUM_OBJ);
 	void initTrucks(int number = MAX_NUM_OBJ);
@@ -95,6 +97,7 @@ private:
 	void handleIntroMenuState();
 	void handlePlayingState();
 	void handleCollisionMenuState();
+	void handlePauseState();
 
 	/*------- UPDATE EVENT -------*/
 	void checkCollision();

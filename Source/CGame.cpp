@@ -24,22 +24,22 @@ void CGame::initWindow() {
 	this->window->setActive(false);
 
 	this->window->setFramerateLimit(500);
+
+
+	this->playground = new CPlayground();
 }
 
 void CGame::reInitObj() {
-	this->cars.clear();
-	this->trucks.clear();
-	this->initCars();
-	this->initTrucks();
-
 	for (int i = 0; i < MAX_NUM_OBJ; i++) {
+		this->cars[i].backToOriginPosision();
+		this->trucks[i].backToOriginPosision();
+
 		this->birds[i].backToOriginPosision();
 		this->dinausors[i].backToOriginPosision();
 	}
 
-	
-
-	this->people = CPeople(*this->localImage.getPeopleTexture(), SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
+	this->people->backToOriginPosision();
+	this->state = GameState::playing_state;
 }
 
 //void CGame::initEnemies() {
@@ -61,22 +61,6 @@ void CGame::initTexts() {
 	text.setOrigin(textRect.left + textRect.width / 2.0f,
 		textRect.top + textRect.height / 2.0f);
 	text.setPosition(sf::Vector2f(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f));
-}
-
-void CGame::initVertexs() {
-	const int horizontal = 50;
-	const int numOfLines = 5;
-	const float space = 120;
-	for (int i = 0; i < numOfLines; i++) {
-		sf::VertexArray  line(sf::LinesStrip, 2);
-		line[0].position = sf::Vector2f(horizontal, (i + 1) * space);
-		line[1].position = sf::Vector2f(SCREEN_WIDTH - horizontal, (i + 1) * space);
-
-		line[0].color = sf::Color::Red;
-		line[1].color = sf::Color::Blue;
-
-		this->lines.push_back(line);
-	}
 }
 
 void CGame::initCars(int number) {
@@ -136,7 +120,7 @@ void CGame::drawCar() {
 		this->window->draw(this->birds[i].getSprite());
 		this->window->draw(this->dinausors[i].getSprite());
 	}
-	this->window->draw(this->people.getSprite());
+	this->window->draw(this->people->getSprite());
 }
 
 CGame::CGame() {
@@ -147,14 +131,13 @@ CGame::CGame() {
 	this->initWindow();
 	//this->initEnemies();
 	this->initMenu();
-	this->initVertexs();
 
 	this->initCars();
 	this->initTrucks();
 	this->initBirds();
 	this->initDinausors();
 
-	this->people = CPeople(*this->localImage.getPeopleTexture(), SCREEN_WIDTH/2.0f, SCREEN_HEIGHT);
+	this->people = new CPeople(*this->localImage.getPeopleTexture(), SCREEN_WIDTH/2.0f, SCREEN_HEIGHT);
 
 	initTexts();
 
@@ -171,9 +154,13 @@ CGame* CGame::getInstance() {
 
 CGame::~CGame() {
 	delete this->window;
+
 	delete this->introMenu;
 	delete this->collisionMenu;
-	//delete this->thread;
+	delete this->pauseMenu;
+
+	delete this->people;
+	delete this->playground;
 }
 
 const bool CGame::isRuning() const { return this->window->isOpen(); }
@@ -185,14 +172,15 @@ void CGame::welcome() {
 void CGame::initMenu() {
 	vector<string> optIntroMenu = { "New game", "Load game", "Setting" };
 	vector<string> optCollisionMenu = { "Play again", "Back to menu", "Quit" };
+	vector<string> optPauseMenu = { "Continue", "New game", "Back to menu", "Quit" };
 
-	introMenu = new CMenu(optIntroMenu, 100, 150);
+	introMenu = new CMenu(optIntroMenu, 150, 150);
 	collisionMenu = new CMenu(optCollisionMenu, 200, 200);
+	pauseMenu = new CMenu(optPauseMenu, 300, 300);
 }
 
 void CGame::drawGame() {
-	for (int i = 0; i < this->lines.size(); i++)
-		this->window->draw(this->lines[i]);
+	this->playground->draw(*this->window);
 	drawCar();
 }
 
@@ -215,6 +203,9 @@ void CGame::pollEvent() {
 				break;
 			case GameState::collision_state:
 				this->handleCollisionMenuState();
+				break;
+			case GameState::pause_state:
+				this->handlePauseState();
 				break;
 			}
 		default:
@@ -243,9 +234,8 @@ void CGame::handleIntroMenuState() {
 	case sf::Keyboard::Enter:
 		int choice = introMenu->GetPressedItem();
 		cout << "Choice: " << choice << endl;
-		if (choice == 0) {
+		if (choice == 0) 
 			this->state = GameState::playing_state;
-		}
 		break;
 	}
 }
@@ -254,19 +244,26 @@ void CGame::handlePlayingState() {
 	switch (this->event.key.code) {
 	case sf::Keyboard::W:
 	case sf::Keyboard::Up:
-		this->people.up(2);
+		this->people->up(2);
 		break;
 	case sf::Keyboard::S:
 	case sf::Keyboard::Down:
-		this->people.down(2);
+		this->people->down(2);
 		break;
 	case sf::Keyboard::A:
 	case sf::Keyboard::Left:
-		this->people.left(2);
+		this->people->left(2);
 		break;
 	case sf::Keyboard::D:
 	case sf::Keyboard::Right:
-		this->people.right(2);
+		this->people->right(2);
+		break;
+	case sf::Keyboard::R:
+		this->people->backToOriginPosision();
+		break;
+	case sf::Keyboard::Escape:
+	case sf::Keyboard::P:
+		this->state = GameState::pause_state;
 		break;
 	}
 }
@@ -296,25 +293,47 @@ void CGame::handleCollisionMenuState() {
 	}
 }
 
+void CGame::handlePauseState() {
+	switch (this->event.key.code) {
+	case sf::Keyboard::W:
+	case sf::Keyboard::Up:
+		pauseMenu->MoveUp();
+		break;
+	case sf::Keyboard::S:
+	case sf::Keyboard::Down:
+		pauseMenu->MoveDown();
+		break;
+	case sf::Keyboard::Enter:
+		int choice = pauseMenu->GetPressedItem();
+		cout << "Choice: " << choice << endl;
+		if (choice == 0) 
+			this->state = GameState::playing_state;
+		break;
+	}
+}
+
 void CGame::update() {
 	pollEvent();
 	if (this->state == GameState::playing_state) {
 		objMove();
 		reuseObj();
 
-		if (this->people.isFinish()) {
-			cout << "is Finished" << endl;
-			this->level.upLevel();
-			reInitObj();
+		if (this->people->isFinish()) {
+			cout << "YOU HAVE FINISHED" << endl;
+			this->state = GameState::wait_for_level_up;
+			if (this->level.upLevel())
+				reInitObj();
+			else
+				cout << "YOU WIN!!" << endl;
 		}
 	}
 }
 
 void CGame::checkCollision() {
-	if (this->people.isImpact(cars, localImage)
-		|| this->people.isImpact(trucks, localImage)
-		|| this->people.isImpact(birds, localImage)
-		|| this->people.isImpact(dinausors, localImage)) {
+	if (this->people->isImpact(cars, localImage)
+		|| this->people->isImpact(trucks, localImage)
+		|| this->people->isImpact(birds, localImage)
+		|| this->people->isImpact(dinausors, localImage)) {
 		cout << "COLLISION" << endl;
 		this->state = GameState::collision_state;
 	}
@@ -380,12 +399,12 @@ void CGame::render() {
 		break;
 	case GameState::playing_state:
 		this->checkCollision();
+	case GameState::pause_state:
 		drawGame();
+		if (this->state == GameState::pause_state) this->pauseMenu->draw(*this->window);
 		break;
 	case GameState::collision_state:
 		collisionMenu->draw(*this->window);
-		break;
-	case GameState::pause_state:
 		break;
 	case GameState::wait_for_level_up:
 

@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\CPlayGround.cpp" />
     <ClCompile Include="Source\CAnimal.cpp" />
     <ClCompile Include="Source\CFont.cpp" />
     <ClCompile Include="Source\CGame.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Header\CVehicle.h" />
     <ClInclude Include="Header\CLevel.h" />
     <ClInclude Include="Header\CPeople.h" />
+    <ClInclude Include="Header\CPlayGround.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,7 @@
 #include "../Header/CPeople.h"
 
-CPeople::CPeople(sf::Texture& texture, float x, float y) : mX(x), mY(y), mState(true) {
+CPeople::CPeople(sf::Texture& texture, float x, float y)
+	: mX(x), mY(y), originPosition(sf::Vector2f(x, y)), mState(true) {
 	this->sprite.setTexture(texture);
 	sf::FloatRect localBounds = this->sprite.getLocalBounds();
 	this->sprite.setOrigin(localBounds.left + localBounds.width / 2.0f,
@@ -26,6 +27,12 @@ void CPeople::right(float x) {
 void CPeople::down(float x) {
 	this->mY += x;
 	sprite.setPosition(this->mX, this->mY);
+}
+
+void CPeople::backToOriginPosision() { 
+	this->mX = originPosition.x;
+	this->mY = originPosition.y;
+	this->sprite.setPosition(originPosition); 
 }
 
 bool CPeople::isImpact(const CVehicle*&) { return false; }
@@ -78,6 +85,7 @@ bool CPeople::isImpact(vector<CDinausor> dinausors, CImage& img) {
 
 bool CPeople::isFinish() {
 	if (this->mY < 120.0f * 1.0f) return true;
+	return false;
 }
 
 bool CPeople::isDead() {
@@ -114,8 +122,8 @@ bool CPeople::PixelPerfectCollision(const sf::Sprite& a, const sf::Sprite& b,
 
 		for (int x = intersection.left; x < xMax; x++)
 			for (int y = intersection.top; y < yMax; y++) {
-				vecA = inverseA.transformPoint(x, y);
-				vecB = inverseB.transformPoint(x, y);
+				vecA = inverseA.transformPoint((float)x, (float)y);
+				vecB = inverseB.transformPoint((float)x, (float)y);
 
 				int idxA = ((int)vecA.x + ((int)vecA.y) * sizeA.x) * 4 + 3;
 				int idxB = ((int)vecB.x + ((int)vecB.y) * sizeB.x) * 4 + 3;

@@ -10,9 +10,11 @@ class CVehicle {
 protected:
     float mX, mY;
     sf::Sprite sprite;
+    sf::Vector2f originPosition;
 public:
     CVehicle(float x, float y);
     sf::Sprite getSprite();
+    void backToOriginPosision();
     virtual void move(float, float) = 0;
 };
 
