@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SFML\include;C:\Users\tinnguyen\CS202\Json support\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,7 +139,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SFML\include;C:\Users\tinnguyen\CS202\Json support\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Json support\dist\jsoncpp.cpp" />
     <ClCompile Include="Source\CPlayGround.cpp" />
     <ClCompile Include="Source\CAnimal.cpp" />
     <ClCompile Include="Source\CFont.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="Source\CPeople.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dist\json\json-forwards.h" />
     <ClInclude Include="Header\CAnimal.h" />
     <ClInclude Include="Header\CGame.h" />
     <ClInclude Include="Header\CFont.h" />
@@ -172,6 +174,8 @@
     <ClInclude Include="Header\CLevel.h" />
     <ClInclude Include="Header\CPeople.h" />
     <ClInclude Include="Header\CPlayGround.h" />
+    <ClInclude Include="Json support\dist\json\json-forwards.h" />
+    <ClInclude Include="Json support\dist\json\json.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

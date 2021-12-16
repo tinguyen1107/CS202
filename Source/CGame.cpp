@@ -70,6 +70,8 @@ void CGame::initCars(int number) {
 	float carPosX = (-1.0f) * (float)carSize.x;
 	float carPosY = 120.0f * 4.0f - (float)carSize.y;
 
+	cout << "CAR WIDTH: " << carSize.x << "HEIGHT: " << carSize.y << endl;
+
 	for (int i = 0; i < number; i++) {
 		CCar car(pCarTexture[i], carPosX, carPosY);
 		this->cars.push_back(car);
@@ -82,6 +84,8 @@ void CGame::initTrucks(int number) {
 	float truckPosX = SCREEN_WIDTH + 1.0f;
 	float truckPosY = 120.0f * 5.0f - (float)truckSize.y;
 
+	cout << "TRUCK WIDTH: " << truckSize.x << "HEIGHT: " << truckSize.y << endl;
+
 	for (int i = 0; i < number; i++) {
 		CTruck truck(pTruckTexture[i], truckPosX, truckPosY);
 		this->trucks.push_back(truck);
@@ -93,6 +97,8 @@ void CGame::initBirds(int number) {
 	sf::Vector2u birdSize = localImage.getBirdImage().getSize();
 	float birdPosX = SCREEN_WIDTH + 1.0f;
 	float birdPosY = 120.0f * 2.0f - 40.0f - (float)birdSize.y;
+
+	cout << "TRUCK WIDTH: " << birdSize.x << "HEIGHT: " << birdSize.y << endl;
 
 	for (int i = 0; i < number; i++) {
 		CBird bird(pBirdTexture[i], birdPosX, birdPosY);
@@ -107,6 +113,8 @@ void CGame::initDinausors(int number) {
 	sf::Vector2u dinausorSize = localImage.getDinausorImage().getSize();
 	float dinausorPosX = (-1.0f) * dinausorSize.x;
 	float dinausorPosY = 120.0f * 3.0f - (float)dinausorSize.y;
+
+	cout << "TRUCK WIDTH: " << dinausorSize.x << "HEIGHT: " << dinausorSize.y << endl;
 
 	for (int i = 0; i < number; i++) {
 		CDinausor dinausor(pDinausorTexture[1], dinausorPosX, dinausorPosY);
@@ -125,9 +133,6 @@ void CGame::drawCar() {
 }
 
 CGame::CGame() {
-	this->sprite.setTexture(*this->localImage.getCarTexture());
-	this->sprite.setPosition(500.0f, 300.0f);
-	
 	this->initVariable();
 	this->initWindow();
 	//this->initEnemies();
@@ -417,7 +422,6 @@ void CGame::render() {
 		break;
 	case GameState::intro_menu_state:
 		introMenu->draw(*this->window);
-		this->window->draw(sprite);
 		break;
 	case GameState::playing_state:
 		this->checkCollision();

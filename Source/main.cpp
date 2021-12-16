@@ -1,5 +1,7 @@
 #include "../Header/CGame.h"
 
+#include <json/json.h>
+
 CGame* game;
 
 void renderThread() {

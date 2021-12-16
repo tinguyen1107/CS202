@@ -36,23 +36,26 @@ class CGame {
 private:
 	//static CGame* instancePtr;
 
-	// Properties
+	/* --- --- -- --- --- */
+	/* --- PROPERTIES --- */
+	/* --- --- -- --- --- */
 	GameState state;
 	CLevel level;
 
 	bool pauseCars;
 	bool pauseTrucks;
-	
-	// Window
+
+	/* --- --- --- -- */
+	/* --- WINDOW --- */
+	/* --- --- --- -- */
 	sf::RenderWindow* window;
 	sf::Event event;
 	sf::VideoMode videoMode;
 
-	/*
-	* Object
-	*/
+	/* --- --- - --- --- */
+	/* --- COMPONENT --- */
+	/* --- --- - --- --- */
 	sf::Text text;
-
 	CPlayground* playground;
 
 	/* --- MENU --- */
@@ -60,6 +63,9 @@ private:
 	CMenu* collisionMenu;
 	CMenu* pauseMenu;
 
+	/* --- --- --- -- */
+	/* --- OBJECT --- */
+	/* --- --- --- -- */
 	CPeople* people;
 
 	// Vehicle
@@ -70,7 +76,7 @@ private:
 	vector<CBird> birds;
 	vector<CDinausor> dinausors;
 	
-	// User interface
+	// UTILITIES
 	CFont localFont;
 	CImage localImage;
 

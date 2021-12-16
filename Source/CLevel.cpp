@@ -5,29 +5,29 @@
 
 using namespace std;
 
-CLevel::CLevel(Level _lev) : lev(_lev) {
+CLevel::CLevel(Level _lev) {
 	levelLabel.setFont(localFont.SemiBold);
-	levelLabel.setString("LEVEL 1");
 	levelLabel.setCharacterSize(60);
 	levelLabel.setFillColor(sf::Color::White);
-
 	levelLabel.setPosition(0, 0);
+
+	this->setLevel(_lev);
 }
 
 float CLevel::getDistance() {
-	int i = rand() % 150;
+	int i = rand();
 
 	switch (this->lev) {
 	case Level::Level_1:
-		return 350.0f + i;
+		return 250.0f + i % 400;
 	case Level::Level_2:
-		return 300.0f + i;
+		return 200.0f + i % 400;
 	case Level::Level_3:
-		return 250.0f + i;
+		return 150.0f + i % 400;
 	case Level::Level_4:
-		return 200.0f + i;
+		return 122.0f + i % 400;
 	case Level::Level_5:
-		return 150.0f + i;
+		return 122.0f + i % 300;
 	}
 }
 
@@ -84,11 +84,11 @@ float CLevel::getDinausorStep() {
 	case Level::Level_2:
 		return 0.0004f;
 	case Level::Level_3:
-		return -0.001f;
+		return 0.001f;
 	case Level::Level_4:
-		return -0.0018f;
+		return 0.0018f;
 	case Level::Level_5:
-		return -0.0032f;
+		return 0.0032f;
 	}
 }
 
@@ -122,7 +122,7 @@ void CLevel::setLevel(Level _lev) {
 bool CLevel::upLevel() {
 	cout << "Level up" << endl;
 	switch (this->lev) {
-	case Level::Level_1: cout << 1 << endl;
+	case Level::Level_1:
 		this->setLevel(Level::Level_2);
 		break;
 	case Level::Level_2:
