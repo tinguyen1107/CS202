@@ -103,12 +103,8 @@ private:
 	void checkCollision();
 	void objMove();
 	void reuseObj();
-
-	//sf::Thread* thread;
 	
 public:
-	sf::Sprite sprite;
-
 	CGame();
 	//static CGame* getInstance();
 	~CGame();

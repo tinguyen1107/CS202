@@ -13,16 +13,6 @@ CMenu::CMenu(vector<string> optString, float width, float height) {
 	}
 	optText[0].setFillColor(sf::Color::Red);
 	selectedIndex = 0;
-
-	//sf::Image image;
-	//if (image.loadFromFile("Resource/Image/B04284_01_04.jpeg")) cout << "TRUEE";
-
-	//sf::Texture texture;
-	////if (texture.loadFromFile("Resource/Image/a.png")) cout << "TRUEE";
-	//texture.loadFromImage(image);
-	//this->sprite.setTexture(texture);
-	//sprite.setScale(0.5f, 0.5f);
-	//sprite.setPosition(100.0f, 100.0f);
 }
 
 CMenu::~CMenu() {}

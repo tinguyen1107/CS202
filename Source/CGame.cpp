@@ -39,6 +39,7 @@ void CGame::reInitObj() {
 	}
 
 	this->people->backToOriginPosision();
+
 	this->state = GameState::playing_state;
 }
 
@@ -137,7 +138,7 @@ CGame::CGame() {
 	this->initBirds();
 	this->initDinausors();
 
-	this->people = new CPeople(*this->localImage.getPeopleTexture(), SCREEN_WIDTH/2.0f, SCREEN_HEIGHT);
+	this->people = new CPeople(*this->localImage.getPeopleTexture(), SCREEN_WIDTH/2.0f, SCREEN_HEIGHT - 60.0f);
 
 	initTexts();
 
@@ -172,7 +173,7 @@ void CGame::welcome() {
 void CGame::initMenu() {
 	vector<string> optIntroMenu = { "New game", "Load game", "Setting" };
 	vector<string> optCollisionMenu = { "Play again", "Back to menu", "Quit" };
-	vector<string> optPauseMenu = { "Continue", "New game", "Back to menu", "Quit" };
+	vector<string> optPauseMenu = { "Continue", "Save game", "New game", "Back to menu", "Quit"};
 
 	introMenu = new CMenu(optIntroMenu, 150, 150);
 	collisionMenu = new CMenu(optCollisionMenu, 200, 200);
@@ -181,6 +182,7 @@ void CGame::initMenu() {
 
 void CGame::drawGame() {
 	this->playground->draw(*this->window);
+	this->level.drawLevelLabel(*this->window);
 	drawCar();
 }
 
@@ -283,6 +285,7 @@ void CGame::handleCollisionMenuState() {
 		cout << "Choice: " << choice << endl;
 		if (choice == 0 || choice == 1) {
 			this->reInitObj();
+			this->level.setLevel(Level::Level_1);
 			if (choice == 0)
 				this->state = GameState::playing_state;
 			else
@@ -306,8 +309,27 @@ void CGame::handlePauseState() {
 	case sf::Keyboard::Enter:
 		int choice = pauseMenu->GetPressedItem();
 		cout << "Choice: " << choice << endl;
-		if (choice == 0) 
+
+		switch (choice) {
+		case 0: // Continue
 			this->state = GameState::playing_state;
+			break;
+		case 1: // Save
+			break;
+		case 2: // New game
+			this->reInitObj();
+			this->level.setLevel(Level::Level_1);
+			this->state = GameState::playing_state;
+			break;
+		case 3: // Back to menu
+			this->reInitObj();
+			this->level.setLevel(Level::Level_1);
+			this->state = GameState::intro_menu_state;
+			break;
+		case 4: // Quit
+			this->window->close();
+			break;
+		}
 		break;
 	}
 }
