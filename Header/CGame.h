@@ -7,7 +7,10 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 
+#include <json/json.h>
+
 #include <iostream>
+
 #include "CFont.h"
 #include "CMenu.h"
 #include "CPeople.h"
@@ -29,7 +32,8 @@ enum GameState {
 	playing_state,
 	collision_state,
 	pause_state,
-	wait_for_level_up,
+	wait_for_level_up_state,
+	input_path_state
 };
 
 class CGame {
@@ -76,7 +80,9 @@ private:
 	vector<CBird> birds;
 	vector<CDinausor> dinausors;
 	
-	// UTILITIES
+	/* --- --- - --- --- */
+	/* --- UTILITIES --- */
+	/* --- --- - --- --- */
 	CFont localFont;
 	CImage localImage;
 
@@ -96,7 +102,7 @@ private:
 	void initBirds(int number = MAX_NUM_OBJ);
 	void initDinausors(int number = MAX_NUM_OBJ);
 
-	void drawCar();
+	void drawObject();
 
 	/*------- POLL EVENT -------*/
 	void handleWelcomeState();

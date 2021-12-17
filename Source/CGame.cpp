@@ -14,6 +14,7 @@ void CGame::initWindow() {
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 
+	this->playground = new CPlayground();
 	this->window = new sf::RenderWindow(
 		this->videoMode, 
 		"Crossing road", 
@@ -24,16 +25,12 @@ void CGame::initWindow() {
 	this->window->setActive(false);
 
 	this->window->setFramerateLimit(500);
-
-
-	this->playground = new CPlayground();
 }
 
 void CGame::reInitObj() {
 	for (int i = 0; i < MAX_NUM_OBJ; i++) {
 		this->cars[i].backToOriginPosision();
 		this->trucks[i].backToOriginPosision();
-
 		this->birds[i].backToOriginPosision();
 		this->dinausors[i].backToOriginPosision();
 	}
@@ -122,7 +119,7 @@ void CGame::initDinausors(int number) {
 	}
 }
 
-void CGame::drawCar() {
+void CGame::drawObject() {
 	for (int i = 0; i < 5; i++) {
 		this->window->draw(this->cars[i].getSprite());
 		this->window->draw(this->trucks[i].getSprite());
@@ -188,7 +185,7 @@ void CGame::initMenu() {
 void CGame::drawGame() {
 	this->playground->draw(*this->window);
 	this->level.drawLevelLabel(*this->window);
-	drawCar();
+	drawObject();
 }
 
 void CGame::pollEvent() {
@@ -241,8 +238,10 @@ void CGame::handleIntroMenuState() {
 	case sf::Keyboard::Enter:
 		int choice = introMenu->GetPressedItem();
 		cout << "Choice: " << choice << endl;
-		if (choice == 0) 
+		if (choice == 0) // start new game
 			this->state = GameState::playing_state;
+		else if (choice == 1)
+			this->state = GameState::input_path_state;
 		break;
 	}
 }
@@ -347,7 +346,7 @@ void CGame::update() {
 
 		if (this->people->isFinish()) {
 			cout << "YOU HAVE FINISHED" << endl;
-			this->state = GameState::wait_for_level_up;
+			this->state = GameState::wait_for_level_up_state;
 			if (this->level.upLevel())
 				reInitObj();
 			else
@@ -432,7 +431,7 @@ void CGame::render() {
 	case GameState::collision_state:
 		collisionMenu->draw(*this->window);
 		break;
-	case GameState::wait_for_level_up:
+	case GameState::wait_for_level_up_state:
 
 	default:
 		break;
