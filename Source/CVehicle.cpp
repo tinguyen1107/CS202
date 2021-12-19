@@ -10,6 +10,7 @@ float CVehicle::getHorizontalPosition() {
 
 void CVehicle::setHorizontalPosition(float x) {
 	this->mX = x;
+	this->sprite.setPosition(mX, mY);
 }
 
 void CVehicle::backToOriginPosision() {

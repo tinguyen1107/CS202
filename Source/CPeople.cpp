@@ -42,6 +42,7 @@ sf::Vector2f CPeople::getPosition() {
 void CPeople::setPosition(float x, float y) {
 	this->mX = x;
 	this->mY = y;
+	this->sprite.setPosition(this->mX, this->mY);
 }
 
 bool CPeople::isImpact(const CVehicle*&) { return false; }

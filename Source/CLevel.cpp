@@ -125,22 +125,21 @@ void CLevel::setLevel(Level _lev) {
 
 void CLevel::loadLevel(std::string str) {
 	char _lev = str[str.length() - 1];
-	switch (_lev)
-	{
+	switch (_lev) {
 	case '1':
 		this->setLevel(Level::Level_1);
 		break;
 	case '2':
-		this->setLevel(Level::Level_1);
+		this->setLevel(Level::Level_2);
 		break;
 	case '3':
-		this->setLevel(Level::Level_1);
+		this->setLevel(Level::Level_3);
 		break;
 	case '4':
-		this->setLevel(Level::Level_1);
+		this->setLevel(Level::Level_4);
 		break;
 	case '5':
-		this->setLevel(Level::Level_1);
+		this->setLevel(Level::Level_5);
 		break;
 	default:
 		cout << "Wrong level !!" << endl;

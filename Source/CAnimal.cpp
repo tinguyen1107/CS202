@@ -13,6 +13,7 @@ float CAnimal::getHorizontalPosition() {
 
 void CAnimal::setHorizontalPosition(float x) {
 	this->mX = x;
+	this->sprite.setPosition(this->mX, this->mY);
 }
 
 void CAnimal::backToOriginPosision() { 

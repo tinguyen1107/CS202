@@ -254,10 +254,10 @@ void CGame::handleIntroMenuState() {
 			string path;
 			cout << "Input PATH to Load: " << endl;
 			getline(cin, path);
-			cout << "Load from " << path << "..." << endl;
+			cout << "Loading from " << path << "..." << endl;
 			this->readData(path);
-		}
-		else {
+			this->state = GameState::playing_state;
+		} else {
 			cout << "DIDN'T IMPLEMENT" << endl;
 		}
 		break;
@@ -319,6 +319,8 @@ void CGame::handleCollisionMenuState() {
 }
 
 void CGame::handlePauseState() {
+	string path;
+
 	switch (this->event.key.code) {
 	case sf::Keyboard::W:
 	case sf::Keyboard::Up:
@@ -337,6 +339,12 @@ void CGame::handlePauseState() {
 			this->state = GameState::playing_state;
 			break;
 		case 1: // Save
+			this->state = GameState::input_path_state;
+			cout << "Input PATH to Save: " << endl;
+			getline(cin, path);
+			cout << "Saving to " << path << "..." << endl;
+			this->writeData(path);
+			this->state = GameState::pause_state;
 			break;
 		case 2: // New game
 			this->reInitObj();
@@ -363,13 +371,15 @@ void CGame::handleInputMenuState() {
 	default:
 		break;
 	}*/
-
-
 }
 
 void CGame::update() {
 	pollEvent();
 	if (this->state == GameState::playing_state) {
+		int randomPause = rand();
+		pauseCars = randomPause % 12 == 3;
+		pauseTrucks = randomPause % 18 == 3;
+
 		objMove();
 		reuseObj();
 

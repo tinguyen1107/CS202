@@ -15,6 +15,7 @@ public:
     CVehicle(float x, float y);
     
     sf::Sprite getSprite();
+
     float getHorizontalPosition();
     void setHorizontalPosition(float x);
 
