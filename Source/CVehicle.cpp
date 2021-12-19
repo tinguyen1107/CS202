@@ -4,6 +4,14 @@ CVehicle::CVehicle(float x, float y): mX(x), mY(y), originPosition(sf::Vector2f(
 
 sf::Sprite CVehicle::getSprite() { return this->sprite; }
 
+float CVehicle::getHorizontalPosition() {
+	return this->mX;
+}
+
+void CVehicle::setHorizontalPosition(float x) {
+	this->mX = x;
+}
+
 void CVehicle::backToOriginPosision() {
 	this->mX = originPosition.x;
 	this->mY = originPosition.y;

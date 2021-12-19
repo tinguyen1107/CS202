@@ -2,6 +2,7 @@
 #define CLevel_h
 
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include "CFont.h"
 
 enum class Level {
@@ -28,8 +29,12 @@ public:
 
 	void drawLevelLabel(sf::RenderWindow& window);
 
+	std::string getLevel();
+
 	/* MODIFY FUNCTION */
 	void setLevel(Level _lev = Level::Level_1);
+	void loadLevel(std::string str);
+
 	bool upLevel();
 };
 

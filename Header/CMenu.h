@@ -11,13 +11,15 @@ using namespace std;
 
 class CMenu {
 public:
-	CMenu(vector<string> opt, float width, float height);
+	CMenu(vector<string> opt, float width, float height, bool inputPath = false);
 	~CMenu();
 
 	void draw(sf::RenderWindow& window);
 	void MoveUp();
 	void MoveDown();
 	int GetPressedItem();
+
+	void updateTextField(sf::Event event);
 
 private:
 	int MAX_NUM_OF_OPT;
@@ -26,6 +28,9 @@ private:
 	vector<sf::Text> optText;
 
 	sf::Sprite sprite;
+
+	// support TextField
+	//sf::TextField tf(20);
 };
 
 #endif

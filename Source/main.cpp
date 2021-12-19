@@ -8,6 +8,7 @@ void renderThread() {
     while (game->isRuning())
         game->render();
 }
+
 /* 
 void func() {
     ifstream file("C:/Users/tinnguyen/CS202/Source/data.json");

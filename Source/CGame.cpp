@@ -5,6 +5,7 @@ void CGame::initVariable() {
 	this->state = GameState::welcome_state;
 	this->window = nullptr;
 	this->pauseCars = this->pauseTrucks = false;
+	this->isInputing = false;
 }
 
 void CGame::initWindow() {
@@ -161,9 +162,12 @@ CGame::~CGame() {
 	delete this->introMenu;
 	delete this->collisionMenu;
 	delete this->pauseMenu;
+	delete this->inputMenu;
 
 	delete this->people;
 	delete this->playground;
+
+	//delete this->tf;
 }
 
 const bool CGame::isRuning() const { return this->window->isOpen(); }
@@ -176,10 +180,12 @@ void CGame::initMenu() {
 	vector<string> optIntroMenu = { "New game", "Load game", "Setting" };
 	vector<string> optCollisionMenu = { "Play again", "Back to menu", "Quit" };
 	vector<string> optPauseMenu = { "Continue", "Save game", "New game", "Back to menu", "Quit"};
+	vector<string> optInputMenu = { "Path", "Load", "Cancel" };
 
 	introMenu = new CMenu(optIntroMenu, 150, 150);
 	collisionMenu = new CMenu(optCollisionMenu, 200, 200);
 	pauseMenu = new CMenu(optPauseMenu, 300, 300);
+	inputMenu = new CMenu(optInputMenu, 300, 300, true);
 }
 
 void CGame::drawGame() {
@@ -211,6 +217,9 @@ void CGame::pollEvent() {
 			case GameState::pause_state:
 				this->handlePauseState();
 				break;
+			case GameState::input_path_state:
+				this->handleInputMenuState();
+				break;
 			}
 		default:
 			break;
@@ -240,8 +249,17 @@ void CGame::handleIntroMenuState() {
 		cout << "Choice: " << choice << endl;
 		if (choice == 0) // start new game
 			this->state = GameState::playing_state;
-		else if (choice == 1)
+		else if (choice == 1) {
 			this->state = GameState::input_path_state;
+			string path;
+			cout << "Input PATH to Load: " << endl;
+			getline(cin, path);
+			cout << "Load from " << path << "..." << endl;
+			this->readData(path);
+		}
+		else {
+			cout << "DIDN'T IMPLEMENT" << endl;
+		}
 		break;
 	}
 }
@@ -338,6 +356,17 @@ void CGame::handlePauseState() {
 	}
 }
 
+void CGame::handleInputMenuState() {
+	/*if 
+	switch (switch_on)
+	{
+	default:
+		break;
+	}*/
+
+
+}
+
 void CGame::update() {
 	pollEvent();
 	if (this->state == GameState::playing_state) {
@@ -412,6 +441,52 @@ void CGame::reuseObj() {
 	}
 }
 
+void CGame::writeData(string path) {
+	ofstream outputFile(path);
+	if (!outputFile.is_open()) cout << "FAIL" << endl;
+	Json::Value value;
+
+	value["level"] = this->level.getLevel();
+	value["pauseCars"] = this->pauseCars;
+	value["pauseTrucks"] = this->pauseTrucks;
+	value["people"]["x"] = this->people->getPosition().x;
+	value["people"]["y"] = this->people->getPosition().y;
+
+	for (int i = 0; i < MAX_NUM_OBJ; ++i) {
+		value["cars"][i] = this->cars[i].getHorizontalPosition();
+		value["trucks"][i] = this->trucks[i].getHorizontalPosition();
+		value["birds"][i] = this->birds[i].getHorizontalPosition();
+		value["dinausors"][i] = this->dinausors[i].getHorizontalPosition();
+	}
+
+	outputFile << value;
+	outputFile.close();
+}
+
+void CGame::readData(string path) {
+	ifstream file(path);
+	if (!file.is_open()) cout << "FAIL" << endl;
+	Json::Value actualValue;
+	Json::Reader reader;
+
+	reader.parse(file, actualValue);
+
+	file.close();
+	cout << "Total json data: " << endl << actualValue << endl;
+
+	this->level.loadLevel(actualValue["level"].asString());
+	this->pauseCars = actualValue["pauseCars"].asBool();
+	this->pauseTrucks = actualValue["pauseTrucks"].asBool();
+	this->people->setPosition(actualValue["people"]["x"].asFloat(), actualValue["people"]["y"].asFloat());
+
+	for (int i = 0; i < MAX_NUM_OBJ; ++i) {
+		this->cars[i].setHorizontalPosition(actualValue["cars"][i].asFloat());
+		this->trucks[i].setHorizontalPosition(actualValue["trucks"][i].asFloat());
+		this->birds[i].setHorizontalPosition(actualValue["birds"][i].asFloat());
+		this->dinausors[i].setHorizontalPosition(actualValue["dinausors"][i].asFloat());
+	}
+}
+
 void CGame::render() {
 	this->window->clear();
 	
@@ -432,7 +507,10 @@ void CGame::render() {
 		collisionMenu->draw(*this->window);
 		break;
 	case GameState::wait_for_level_up_state:
-
+		break;
+	case GameState::input_path_state:
+		this->inputMenu->draw(*this->window);
+		break;
 	default:
 		break;
 	}	

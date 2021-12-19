@@ -7,6 +7,14 @@ sf::Sprite CAnimal::getSprite()
 	return this->sprite;
 }
 
+float CAnimal::getHorizontalPosition() {
+	return this->mX;
+}
+
+void CAnimal::setHorizontalPosition(float x) {
+	this->mX = x;
+}
+
 void CAnimal::backToOriginPosision() { 
 	this->mX = originPosition.x;
 	this->mY = originPosition.y;

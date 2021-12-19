@@ -12,7 +12,11 @@ protected:
     sf::Vector2f originPosition;
 public:
     CAnimal(float x, float y);
+    
     sf::Sprite getSprite();
+    float getHorizontalPosition();
+    void setHorizontalPosition(float x);
+    
     void backToOriginPosision();
     virtual void move(float, float) = 0;
     virtual void tell() = 0;

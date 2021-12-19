@@ -27,6 +27,9 @@ public:
 
     void backToOriginPosision();
 
+    sf::Vector2f getPosition();
+    void setPosition(float x, float y);
+
     bool isImpact(const CVehicle*&);
     bool isImpact(const CAnimal*&);
 

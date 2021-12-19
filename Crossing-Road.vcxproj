@@ -162,6 +162,7 @@
     <ClCompile Include="Source\CVehicle.cpp" />
     <ClCompile Include="Source\CLevel.cpp" />
     <ClCompile Include="Source\CPeople.cpp" />
+    <ClCompile Include="Source\TextField.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dist\json\json-forwards.h" />
@@ -176,9 +177,7 @@
     <ClInclude Include="Header\CPlayGround.h" />
     <ClInclude Include="Json support\dist\json\json-forwards.h" />
     <ClInclude Include="Json support\dist\json\json.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Source\data.json" />
+    <ClInclude Include="Header\TextField.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

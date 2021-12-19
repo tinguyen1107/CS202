@@ -94,6 +94,10 @@ float CLevel::getDinausorStep() {
 
 void CLevel::drawLevelLabel(sf::RenderWindow& window) { window.draw(this->levelLabel); }
 
+string CLevel::getLevel() {
+	return this->levelLabel.getString();
+}
+
 void CLevel::setLevel(Level _lev) {
 	switch (_lev) {
 	case Level::Level_1:
@@ -115,6 +119,31 @@ void CLevel::setLevel(Level _lev) {
 	case Level::Level_5:
 		this->lev = Level::Level_5;
 		this->levelLabel.setString("LEVEL 5");
+		break;
+	}
+}
+
+void CLevel::loadLevel(std::string str) {
+	char _lev = str[str.length() - 1];
+	switch (_lev)
+	{
+	case '1':
+		this->setLevel(Level::Level_1);
+		break;
+	case '2':
+		this->setLevel(Level::Level_1);
+		break;
+	case '3':
+		this->setLevel(Level::Level_1);
+		break;
+	case '4':
+		this->setLevel(Level::Level_1);
+		break;
+	case '5':
+		this->setLevel(Level::Level_1);
+		break;
+	default:
+		cout << "Wrong level !!" << endl;
 		break;
 	}
 }

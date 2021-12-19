@@ -15,6 +15,6 @@ bool CFont::initFonts() {
 //}
 
 CFont::CFont() {
-	if (initFonts()) std::cout << "Load font success." << std::endl;
-	else std::cout << "Load font failed" << std::endl;
+	if (initFonts()) std::cout << "LOAD FONT SUCCESS" << std::endl;
+	else std::cout << "LOAD FONT FAILED" << std::endl;
 }

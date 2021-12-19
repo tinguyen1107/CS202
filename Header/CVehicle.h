@@ -13,7 +13,11 @@ protected:
     sf::Vector2f originPosition;
 public:
     CVehicle(float x, float y);
+    
     sf::Sprite getSprite();
+    float getHorizontalPosition();
+    void setHorizontalPosition(float x);
+
     void backToOriginPosision();
     virtual void move(float, float) = 0;
 };

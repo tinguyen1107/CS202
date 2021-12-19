@@ -48,6 +48,9 @@
     <ClCompile Include="Json support\dist\jsoncpp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TextField.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\CGame.h">
@@ -86,8 +89,8 @@
     <ClInclude Include="Json support\dist\json\json-forwards.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Source\data.json" />
+    <ClInclude Include="Header\TextField.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

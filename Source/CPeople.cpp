@@ -35,6 +35,15 @@ void CPeople::backToOriginPosision() {
 	this->sprite.setPosition(originPosition); 
 }
 
+sf::Vector2f CPeople::getPosition() {
+	return this->sprite.getPosition();
+}
+
+void CPeople::setPosition(float x, float y) {
+	this->mX = x;
+	this->mY = y;
+}
+
 bool CPeople::isImpact(const CVehicle*&) { return false; }
 
 bool CPeople::isImpact(const CAnimal*&) { return false; }

@@ -1,7 +1,10 @@
 #include "../Header/CMenu.h"
 
-CMenu::CMenu(vector<string> optString, float width, float height) {
+CMenu::CMenu(vector<string> optString, float width, float height, bool inputPath) 
+	//: path(nullptr)
+	{
 	MAX_NUM_OF_OPT = optString.size();
+
 	for (int i = 0; i < optString.size(); i++) {
 		sf::Text opt;
 		opt.setFont(font.Regular);
@@ -13,6 +16,8 @@ CMenu::CMenu(vector<string> optString, float width, float height) {
 	}
 	optText[0].setFillColor(sf::Color::Red);
 	selectedIndex = 0;
+
+	//if (inputPath) path = new string("");
 }
 
 CMenu::~CMenu() {}
@@ -40,3 +45,14 @@ void CMenu::MoveDown() {
 }
 
 int CMenu::GetPressedItem() { return selectedIndex; }
+
+void CMenu::updateTextField(sf::Event event) {
+	/*if (event.type == sf::Event::TextEntered)
+	{
+		if (event.text.unicode < 128)
+		{
+			*path += event.text.unicode;
+			optText[0].setString(*path);
+		}
+	}*/
+}

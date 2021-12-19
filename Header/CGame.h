@@ -10,12 +10,15 @@
 #include <json/json.h>
 
 #include <iostream>
+#include <fstream>
 
 #include "CFont.h"
 #include "CMenu.h"
 #include "CPeople.h"
 #include "CLevel.h"
 #include "CPlayGround.h"
+
+#include "../Header/TextField.h"
 
 using namespace std;
 
@@ -49,23 +52,27 @@ private:
 	bool pauseCars;
 	bool pauseTrucks;
 
-	/* --- --- --- -- */
-	/* --- WINDOW --- */
-	/* --- --- --- -- */
-	sf::RenderWindow* window;
-	sf::Event event;
-	sf::VideoMode videoMode;
+	bool isInputing;
 
 	/* --- --- - --- --- */
 	/* --- COMPONENT --- */
 	/* --- --- - --- --- */
+
+	/* --- WINDOW --- */
+	sf::RenderWindow* window;
+	sf::Event event;
+	sf::VideoMode videoMode;
+
+	/* --- SUBCOMPONENT --- */
 	sf::Text text;
 	CPlayground* playground;
+	//sf::TextField* tf;
 
 	/* --- MENU --- */
 	CMenu* introMenu;
 	CMenu* collisionMenu;
 	CMenu* pauseMenu;
+	CMenu* inputMenu;
 
 	/* --- --- --- -- */
 	/* --- OBJECT --- */
@@ -110,12 +117,16 @@ private:
 	void handlePlayingState();
 	void handleCollisionMenuState();
 	void handlePauseState();
+	void handleInputMenuState();
 
 	/*------- UPDATE EVENT -------*/
 	void checkCollision();
 	void objMove();
 	void reuseObj();
-	
+
+	void writeData(string path);
+	void readData(string path);
+
 public:
 	CGame();
 	//static CGame* getInstance();
