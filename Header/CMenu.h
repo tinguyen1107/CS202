@@ -24,7 +24,7 @@ public:
 private:
 	int MAX_NUM_OF_OPT;
 	int selectedIndex;
-	CFont font;
+	CFont* localFont;
 	vector<sf::Text> optText;
 
 	sf::Sprite sprite;

@@ -7,7 +7,7 @@ CMenu::CMenu(vector<string> optString, float width, float height, bool inputPath
 
 	for (int i = 0; i < optString.size(); i++) {
 		sf::Text opt;
-		opt.setFont(font.Regular);
+		opt.setFont(localFont->getInstance()->Regular);
 		opt.setFillColor(sf::Color(255, 255, 255));
 		opt.setString(optString[i]);
 		opt.setPosition(sf::Vector2f(width / 2, height / (MAX_NUM_OF_OPT + 1) * (i+1)));

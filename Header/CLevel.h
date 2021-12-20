@@ -12,7 +12,7 @@ enum class Level {
 
 class CLevel {
 private:
-	CFont localFont;
+	CFont* localFont;
 
 	Level lev;
 	sf::Text levelLabel;

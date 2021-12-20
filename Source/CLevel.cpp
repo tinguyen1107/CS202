@@ -6,7 +6,7 @@
 using namespace std;
 
 CLevel::CLevel(Level _lev) {
-	levelLabel.setFont(localFont.SemiBold);
+	levelLabel.setFont(localFont->getInstance()->SemiBold);
 	levelLabel.setCharacterSize(60);
 	levelLabel.setFillColor(sf::Color::White);
 	levelLabel.setPosition(0, 0);

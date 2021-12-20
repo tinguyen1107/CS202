@@ -6,12 +6,13 @@
 class CFont {
 private:
 	static CFont* instance;
-	//CFont();
+	CFont();
 
 	bool initFonts();
 public:
-	//static CFont* getInstance();
-	CFont();
+	static CFont* getInstance();
+	
+	~CFont();
 
 	sf::Font Bold;
 	sf::Font SemiBold;

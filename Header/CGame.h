@@ -90,8 +90,8 @@ private:
 	/* --- --- - --- --- */
 	/* --- UTILITIES --- */
 	/* --- --- - --- --- */
-	CFont localFont;
-	CImage localImage;
+	CFont* localFont;
+	CImage* localImage;
 
 	//CGame();
 

@@ -7,6 +7,9 @@ using namespace std;
 
 class CImage {
 private:
+	static CImage* instance;
+	CImage();
+	
 	sf::Image carImg;
 	sf::Texture* carTt;
 
@@ -25,7 +28,7 @@ private:
 	bool initImage();
 
 public:
-	CImage();
+	static CImage* getInstance();
 	~CImage();
 
 	sf::Image getCarImage() const;

@@ -12,15 +12,15 @@ void CGame::initWindow() {
 	this->videoMode.height = SCREEN_HEIGHT;
 	this->videoMode.width = SCREEN_WIDTH;
 
-	sf::ContextSettings settings;
-	settings.antialiasingLevel = 8;
+	//sf::ContextSettings settings;
+	//settings.antialiasingLevel = 8;
 
 	this->playground = new CPlayground();
 	this->window = new sf::RenderWindow(
 		this->videoMode, 
 		"Crossing road", 
-		sf::Style::Titlebar | sf::Style::Close, 
-		settings
+		sf::Style::Titlebar | sf::Style::Close 
+		//settings
 	);
 
 	this->window->setActive(false);
@@ -41,16 +41,8 @@ void CGame::reInitObj() {
 	this->state = GameState::playing_state;
 }
 
-//void CGame::initEnemies() {
-//	this->enemy.setPosition(20.f, 10.f);
-//	this->enemy.setSize(sf::Vector2f(100.f, 100.f));
-//	this->enemy.setFillColor(sf::Color::Cyan);
-//	this->enemy.setOutlineColor(sf::Color::Green);
-//	this->enemy.setOutlineThickness(1.f);
-//}
-
 void CGame::initTexts() {
-	text.setFont(localFont.SemiBold);
+	text.setFont(localFont->getInstance()->SemiBold);
 	text.setString("Welcome");
 	text.setCharacterSize(60);
 	text.setFillColor(sf::Color::White);
@@ -63,8 +55,8 @@ void CGame::initTexts() {
 }
 
 void CGame::initCars(int number) {
-	sf::Texture* pCarTexture = localImage.getCarTexture();
-	sf::Vector2u carSize = localImage.getCarImage().getSize();
+	sf::Texture* pCarTexture = localImage->getInstance()->getCarTexture();
+	sf::Vector2u carSize = localImage->getInstance()->getCarImage().getSize();
 	float carPosX = (-1.0f) * (float)carSize.x;
 	float carPosY = 120.0f * 4.0f - (float)carSize.y;
 
@@ -77,8 +69,8 @@ void CGame::initCars(int number) {
 }
 
 void CGame::initTrucks(int number) {
-	sf::Texture* pTruckTexture = localImage.getTruckTexture();
-	sf::Vector2u truckSize = localImage.getTruckImage().getSize();
+	sf::Texture* pTruckTexture = localImage->getInstance()->getTruckTexture();
+	sf::Vector2u truckSize = localImage->getInstance()->getTruckImage().getSize();
 	float truckPosX = SCREEN_WIDTH + 1.0f;
 	float truckPosY = 120.0f * 5.0f - (float)truckSize.y;
 
@@ -91,8 +83,8 @@ void CGame::initTrucks(int number) {
 }
 
 void CGame::initBirds(int number) {
-	sf::Texture* pBirdTexture = localImage.getBirdTexture();
-	sf::Vector2u birdSize = localImage.getBirdImage().getSize();
+	sf::Texture* pBirdTexture = localImage->getInstance()->getBirdTexture();
+	sf::Vector2u birdSize = localImage->getInstance()->getBirdImage().getSize();
 	float birdPosX = SCREEN_WIDTH + 1.0f;
 	float birdPosY = 120.0f * 2.0f - 40.0f - (float)birdSize.y;
 
@@ -105,10 +97,10 @@ void CGame::initBirds(int number) {
 }
 
 void CGame::initDinausors(int number) {
-	sf::Texture* pDinausorTexture = localImage.getDinausorTexture();
+	sf::Texture* pDinausorTexture = localImage->getInstance()->getDinausorTexture();
 	float dinausorPos = (-1.0f) * pDinausorTexture[0].getSize().x;
 
-	sf::Vector2u dinausorSize = localImage.getDinausorImage().getSize();
+	sf::Vector2u dinausorSize = localImage->getInstance()->getDinausorImage().getSize();
 	float dinausorPosX = (-1.0f) * dinausorSize.x;
 	float dinausorPosY = 120.0f * 3.0f - (float)dinausorSize.y;
 
@@ -141,7 +133,7 @@ CGame::CGame() {
 	this->initBirds();
 	this->initDinausors();
 
-	this->people = new CPeople(*this->localImage.getPeopleTexture(), SCREEN_WIDTH/2.0f, SCREEN_HEIGHT - 60.0f);
+	this->people = new CPeople(*this->localImage->getInstance()->getPeopleTexture(), SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT - 60.0f);
 
 	initTexts();
 
@@ -166,8 +158,6 @@ CGame::~CGame() {
 
 	delete this->people;
 	delete this->playground;
-
-	//delete this->tf;
 }
 
 const bool CGame::isRuning() const { return this->window->isOpen(); }
@@ -395,10 +385,10 @@ void CGame::update() {
 }
 
 void CGame::checkCollision() {
-	if (this->people->isImpact(cars, localImage)
-		|| this->people->isImpact(trucks, localImage)
-		|| this->people->isImpact(birds, localImage)
-		|| this->people->isImpact(dinausors, localImage)) {
+	if (this->people->isImpact(cars, *localImage->getInstance())
+		|| this->people->isImpact(trucks, *localImage->getInstance())
+		|| this->people->isImpact(birds, *localImage->getInstance())
+		|| this->people->isImpact(dinausors, *localImage->getInstance())) {
 		cout << "COLLISION" << endl;
 		this->state = GameState::collision_state;
 	}
@@ -435,12 +425,12 @@ void CGame::reuseObj() {
 		initCars(1);
 	}
 
-	if (trucks[0].getSprite().getPosition().x < (-1.0f) * localImage.getTruckImage().getSize().x) {
+	if (trucks[0].getSprite().getPosition().x < (-1.0f) * localImage->getInstance()->getTruckImage().getSize().x) {
 		trucks.erase(trucks.begin());
 		initTrucks(1);
 	}
 
-	if (birds[0].getSprite().getPosition().x < (-1.0f) * localImage.getBirdImage().getSize().x) {
+	if (birds[0].getSprite().getPosition().x < (-1.0f) * localImage->getInstance()->getBirdImage().getSize().x) {
 		birds.erase(birds.begin());
 		initBirds(1);
 	}

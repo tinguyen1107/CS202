@@ -1,5 +1,7 @@
 #include "../Header/CImage.h"
 
+CImage* CImage::instance = nullptr;
+
 bool CImage::initImage() {
 	const string path = "Resource/Image/";
 	return carImg.loadFromFile(path + "car.png")
@@ -27,6 +29,11 @@ CImage::CImage() {
 
 	peopleTt = new sf::Texture;
 	peopleTt->loadFromImage(peopleImg);
+}
+
+CImage* CImage::getInstance() {
+	if (!instance) instance = new CImage;
+	return instance;
 }
 
 CImage::~CImage() {
