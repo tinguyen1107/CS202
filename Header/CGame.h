@@ -13,6 +13,8 @@
 #include <fstream>
 
 #include "CFont.h"
+#include "CSound.h"
+
 #include "CMenu.h"
 #include "CPeople.h"
 #include "CLevel.h"
@@ -92,6 +94,7 @@ private:
 	/* --- --- - --- --- */
 	CFont* localFont;
 	CImage* localImage;
+	CSound* localSound;
 
 	//CGame();
 

@@ -226,6 +226,10 @@ void CGame::handleWelcomeState() {
 
 void CGame::handleIntroMenuState() {
 	switch (this->event.key.code) {
+	case sf::Keyboard::P:
+		cout << "call" << endl;
+		this->localSound->getInstance()->success.play();
+		break;
 	case sf::Keyboard::W:
 	case sf::Keyboard::Up:
 		introMenu->MoveUp();
