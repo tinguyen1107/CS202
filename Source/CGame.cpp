@@ -6,6 +6,8 @@ void CGame::initVariable() {
 	this->window = nullptr;
 	this->pauseCars = this->pauseTrucks = false;
 	this->isInputing = false;
+
+	this->localSound->getInstance();
 }
 
 void CGame::initWindow() {
@@ -52,6 +54,8 @@ void CGame::initTexts() {
 	text.setOrigin(textRect.left + textRect.width / 2.0f,
 		textRect.top + textRect.height / 2.0f);
 	text.setPosition(sf::Vector2f(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f));
+
+	welcome_view_sprite.setTexture(*this->localImage->getInstance()->getWelcomeViewTexture());
 }
 
 void CGame::initCars(int number) {
@@ -163,7 +167,8 @@ CGame::~CGame() {
 const bool CGame::isRuning() const { return this->window->isOpen(); }
 
 void CGame::welcome() {
-	this->window->draw(text);
+	//this->window->draw(text);
+	this->window->draw(welcome_view_sprite);
 }
 
 void CGame::initMenu() {
@@ -259,31 +264,19 @@ void CGame::handleIntroMenuState() {
 }
 
 void CGame::handlePlayingState() {
-	switch (this->event.key.code) {
-	case sf::Keyboard::W:
-	case sf::Keyboard::Up:
-		this->people->up(2);
-		break;
-	case sf::Keyboard::S:
-	case sf::Keyboard::Down:
-		this->people->down(2);
-		break;
-	case sf::Keyboard::A:
-	case sf::Keyboard::Left:
-		this->people->left(2);
-		break;
-	case sf::Keyboard::D:
-	case sf::Keyboard::Right:
-		this->people->right(2);
-		break;
-	case sf::Keyboard::R:
-		this->people->backToOriginPosision();
-		break;
-	case sf::Keyboard::Escape:
-	case sf::Keyboard::P:
-		this->state = GameState::pause_state;
-		break;
-	}
+	float peopleStep = 10;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) this->people->up(peopleStep);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) this->people->down(peopleStep);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) this->people->left(peopleStep);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) this->people->right(peopleStep);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) this->state = GameState::pause_state;
 }
 
 void CGame::handleCollisionMenuState() {

@@ -13,6 +13,7 @@
 #include <fstream>
 
 #include "CFont.h"
+#include "CImage.h"
 #include "CSound.h"
 
 #include "CMenu.h"
@@ -24,8 +25,8 @@
 
 using namespace std;
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 720
+#define SCREEN_WIDTH 1000
+#define SCREEN_HEIGHT 700
 
 #define WIDTH 400
 
@@ -43,8 +44,6 @@ enum GameState {
 
 class CGame {
 private:
-	//static CGame* instancePtr;
-
 	/* --- --- -- --- --- */
 	/* --- PROPERTIES --- */
 	/* --- --- -- --- --- */
@@ -67,6 +66,8 @@ private:
 
 	/* --- SUBCOMPONENT --- */
 	sf::Text text;
+	sf::Sprite welcome_view_sprite;
+
 	CPlayground* playground;
 	//sf::TextField* tf;
 
@@ -95,8 +96,6 @@ private:
 	CFont* localFont;
 	CImage* localImage;
 	CSound* localSound;
-
-	//CGame();
 
 	// Private Functions
 	void initVariable();
@@ -132,7 +131,6 @@ private:
 
 public:
 	CGame();
-	//static CGame* getInstance();
 	~CGame();
 
 	const bool isRuning() const;

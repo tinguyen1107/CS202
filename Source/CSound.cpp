@@ -30,7 +30,15 @@ CSound* CSound::getInstance() {
 
 CSound::~CSound() {
     delete instance;
+
+    delete intro;
     delete car_collision;
+    delete truck_collision;
+    delete bird_collision;
+    delete dinausor_collision;
+    delete people_move;
+    delete playing;
+    delete waiting;
 }
 
 CSound::CSound() {

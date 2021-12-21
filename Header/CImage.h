@@ -9,6 +9,9 @@ class CImage {
 private:
 	static CImage* instance;
 	CImage();
+
+	sf::Image welcome_view_img;
+	sf::Texture* welcome_view_tt;
 	
 	sf::Image carImg;
 	sf::Texture* carTt;
@@ -30,6 +33,8 @@ private:
 public:
 	static CImage* getInstance();
 	~CImage();
+
+	sf::Texture* getWelcomeViewTexture() const;
 
 	sf::Image getCarImage() const;
 	sf::Texture* getCarTexture() const;

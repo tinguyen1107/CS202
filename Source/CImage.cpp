@@ -4,7 +4,8 @@ CImage* CImage::instance = nullptr;
 
 bool CImage::initImage() {
 	const string path = "Resource/Image/";
-	return carImg.loadFromFile(path + "car.png")
+	return welcome_view_img.loadFromFile(path + "welcome_view_img.png")
+		&& carImg.loadFromFile(path + "car.png")
 		&& truckImg.loadFromFile(path + "truck.png")
 		&& dinausorImg.loadFromFile(path + "dinausor.png")
 		&& birdImg.loadFromFile(path + "bird.png")
@@ -29,6 +30,9 @@ CImage::CImage() {
 
 	peopleTt = new sf::Texture;
 	peopleTt->loadFromImage(peopleImg);
+
+	welcome_view_tt = new sf::Texture;
+	welcome_view_tt->loadFromImage(welcome_view_img);
 }
 
 CImage* CImage::getInstance() {
@@ -42,7 +46,10 @@ CImage::~CImage() {
 	delete[] dinausorTt;
 
 	delete peopleTt;
+	delete welcome_view_tt;
 }
+
+sf::Texture* CImage::getWelcomeViewTexture() const { return this->welcome_view_tt; }
 
 sf::Image CImage::getCarImage() const { return carImg; }
 sf::Texture* CImage::getCarTexture() const { return carTt; }
