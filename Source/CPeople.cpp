@@ -55,8 +55,10 @@ bool CPeople::isImpact(vector<CCar> cars, CImage& img) {
 		|| (this->mY < 120.0f * 3.0f)) return false;
 
 	for (int i = 0; i < cars.size(); ++i)
-		if (PixelPerfectCollision(sprite, cars[i].getSprite(), img.getPeopleImg(), img.getCarImage()))
+		if (PixelPerfectCollision(sprite, cars[i].getSprite(), img.getPeopleImg(), img.getCarImage())) {
+			this->localSound->getInstance()->car_collision->playSound();
 			return true;
+		}
 	return false;
 }
 
@@ -66,8 +68,10 @@ bool CPeople::isImpact(vector<CTruck> trucks, CImage& img) {
 		|| (this->mY < 120.0f * 4.0f)) return false;
 
 	for (int i = 0; i < trucks.size(); ++i)
-		if (PixelPerfectCollision(sprite, trucks[i].getSprite(), img.getPeopleImg(), img.getTruckImage()))
+		if (PixelPerfectCollision(sprite, trucks[i].getSprite(), img.getPeopleImg(), img.getTruckImage())) {
+			this->localSound->getInstance()->car_collision->playSound();
 			return true;
+		}
 	return false;
 }
 

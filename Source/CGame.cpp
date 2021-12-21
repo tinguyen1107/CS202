@@ -228,7 +228,7 @@ void CGame::handleIntroMenuState() {
 	switch (this->event.key.code) {
 	case sf::Keyboard::P:
 		cout << "call" << endl;
-		this->localSound->getInstance()->success.play();
+		this->localSound->getInstance()->car_collision->playSound();
 		break;
 	case sf::Keyboard::W:
 	case sf::Keyboard::Up:
@@ -243,7 +243,7 @@ void CGame::handleIntroMenuState() {
 		cout << "Choice: " << choice << endl;
 		if (choice == 0) // start new game
 			this->state = GameState::playing_state;
-		else if (choice == 1) {
+		else if (choice == 1) { // load game
 			this->state = GameState::input_path_state;
 			string path;
 			cout << "Input PATH to Load: " << endl;
@@ -251,7 +251,7 @@ void CGame::handleIntroMenuState() {
 			cout << "Loading from " << path << "..." << endl;
 			this->readData(path);
 			this->state = GameState::playing_state;
-		} else {
+		} else { // setting
 			cout << "DIDN'T IMPLEMENT" << endl;
 		}
 		break;

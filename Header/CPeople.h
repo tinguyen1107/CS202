@@ -3,6 +3,7 @@
 
 #include "CAnimal.h"
 #include "CVehicle.h"
+#include "CSound.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -13,6 +14,8 @@ private:
 
     bool mState;
     sf::Sprite sprite;
+
+    CSound* localSound;
 
     inline sf::IntRect FToIRect(const sf::FloatRect& f);
     bool PixelPerfectCollision(const sf::Sprite& a, const sf::Sprite& b,
