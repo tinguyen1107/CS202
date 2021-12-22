@@ -19,12 +19,7 @@ void CSingleImage::drawTo(sf::RenderWindow& window){
 CImage* CImage::instance = nullptr;
 
 bool CImage::initImage() {
-	const string path = "Resource/Image/";
-	return 
-		
-		//welcome_view_img.loadFromFile(path + "welcome_view_img.png")
-		//&& 
-		carImg.loadFromFile(path + "car.png")
+	return carImg.loadFromFile(path + "car.png")
 		&& truckImg.loadFromFile(path + "truck.png")
 		&& dinausorImg.loadFromFile(path + "dinausor.png")
 		&& birdImg.loadFromFile(path + "bird.png")
@@ -51,14 +46,16 @@ CImage::CImage() {
 	peopleTt->loadFromImage(peopleImg);
 
 	try {
-		this->welcome_sImg = new CSingleImage("Resource/Image/welcome_view_img.png");
-		this->logo_sImg = new CSingleImage("Resource/Image/playground.png");
+		this->welcome_sImg = new CSingleImage(path + "welcome_view_img.png");
+		this->playground_sImg = new CSingleImage(path + "playground.png");
+		this->road_sImg = new CSingleImage(path + "road.png");
+		this->menu_bg_sImg = new CSingleImage(path + "menu_bg.png");
 	}
 	catch (int x) {
 		if (x == -1) cout << "LOAD FAILED" << endl;
 	}
 
-	this->logo_sImg->sprite->setPosition(0.0f, 0.0f);
+	this->road_sImg->sprite->setPosition(340.0f, 20.0f);
 	cout << "LOAD IMG SUCCESS" << endl;
 }
 
@@ -75,7 +72,9 @@ CImage::~CImage() {
 	delete peopleTt;
 
 	delete welcome_sImg;
-	delete logo_sImg;
+	delete playground_sImg;
+	delete road_sImg;
+	delete menu_bg_sImg;
 }
 
 sf::Image CImage::getCarImage() const { return carImg; }

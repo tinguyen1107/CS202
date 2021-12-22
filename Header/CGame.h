@@ -88,7 +88,7 @@ private:
 
 	// Animal
 	vector<CBird> birds;
-	vector<CDinausor> dinausors;
+	vector<CDinosaur> dinausors;
 	
 	/* --- --- - --- --- */
 	/* --- UTILITIES --- */
@@ -136,8 +136,6 @@ public:
 	const bool isRuning() const;
 
 	// Functions
-	void welcome();
-
 	void drawGame();
 
 	void pollEvent();

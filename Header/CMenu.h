@@ -2,6 +2,7 @@
 #define CMenu_h
 
 #include "CFont.h"
+#include "CImage.h"
 
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -11,7 +12,7 @@ using namespace std;
 
 class CMenu {
 public:
-	CMenu(vector<string> opt, float width, float height, bool inputPath = false);
+	CMenu(vector<string> optString, float x, float y, float height, bool inputPath = false);
 	~CMenu();
 
 	void draw(sf::RenderWindow& window);
@@ -25,6 +26,7 @@ private:
 	int MAX_NUM_OF_OPT;
 	int selectedIndex;
 	CFont* localFont;
+	CImage* localImage;
 	vector<sf::Text> optText;
 
 	sf::Sprite sprite;

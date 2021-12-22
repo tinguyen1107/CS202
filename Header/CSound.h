@@ -11,8 +11,7 @@ protected:
 	sf::SoundBuffer *soundBuffer;
 	sf::Sound *sound;
 public:
-	CSoundEffect();
-	CSoundEffect(string path);
+	CSoundEffect(string path, int volume = 100);
 	~CSoundEffect();
 
 	void playSound();

@@ -7,7 +7,9 @@
 
 enum class Level {
 	Level_1, Level_2,
-	Level_3, Level_4, Level_5
+	Level_3, Level_4, 
+	Level_5, Level_6,
+	Level_7
 };
 
 class CLevel {
@@ -21,6 +23,8 @@ public:
 	 
 	/* GET FUNCTION */
 	float getDistance();
+
+	float getPeopleStep();
 
 	float getCarStep();
 	float getTruckStep();

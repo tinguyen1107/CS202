@@ -40,20 +40,20 @@ void CBird::tell() {
 	cout << "BIRD TELL!!" << endl;
 }
 
-CDinausor::CDinausor() : CAnimal(0, 0) {}
+CDinosaur::CDinosaur() : CAnimal(0, 0) {}
 
-CDinausor::CDinausor(sf::Texture& texture, float x, float y) : CAnimal(x, y) {
+CDinosaur::CDinosaur(sf::Texture& texture, float x, float y) : CAnimal(x, y) {
 	this->sprite.setTexture(texture);
 	this->sprite.setPosition(x, y);
 }
 
-void CDinausor::move(float x, float y) {
+void CDinosaur::move(float x, float y) {
 	this->mX += x;
 	this->mY += y;
 
 	this->sprite.setPosition(this->mX, this->mY);
 }
 
-void CDinausor::tell() {
+void CDinosaur::tell() {
 	cout << "DINAUSOR TELL!!" << endl;
 }

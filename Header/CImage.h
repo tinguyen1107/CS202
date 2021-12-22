@@ -19,11 +19,10 @@ public:
 
 class CImage {
 private:
+	const string path = "Resource/Image/";
+
 	static CImage* instance;
 	CImage();
-	
-	//sf::Texture* welcome_view_tt;
-	//CSingleImage* welcome_sImg;
 	
 	sf::Image carImg;
 	sf::Texture* carTt;
@@ -46,9 +45,9 @@ public:
 	static CImage* getInstance();
 	~CImage();
 	CSingleImage* welcome_sImg;
-	CSingleImage* logo_sImg;
-
-	//sf::Texture* getWelcomeViewTexture() const;
+	CSingleImage* playground_sImg;
+	CSingleImage* road_sImg;
+	CSingleImage* menu_bg_sImg;
 
 	sf::Image getCarImage() const;
 	sf::Texture* getCarTexture() const;

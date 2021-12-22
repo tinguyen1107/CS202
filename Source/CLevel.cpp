@@ -9,7 +9,6 @@ CLevel::CLevel(Level _lev) {
 	levelLabel.setFont(localFont->getInstance()->SemiBold);
 	levelLabel.setCharacterSize(60);
 	levelLabel.setFillColor(sf::Color::White);
-	levelLabel.setPosition(0, 0);
 
 	this->setLevel(_lev);
 }
@@ -18,94 +17,80 @@ float CLevel::getDistance() {
 	int i = rand();
 
 	switch (this->lev) {
-	case Level::Level_1:
-		return 350.0f + i % 400;
-	case Level::Level_2:
-		return 300.0f + i % 400;
-	case Level::Level_3:
-		return 250.0f + i % 400;
-	case Level::Level_4:
-		return 200.0f + i % 400;
-	case Level::Level_5:
-		return 200.0f + i % 300;
+	case Level::Level_1: return 350.0f + i % 400;
+	case Level::Level_2: return 300.0f + i % 400;
+	case Level::Level_3: return 250.0f + i % 400;
+	case Level::Level_4: return 200.0f + i % 400;
+	case Level::Level_5: return 200.0f + i % 300;
+	default: return 0.0f;
+	}
+}
+
+float CLevel::getPeopleStep() {
+	switch (this->lev) {
+	case Level::Level_1: return 2.0f;
+	case Level::Level_2: return 2.25f;
+	case Level::Level_3: return 2.5f;
+	case Level::Level_4: return 2.75f;
+	case Level::Level_5: return 3.0f;
 	default: return 0.0f;
 	}
 }
 
 float CLevel::getCarStep() {
 	switch (this->lev) {
-	case Level::Level_1:
-		return 0.0002f;
-	case Level::Level_2:
-		return 0.0004f;
-	case Level::Level_3:
-		return 0.001f;
-	case Level::Level_4:
-		return 0.002f;
-	case Level::Level_5:
-		return 0.0035f;
+	case Level::Level_1: return 0.00015f;
+	case Level::Level_2: return 0.0003f;
+	case Level::Level_3: return 0.0006f;
+	case Level::Level_4: return 0.001f;
+	case Level::Level_5: return 0.0014f;
+	default: return 0.0f;
 	}
 }
 
 float CLevel::getTruckStep()
 {
 	switch (this->lev) {
-	case Level::Level_1:
-		return -0.0005f;
-	case Level::Level_2:
-		return -0.0007f;
-	case Level::Level_3:
-		return -0.002f;
-	case Level::Level_4:
-		return -0.003f;
-	case Level::Level_5:
-		return -0.0045f;
+	case Level::Level_1: return -0.00017f;
+	case Level::Level_2: return -0.00034f;
+	case Level::Level_3: return -0.00068f;
+	case Level::Level_4: return -0.0012f;
+	case Level::Level_5: return -0.0015f;
 	default: return 0.0f;
 	}
 }
 
 float CLevel::getBirdStep() {
 	switch (this->lev) {
-	case Level::Level_1:
-		return -0.0003f;
-	case Level::Level_2:
-		return -0.0005f;
-	case Level::Level_3:
-		return -0.0012f;
-	case Level::Level_4:
-		return -0.0022f;
-	case Level::Level_5:
-		return -0.003f;
+	case Level::Level_1: return -0.0001f;
+	case Level::Level_2: return -0.0002f;
+	case Level::Level_3: return -0.0004f;
+	case Level::Level_4: return -0.0008f;
+	case Level::Level_5: return -0.0012f;
 	default: return 0.0f;
 	}
 }
 
 float CLevel::getDinausorStep() {
 	switch (this->lev) {
-	case Level::Level_1:
-		return 0.0002f;
-	case Level::Level_2:
-		return 0.0004f;
-	case Level::Level_3:
-		return 0.001f;
-	case Level::Level_4:
-		return 0.0018f;
-	case Level::Level_5:
-		return 0.0032f;
+	case Level::Level_1: return 0.00013f;
+	case Level::Level_2: return 0.00026f;
+	case Level::Level_3: return 0.00052f;
+	case Level::Level_4: return 0.00104f;
+	case Level::Level_5: return 0.0011f;
+	default: return 0.0f;
 	}
 }
 
 void CLevel::drawLevelLabel(sf::RenderWindow& window) { window.draw(this->levelLabel); }
 
-string CLevel::getLevel() {
-	return this->levelLabel.getString();
-}
+string CLevel::getLevel() { return this->levelLabel.getString(); }
 
 void CLevel::setLevel(Level _lev) {
 	switch (_lev) {
 	case Level::Level_1:
 		this->lev = Level::Level_1;
-		this->levelLabel.setString("LEVEL 1");
+		this->levelLabel.setString("Level 1");
 		break;
 	case Level::Level_2:
 		this->lev = Level::Level_2;
@@ -124,6 +109,10 @@ void CLevel::setLevel(Level _lev) {
 		this->levelLabel.setString("LEVEL 5");
 		break;
 	}
+	sf::FloatRect textRect = this->levelLabel.getLocalBounds();
+	this->levelLabel.setOrigin(textRect.left + textRect.width / 2.0f,
+		textRect.top + textRect.height / 2.0f);
+	this->levelLabel.setPosition(sf::Vector2f(170, 340));
 }
 
 void CLevel::loadLevel(std::string str) {

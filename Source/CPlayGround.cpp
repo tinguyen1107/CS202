@@ -1,5 +1,7 @@
 #include "..\Header\CPlayGround.h"
 
+CPlayground* CPlayground::instance = nullptr;
+
 CPlayground::CPlayground(float x, float y, float width, float height, float top_bottom_space, float space, float horizontal) : pos(sf::Vector2f(x, y)) {
 	const int numOfLines = 5;
 	for (int i = 0; i < numOfLines; i++)
@@ -7,8 +9,17 @@ CPlayground::CPlayground(float x, float y, float width, float height, float top_
 	initBorder(horizontal, width, height);
 }
 
+CPlayground& CPlayground::getInstance() {
+	if (!instance) instance = new CPlayground;
+	return *instance;
+}
+
 void CPlayground::draw(sf::RenderWindow& window) {
 	//for (int i = 0; i < this->lines.size(); ++i) window.draw(lines[i]);
+}
+
+CPlayground::~CPlayground() {
+	delete instance;
 }
 
 void CPlayground::initHorizontalLine(float x, float y, float width) {

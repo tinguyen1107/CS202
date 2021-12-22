@@ -40,7 +40,7 @@ public:
     bool isImpact(vector<CTruck>, CImage&);
 
     bool isImpact(vector<CBird>, CImage&);
-    bool isImpact(vector<CDinausor>, CImage&);
+    bool isImpact(vector<CDinosaur>, CImage&);
 
     bool isFinish(float y);
     bool isDead();

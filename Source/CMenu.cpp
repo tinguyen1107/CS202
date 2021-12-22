@@ -1,6 +1,6 @@
 #include "../Header/CMenu.h"
 
-CMenu::CMenu(vector<string> optString, float width, float height, bool inputPath) 
+CMenu::CMenu(vector<string> optString, float x, float y, float height, bool inputPath) 
 	//: path(nullptr)
 	{
 	MAX_NUM_OF_OPT = optString.size();
@@ -10,7 +10,7 @@ CMenu::CMenu(vector<string> optString, float width, float height, bool inputPath
 		opt.setFont(localFont->getInstance()->Regular);
 		opt.setFillColor(sf::Color(255, 255, 255));
 		opt.setString(optString[i]);
-		opt.setPosition(sf::Vector2f(width / 2, height / (MAX_NUM_OF_OPT + 1) * (i+1)));
+		opt.setPosition(sf::Vector2f(x, y + height / (MAX_NUM_OF_OPT) * i));
 
 		optText.push_back(opt);
 	}
@@ -20,9 +20,13 @@ CMenu::CMenu(vector<string> optString, float width, float height, bool inputPath
 	//if (inputPath) path = new string("");
 }
 
-CMenu::~CMenu() {}
+CMenu::~CMenu() {
+	delete localFont;
+	delete localImage;
+}
 
 void CMenu::draw(sf::RenderWindow& window) {
+	this->localImage->getInstance()->menu_bg_sImg->drawTo(window);
 	for (int i = 0; i < MAX_NUM_OF_OPT; i++)
 		window.draw(optText[i]);
 	//window.draw(sprite, sf::RenderStates::Default);

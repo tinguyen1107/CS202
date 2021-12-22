@@ -30,10 +30,10 @@ public:
     void tell();
 };
 
-class CDinausor : public CAnimal {
+class CDinosaur : public CAnimal {
 public:
-    CDinausor();
-    CDinausor(sf::Texture& texture, float x, float y);
+    CDinosaur();
+    CDinosaur(sf::Texture& texture, float x, float y);
     void move(float x, float y);
     void tell();
 };
