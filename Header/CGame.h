@@ -26,7 +26,7 @@
 using namespace std;
 
 #define SCREEN_WIDTH 1000
-#define SCREEN_HEIGHT 700
+#define SCREEN_HEIGHT 640
 
 #define WIDTH 400
 

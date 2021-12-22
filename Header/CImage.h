@@ -5,13 +5,25 @@
 #include <iostream>
 using namespace std;
 
+class CSingleImage {
+private:
+	sf::Texture* texture;
+public:
+	sf::Sprite* sprite;
+
+	CSingleImage(string path);
+	~CSingleImage();
+
+	void drawTo(sf::RenderWindow& window);
+};
+
 class CImage {
 private:
 	static CImage* instance;
 	CImage();
-
-	sf::Image welcome_view_img;
-	sf::Texture* welcome_view_tt;
+	
+	//sf::Texture* welcome_view_tt;
+	//CSingleImage* welcome_sImg;
 	
 	sf::Image carImg;
 	sf::Texture* carTt;
@@ -33,8 +45,10 @@ private:
 public:
 	static CImage* getInstance();
 	~CImage();
+	CSingleImage* welcome_sImg;
+	CSingleImage* logo_sImg;
 
-	sf::Texture* getWelcomeViewTexture() const;
+	//sf::Texture* getWelcomeViewTexture() const;
 
 	sf::Image getCarImage() const;
 	sf::Texture* getCarTexture() const;

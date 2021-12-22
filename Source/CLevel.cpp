@@ -19,15 +19,16 @@ float CLevel::getDistance() {
 
 	switch (this->lev) {
 	case Level::Level_1:
-		return 250.0f + i % 400;
+		return 350.0f + i % 400;
 	case Level::Level_2:
-		return 200.0f + i % 400;
+		return 300.0f + i % 400;
 	case Level::Level_3:
-		return 150.0f + i % 400;
+		return 250.0f + i % 400;
 	case Level::Level_4:
-		return 122.0f + i % 400;
+		return 200.0f + i % 400;
 	case Level::Level_5:
-		return 122.0f + i % 300;
+		return 200.0f + i % 300;
+	default: return 0.0f;
 	}
 }
 
@@ -59,6 +60,7 @@ float CLevel::getTruckStep()
 		return -0.003f;
 	case Level::Level_5:
 		return -0.0045f;
+	default: return 0.0f;
 	}
 }
 
@@ -74,6 +76,7 @@ float CLevel::getBirdStep() {
 		return -0.0022f;
 	case Level::Level_5:
 		return -0.003f;
+	default: return 0.0f;
 	}
 }
 

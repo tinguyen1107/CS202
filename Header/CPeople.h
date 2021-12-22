@@ -22,7 +22,7 @@ private:
         const sf::Image& imgA, const sf::Image& imgB);
 
 public:
-    CPeople(sf::Texture& texture, float x = 54, float y = 30);
+    CPeople(sf::Texture& texture, float x, float y);
     void up(float);
     void left(float);
     void right(float);
@@ -42,7 +42,7 @@ public:
     bool isImpact(vector<CBird>, CImage&);
     bool isImpact(vector<CDinausor>, CImage&);
 
-    bool isFinish();
+    bool isFinish(float y);
     bool isDead();
     sf::Sprite getSprite();
 };

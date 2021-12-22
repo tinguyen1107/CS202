@@ -8,7 +8,7 @@ CPlayground::CPlayground(float x, float y, float width, float height, float top_
 }
 
 void CPlayground::draw(sf::RenderWindow& window) {
-	for (int i = 0; i < this->lines.size(); ++i) window.draw(lines[i]);
+	//for (int i = 0; i < this->lines.size(); ++i) window.draw(lines[i]);
 }
 
 void CPlayground::initHorizontalLine(float x, float y, float width) {

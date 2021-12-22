@@ -21,4 +21,4 @@ CFont* CFont::getInstance() {
 	return instance;
 }
 
-CFont::~CFont() { delete instance; }
+CFont::~CFont() { delete instance; instance = nullptr; }

@@ -10,21 +10,29 @@ CPeople::CPeople(sf::Texture& texture, float x, float y)
 }
 
 void CPeople::up(float x) {
+	if (this->mY - this->sprite.getLocalBounds().height - x < 20) return;
+
 	this->mY -= x;
 	sprite.setPosition(this->mX, this->mY);
 }
 
 void CPeople::left(float x) {
+	if (this->mX - this->sprite.getLocalBounds().width/2.0f - x < 340) return;
+
 	this->mX -= x;
 	sprite.setPosition(this->mX, this->mY);
 }
 
 void CPeople::right(float x) {
+	if (this->mX + this->sprite.getLocalBounds().width/2.0f + x > 980) return;
+
 	this->mX += x;
 	sprite.setPosition(this->mX, this->mY);
 }
 
 void CPeople::down(float x) {
+	if (this->mY + x > 620) return;
+
 	this->mY += x;
 	sprite.setPosition(this->mX, this->mY);
 }
@@ -97,8 +105,8 @@ bool CPeople::isImpact(vector<CDinausor> dinausors, CImage& img) {
 	return false;
 }
 
-bool CPeople::isFinish() {
-	if (this->mY < 120.0f * 1.0f) return true;
+bool CPeople::isFinish(float y) {
+	if (this->mY < y) return true;
 	return false;
 }
 

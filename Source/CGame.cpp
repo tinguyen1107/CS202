@@ -8,21 +8,17 @@ void CGame::initVariable() {
 	this->isInputing = false;
 
 	this->localSound->getInstance();
+	this->playground = new CPlayground();
 }
 
 void CGame::initWindow() {
 	this->videoMode.height = SCREEN_HEIGHT;
 	this->videoMode.width = SCREEN_WIDTH;
 
-	//sf::ContextSettings settings;
-	//settings.antialiasingLevel = 8;
-
-	this->playground = new CPlayground();
 	this->window = new sf::RenderWindow(
 		this->videoMode, 
 		"Crossing road", 
 		sf::Style::Titlebar | sf::Style::Close 
-		//settings
 	);
 
 	this->window->setActive(false);
@@ -48,21 +44,18 @@ void CGame::initTexts() {
 	text.setString("Welcome");
 	text.setCharacterSize(60);
 	text.setFillColor(sf::Color::White);
-	//text.setStyle(sf::Text::Bold | sf::Text::Underlined);
 
 	sf::FloatRect textRect = text.getLocalBounds();
 	text.setOrigin(textRect.left + textRect.width / 2.0f,
 		textRect.top + textRect.height / 2.0f);
 	text.setPosition(sf::Vector2f(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f));
-
-	welcome_view_sprite.setTexture(*this->localImage->getInstance()->getWelcomeViewTexture());
 }
 
 void CGame::initCars(int number) {
 	sf::Texture* pCarTexture = localImage->getInstance()->getCarTexture();
 	sf::Vector2u carSize = localImage->getInstance()->getCarImage().getSize();
-	float carPosX = (-1.0f) * (float)carSize.x;
-	float carPosY = 120.0f * 4.0f - (float)carSize.y;
+	float carPosX = this->playground->left - (float)carSize.x;
+	float carPosY = 80.0f + 120.0f * 3.0f - (float)carSize.y;
 
 	cout << "CAR WIDTH: " << carSize.x << "HEIGHT: " << carSize.y << endl;
 
@@ -75,8 +68,8 @@ void CGame::initCars(int number) {
 void CGame::initTrucks(int number) {
 	sf::Texture* pTruckTexture = localImage->getInstance()->getTruckTexture();
 	sf::Vector2u truckSize = localImage->getInstance()->getTruckImage().getSize();
-	float truckPosX = SCREEN_WIDTH + 1.0f;
-	float truckPosY = 120.0f * 5.0f - (float)truckSize.y;
+	float truckPosX = this->playground->right;
+	float truckPosY = 80.0f + 120.0f * 4.0f - (float)truckSize.y;
 
 	cout << "TRUCK WIDTH: " << truckSize.x << "HEIGHT: " << truckSize.y << endl;
 
@@ -89,8 +82,8 @@ void CGame::initTrucks(int number) {
 void CGame::initBirds(int number) {
 	sf::Texture* pBirdTexture = localImage->getInstance()->getBirdTexture();
 	sf::Vector2u birdSize = localImage->getInstance()->getBirdImage().getSize();
-	float birdPosX = SCREEN_WIDTH + 1.0f;
-	float birdPosY = 120.0f * 2.0f - 40.0f - (float)birdSize.y;
+	float birdPosX = this->playground->right;
+	float birdPosY = 80.0f + 120.0f * 1.0f - 40.0f - (float)birdSize.y;
 
 	cout << "TRUCK WIDTH: " << birdSize.x << "HEIGHT: " << birdSize.y << endl;
 
@@ -105,8 +98,8 @@ void CGame::initDinausors(int number) {
 	float dinausorPos = (-1.0f) * pDinausorTexture[0].getSize().x;
 
 	sf::Vector2u dinausorSize = localImage->getInstance()->getDinausorImage().getSize();
-	float dinausorPosX = (-1.0f) * dinausorSize.x;
-	float dinausorPosY = 120.0f * 3.0f - (float)dinausorSize.y;
+	float dinausorPosX = this->playground->left - dinausorSize.x;
+	float dinausorPosY = 80.0f + 120.0f * 2.0f - (float)dinausorSize.y;
 
 	cout << "TRUCK WIDTH: " << dinausorSize.x << "HEIGHT: " << dinausorSize.y << endl;
 
@@ -128,8 +121,6 @@ void CGame::drawObject() {
 
 CGame::CGame() {
 	this->initVariable();
-	this->initWindow();
-	//this->initEnemies();
 	this->initMenu();
 
 	this->initCars();
@@ -137,23 +128,21 @@ CGame::CGame() {
 	this->initBirds();
 	this->initDinausors();
 
-	this->people = new CPeople(*this->localImage->getInstance()->getPeopleTexture(), SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT - 60.0f);
+	int random = rand() % (int)this->playground->width + (int)this->playground->left;
+	this->people = new CPeople(*this->localImage->getInstance()->getPeopleTexture(), (float)random, this->playground->y_start);
 
-	initTexts();
+	this->initTexts();
 
+	this->initWindow();
 	cout << "DID INIT !!" << endl;
 }
 
-/*
-CGame* CGame::getInstance() {
-	if (instancePtr == nullptr)
-		instancePtr = new CGame;
-	return instancePtr;
-}
-*/
-
 CGame::~CGame() {
 	delete this->window;
+
+	delete this->localFont;
+	delete this->localSound;
+	delete this->localImage;
 
 	delete this->introMenu;
 	delete this->collisionMenu;
@@ -187,6 +176,7 @@ void CGame::drawGame() {
 	this->playground->draw(*this->window);
 	this->level.drawLevelLabel(*this->window);
 	drawObject();
+	this->localImage->getInstance()->logo_sImg->drawTo(*this->window);
 }
 
 void CGame::pollEvent() {
@@ -264,8 +254,8 @@ void CGame::handleIntroMenuState() {
 }
 
 void CGame::handlePlayingState() {
-	float peopleStep = 10;
-
+	float peopleStep = 3;
+	// Motion control
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) this->people->up(peopleStep);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)
@@ -274,7 +264,7 @@ void CGame::handlePlayingState() {
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) this->people->left(peopleStep);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) this->people->right(peopleStep);
-
+	// State Control
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) this->state = GameState::pause_state;
 }
@@ -370,7 +360,7 @@ void CGame::update() {
 		objMove();
 		reuseObj();
 
-		if (this->people->isFinish()) {
+		if (this->people->isFinish(this->playground->y_finish)) {
 			cout << "YOU HAVE FINISHED" << endl;
 			this->state = GameState::wait_for_level_up_state;
 			if (this->level.upLevel())
@@ -398,15 +388,18 @@ void CGame::objMove() {
 	float dinausorStep = this->level.getDinausorStep();
 
 	for (int i = 1; i < 5; i++) {
-		if (cars[i - 1].getSprite().getPosition().x - cars[i].getSprite().getPosition().x > this->level.getDistance()
-			&& !pauseCars)
+		float car_curDis = cars[i - 1].getSprite().getPosition().x - cars[i].getSprite().getPosition().x;
+		float truck_curDis = trucks[i - 1].getSprite().getPosition().x - trucks[i].getSprite().getPosition().x;
+		float bird_curDis = birds[i - 1].getSprite().getPosition().x - birds[i].getSprite().getPosition().x;
+		float dinausor_curDis = dinausors[i - 1].getSprite().getPosition().x - dinausors[i].getSprite().getPosition().x;
+
+		if (car_curDis > this->level.getDistance() && !pauseCars)
 			this->cars[i].move(carStep + 0.001f * i, 0.0f);
-		if (trucks[i - 1].getSprite().getPosition().x - trucks[i].getSprite().getPosition().x < (- 1) * this->level.getDistance()
-			&& !pauseTrucks)
+		if (truck_curDis < (- 1) * this->level.getDistance() && !pauseTrucks)
 			this->trucks[i].move(truckStep, 0);
-		if (birds[i - 1].getSprite().getPosition().x - birds[i].getSprite().getPosition().x < (-1) * this->level.getDistance())
+		if (bird_curDis < (-1) * this->level.getDistance())
 			this->birds[i].move(birdStep, 0);
-		if (dinausors[i - 1].getSprite().getPosition().x - dinausors[i].getSprite().getPosition().x > this->level.getDistance())
+		if (dinausor_curDis > this->level.getDistance())
 			this->dinausors[i].move(dinausorStep, 0);
 	}
 
@@ -489,7 +482,8 @@ void CGame::render() {
 	
 	switch (state) {
 	case GameState::welcome_state:
-		welcome();
+		//welcome();
+		this->localImage->getInstance()->welcome_sImg->drawTo(*window);
 		break;
 	case GameState::intro_menu_state:
 		introMenu->draw(*this->window);
