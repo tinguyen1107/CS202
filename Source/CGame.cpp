@@ -9,6 +9,7 @@ void CGame::initVariable() {
 
 	this->localSound->getInstance();
 	this->playground->getInstance();
+	this->trafficLight->getInstance();
 }
 
 void CGame::initWindow() {
@@ -152,6 +153,7 @@ CGame::~CGame() {
 
 	delete this->people;
 	delete this->playground;
+	delete this->trafficLight;
 }
 
 const bool CGame::isRuning() const { return this->window->isOpen(); }
@@ -169,10 +171,11 @@ void CGame::initMenu() {
 }
 
 void CGame::drawGame() {
-	this->playground->getInstance().draw(*this->window);
+	//this->playground->getInstance().draw(*this->window);
 	this->localImage->getInstance()->road_sImg->drawTo(*this->window);
 	this->drawObject();
 	this->localImage->getInstance()->playground_sImg->drawTo(*this->window);
+	this->trafficLight->getInstance().drawTo(*this->window);
 	this->level.drawLevelLabel(*this->window);
 }
 
@@ -233,8 +236,11 @@ void CGame::handleIntroMenuState() {
 	case sf::Keyboard::Enter:
 		int choice = introMenu->GetPressedItem();
 		cout << "Choice: " << choice << endl;
-		if (choice == 0) // start new game
+		if (choice == 0) // start new game 
+		{
 			this->state = GameState::playing_state;
+			this->trafficLight->getInstance().setActive(true);
+		}
 		else if (choice == 1) { // load game
 			this->state = GameState::input_path_state;
 			string path;
@@ -356,6 +362,7 @@ void CGame::update() {
 
 		objMove();
 		reuseObj();
+		this->trafficLight->getInstance().updateTrafficLight(10, 10);
 
 		if (this->people->isFinish(this->playground->getInstance().y_finish)) {
 			cout << "YOU HAVE FINISHED" << endl;
@@ -379,6 +386,9 @@ void CGame::checkCollision() {
 }
 
 void CGame::objMove() {
+	bool car_tl = this->trafficLight->getInstance().carTrafficLight();
+	bool truck_tl = this->trafficLight->getInstance().truckTrafficLight();
+
 	float carStep = this->level.getCarStep();
 	float truckStep = this->level.getTruckStep();
 	float birdStep = this->level.getBirdStep();
@@ -390,9 +400,9 @@ void CGame::objMove() {
 		float bird_curDis = birds[i - 1].getSprite().getPosition().x - birds[i].getSprite().getPosition().x;
 		float dinausor_curDis = dinausors[i - 1].getSprite().getPosition().x - dinausors[i].getSprite().getPosition().x;
 
-		if (car_curDis > this->level.getDistance() && !pauseCars)
+		if (car_curDis > this->level.getDistance() && car_tl)
 			this->cars[i].move(carStep + 0.001f * i, 0.0f);
-		if (truck_curDis < (- 1) * this->level.getDistance() && !pauseTrucks)
+		if (truck_curDis < (- 1) * this->level.getDistance() && truck_tl)
 			this->trucks[i].move(truckStep, 0);
 		if (bird_curDis < (-1) * this->level.getDistance())
 			this->birds[i].move(birdStep, 0);
@@ -400,8 +410,10 @@ void CGame::objMove() {
 			this->dinausors[i].move(dinausorStep, 0);
 	}
 
-	this->cars[0].move(carStep, 0);
-	this->trucks[0].move(truckStep, 0);
+	if (car_tl)
+		this->cars[0].move(carStep, 0);
+	if (truck_tl)
+		this->trucks[0].move(truckStep, 0);
 	this->birds[0].move(birdStep, 0);
 	this->dinausors[0].move(dinausorStep, 0);
 }

@@ -45,7 +45,7 @@ CSound::CSound() {
     truck_collision = new CSoundEffect(path + "truck-collision.wav");
     bird_collision = new CSoundEffect(path + "bird-collision.wav");
     dinausor_collision = new CSoundEffect(path + "dinausor-collision.wav");
-    people_move = new CSoundEffect(path + "people-move.wav", 10);
+    people_move = new CSoundEffect(path + "people-move.wav", 30);
     playing = new CSoundEffect(path + "playing.wav");
     waiting = new CSoundEffect(path + "waiting.wav");
 }

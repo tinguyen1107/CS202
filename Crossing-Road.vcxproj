@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\CTrafficLight.cpp" />
     <ClCompile Include="Source\CSound.cpp" />
     <ClCompile Include="Json support\dist\jsoncpp.cpp" />
     <ClCompile Include="Source\CPlayGround.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="Source\TextField.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header\CTrafficLight.h" />
     <ClInclude Include="Header\CSound.h" />
     <ClInclude Include="dist\json\json-forwards.h" />
     <ClInclude Include="Header\CAnimal.h" />
