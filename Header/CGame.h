@@ -40,7 +40,8 @@ enum GameState {
 	collision_state,
 	pause_state,
 	wait_for_level_up_state,
-	input_path_state
+	input_path_state,
+	setting_menu_state
 };
 
 class CGame {
@@ -66,17 +67,14 @@ private:
 	sf::VideoMode videoMode;
 
 	/* --- SUBCOMPONENT --- */
-	sf::Text text;
-	sf::Sprite welcome_view_sprite;
-
 	CPlayground* playground;
-	//sf::TextField* tf;
 
 	/* --- MENU --- */
 	CMenu* introMenu;
 	CMenu* collisionMenu;
 	CMenu* pauseMenu;
 	CMenu* inputMenu;
+	CMenu* settingMenu;
 
 	/* --- --- --- -- */
 	/* --- OBJECT --- */
@@ -105,8 +103,6 @@ private:
 	void initMenu();
 
 	void reInitObj();
-
-	void initTexts();
 
 	void initCars(int number = MAX_NUM_OBJ);
 	void initTrucks(int number = MAX_NUM_OBJ);

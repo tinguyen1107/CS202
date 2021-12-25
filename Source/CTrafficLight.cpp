@@ -43,7 +43,6 @@ void CTrafficLight::updateTrafficLight(double car_interval, double truck_interva
 	}
 
 	updateLight();
-
 }
 
 CTrafficLight::~CTrafficLight() {

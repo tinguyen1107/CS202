@@ -41,18 +41,6 @@ void CGame::reInitObj() {
 	this->state = GameState::playing_state;
 }
 
-void CGame::initTexts() {
-	text.setFont(localFont->getInstance()->SemiBold);
-	text.setString("Welcome");
-	text.setCharacterSize(60);
-	text.setFillColor(sf::Color::White);
-
-	sf::FloatRect textRect = text.getLocalBounds();
-	text.setOrigin(textRect.left + textRect.width / 2.0f,
-		textRect.top + textRect.height / 2.0f);
-	text.setPosition(sf::Vector2f(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f));
-}
-
 void CGame::initCars(int number) {
 	sf::Texture* pCarTexture = localImage->getInstance()->getCarTexture();
 	sf::Vector2u carSize = localImage->getInstance()->getCarImage().getSize();
@@ -133,10 +121,8 @@ CGame::CGame() {
 	int random = rand() % (int)this->playground->getInstance().width + (int)this->playground->getInstance().left;
 	this->people = new CPeople(*this->localImage->getInstance()->getPeopleTexture(), (float)random, this->playground->getInstance().y_start);
 
-	this->initTexts();
-
 	this->initWindow();
-	cout << "DID INIT !!" << endl;
+	cout << "- - INITIALIZED - -" << endl;
 }
 
 CGame::~CGame() {
@@ -150,6 +136,7 @@ CGame::~CGame() {
 	delete this->collisionMenu;
 	delete this->pauseMenu;
 	delete this->inputMenu;
+	delete this->settingMenu;
 
 	delete this->people;
 	delete this->playground;
@@ -163,15 +150,16 @@ void CGame::initMenu() {
 	vector<string> optCollisionMenu = { "Play again", "Back to menu", "Quit" };
 	vector<string> optPauseMenu = { "Continue", "Save game", "New game", "Back to menu", "Quit"};
 	vector<string> optInputMenu = { "Path", "Load", "Cancel" };
+	vector<string> optSettingMenu = { "Sound" };
 
 	introMenu = new CMenu(optIntroMenu, 80, 80, 150);
 	collisionMenu = new CMenu(optCollisionMenu, 80, 80, 150);
 	pauseMenu = new CMenu(optPauseMenu, 80, 80, 250);
 	inputMenu = new CMenu(optInputMenu, 80, 80, 150, true);
+	settingMenu = new CMenu(optSettingMenu, 80, 80, 50);
 }
 
 void CGame::drawGame() {
-	//this->playground->getInstance().draw(*this->window);
 	this->localImage->getInstance()->road_sImg->drawTo(*this->window);
 	this->drawObject();
 	this->localImage->getInstance()->playground_sImg->drawTo(*this->window);
@@ -236,8 +224,7 @@ void CGame::handleIntroMenuState() {
 	case sf::Keyboard::Enter:
 		int choice = introMenu->GetPressedItem();
 		cout << "Choice: " << choice << endl;
-		if (choice == 0) // start new game 
-		{
+		if (choice == 0) { // start new game 
 			this->state = GameState::playing_state;
 			this->trafficLight->getInstance().setActive(true);
 		}
@@ -250,7 +237,7 @@ void CGame::handleIntroMenuState() {
 			this->readData(path);
 			this->state = GameState::playing_state;
 		} else { // setting
-			cout << "DIDN'T IMPLEMENT" << endl;
+			this->state = GameState::setting_menu_state;
 		}
 		break;
 	}
@@ -288,12 +275,11 @@ void CGame::handleCollisionMenuState() {
 		if (choice == 0 || choice == 1) {
 			this->reInitObj();
 			this->level.setLevel(Level::Level_1);
-			if (choice == 0)
+			if (choice == 0) // Play again
 				this->state = GameState::playing_state;
-			else
+			else // Back To Menu
 				this->state = GameState::intro_menu_state;
-		}
-		else this->window->close();
+		} else this->window->close(); // Quit
 		break;
 	}
 }
@@ -491,7 +477,6 @@ void CGame::render() {
 	
 	switch (state) {
 	case GameState::welcome_state:
-		//welcome();
 		this->localImage->getInstance()->welcome_sImg->drawTo(*this->window);
 		break;
 	case GameState::intro_menu_state:
@@ -511,9 +496,11 @@ void CGame::render() {
 	case GameState::input_path_state:
 		this->inputMenu->draw(*this->window);
 		break;
+	case GameState::setting_menu_state:
+		this->settingMenu->draw(*this->window);
 	default:
 		break;
-	}	
+	}
 
 	this->window->display();
 }
