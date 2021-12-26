@@ -4,8 +4,10 @@
 
 CSoundEffect::CSoundEffect(string path, int volume) {
     soundBuffer = new sf::SoundBuffer;
-    if (soundBuffer->loadFromFile(path)) cout << "LOAD SOUND SUCCESS FROM: " << path << endl;
-    else cout << "LOAD SOUND FAILED FROM: " << path << endl;
+    if (!soundBuffer->loadFromFile(path)) {
+        cout << "LOAD SOUND FAILED FROM: " << path << endl;
+        throw - 1; // -1 mean can't load
+    }
     sound = new sf::Sound(*soundBuffer);
     sound->setVolume(volume);
 }
@@ -39,13 +41,20 @@ CSound::~CSound() {
 
 CSound::CSound() {
     std::string path = "Resource/Sound/";
-
-    intro = new CSoundEffect(path + "intro.wav");
-    car_collision = new CSoundEffect(path + "car-collision.wav");
-    truck_collision = new CSoundEffect(path + "truck-collision.wav");
-    bird_collision = new CSoundEffect(path + "bird-collision.wav");
-    dinausor_collision = new CSoundEffect(path + "dinausor-collision.wav");
-    people_move = new CSoundEffect(path + "people-move.wav", 30);
-    playing = new CSoundEffect(path + "playing.wav");
-    waiting = new CSoundEffect(path + "waiting.wav");
+    try {
+        intro = new CSoundEffect(path + "intro.wav");
+        car_collision = new CSoundEffect(path + "car-collision.wav");
+        truck_collision = new CSoundEffect(path + "truck-collision.wav");
+        bird_collision = new CSoundEffect(path + "bird-collision.wav");
+        dinausor_collision = new CSoundEffect(path + "dinausor-collision.wav");
+        people_move = new CSoundEffect(path + "people-move.wav", 30);
+        playing = new CSoundEffect(path + "playing.wav");
+        waiting = new CSoundEffect(path + "waiting.wav");
+    } catch (int x) {
+        if (x == -1) {
+            cout << "LOAD SOUND FAILED" << endl;
+            this->isActive = false;
+        }
+    }
+    this->isActive = true;
 }

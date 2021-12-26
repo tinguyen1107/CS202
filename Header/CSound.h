@@ -31,6 +31,8 @@ public:
 	static CSound* getInstance();
 	~CSound();
 private:
+	bool isActive;
+
 	static CSound* instance;
 	CSound();
 };
