@@ -9,7 +9,7 @@ CSoundEffect::CSoundEffect(string path, int volume) {
         throw - 1; // -1 mean can't load
     }
     sound = new sf::Sound(*soundBuffer);
-    sound->setVolume(volume);
+    sound->setVolume((float)volume);
 }
 
 CSoundEffect::~CSoundEffect() {
@@ -28,6 +28,7 @@ CSound* CSound::getInstance() {
 
 CSound::~CSound() {
     delete instance;
+    delete label;
 
     delete intro;
     delete car_collision;
@@ -39,7 +40,31 @@ CSound::~CSound() {
     delete waiting;
 }
 
+void CSound::setStateLabel(bool _isPlaying) {
+    this->isPlaying = _isPlaying;
+    if (this->isPlaying)
+        this->label->setPosition(sf::Vector2f(40.0f, 460.0f));
+    else
+        this->label->setPosition(sf::Vector2f(80.0f, 80.0f));
+}
+
+void CSound::toggleActive(bool _update) {
+    if (!_update) this->isActive = !this->isActive;
+
+    sf::Color color = this->isActive ? sf::Color::Green : sf::Color::Red;
+    this->label->setColor(color);
+}
+
+void CSound::drawLabelTo(sf::RenderWindow& window) {
+    this->label->drawTo(window);
+}
+
 CSound::CSound() {
+    this->label = new CCirclesAndText(sf::Vector2f(0, 0), localFont->getInstance()->ArialRounded, "Sound");
+    this->isPlaying = false;
+    this->isActive = true;
+
+    // Load sounds
     std::string path = "Resource/Sound/";
     try {
         intro = new CSoundEffect(path + "intro.wav");
@@ -56,5 +81,7 @@ CSound::CSound() {
             this->isActive = false;
         }
     }
-    this->isActive = true;
+
+    toggleActive(true);
+    cout << "LOAD SOUND SUCCESS" << endl;
 }

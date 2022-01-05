@@ -21,7 +21,7 @@ CImage* CImage::instance = nullptr;
 bool CImage::initImage() {
 	return carImg.loadFromFile(path + "car.png")
 		&& truckImg.loadFromFile(path + "truck.png")
-		&& dinausorImg.loadFromFile(path + "dinausor.png")
+		&& dinausorImg.loadFromFile(path + "dinosaur.png")
 		&& birdImg.loadFromFile(path + "bird.png")
 		&& peopleImg.loadFromFile(path + "people.png");
 }
@@ -52,11 +52,10 @@ CImage::CImage() {
 		this->menu_bg_sImg = new CSingleImage(path + "menu_bg.png");
 	}
 	catch (int x) {
-		if (x == -1) cout << "LOAD FAILED" << endl;
+		if (x == -1) cout << "LOAD IMG FAILED" << endl;
 	}
 
 	this->road_sImg->sprite->setPosition(340.0f, 20.0f);
-	cout << "LOAD IMG SUCCESS" << endl;
 }
 
 CImage* CImage::getInstance() {

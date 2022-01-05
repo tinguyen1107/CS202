@@ -31,6 +31,9 @@ private:
 
 	sf::Sprite sprite;
 
+	const sf::Color normalColor = sf::Color(0, 0, 0);
+	const sf::Color selectedColor = sf::Color(255, 0, 0);
+
 	// support TextField
 	//sf::TextField tf(20);
 };

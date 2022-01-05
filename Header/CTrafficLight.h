@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <time.h> 
+#include "CCirclesAndText.h"
 
 class CTrafficLight {
 public:
@@ -20,6 +21,8 @@ public:
 
 	~CTrafficLight();
 
+	void drawLabelTo(sf::RenderWindow& window);
+
 private:
 	CTrafficLight();
 	void updateLight();
@@ -36,6 +39,9 @@ private:
 
 	sf::CircleShape* carLight; 
 	sf::CircleShape* truckLight;
+
+	CCirclesAndText* label;
+	CFont* font;
 };
 
 #endif

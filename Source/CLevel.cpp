@@ -17,11 +17,13 @@ float CLevel::getDistance() {
 	int i = rand();
 
 	switch (this->lev) {
-	case Level::Level_1: return 350.0f + i % 400;
-	case Level::Level_2: return 300.0f + i % 400;
-	case Level::Level_3: return 250.0f + i % 400;
-	case Level::Level_4: return 200.0f + i % 400;
-	case Level::Level_5: return 200.0f + i % 300;
+	case Level::Level_1: return 400.0f + i % 300;
+	case Level::Level_2: return 350.0f + i % 300;
+	case Level::Level_3: return 300.0f + i % 300;
+	case Level::Level_4: return 200.0f + i % 300;
+	case Level::Level_5: return 150.0f + i % 300;
+	case Level::Level_6: return 150.0f + i % 200;
+	case Level::Level_7: return 130.0f + i % 100;
 	default: return 0.0f;
 	}
 }
@@ -29,33 +31,38 @@ float CLevel::getDistance() {
 float CLevel::getPeopleStep() {
 	switch (this->lev) {
 	case Level::Level_1: return 2.0f;
-	case Level::Level_2: return 2.25f;
-	case Level::Level_3: return 2.5f;
-	case Level::Level_4: return 2.75f;
-	case Level::Level_5: return 3.0f;
+	case Level::Level_2: return 2.2f;
+	case Level::Level_3: return 2.4f;
+	case Level::Level_4: return 2.6f;
+	case Level::Level_5: return 2.8f;
+	case Level::Level_6: return 3.0f;
+	case Level::Level_7: return 3.2f;
 	default: return 0.0f;
 	}
 }
 
 float CLevel::getCarStep() {
 	switch (this->lev) {
-	case Level::Level_1: return 0.00015f;
+	case Level::Level_1: return 0.0002f;
 	case Level::Level_2: return 0.0003f;
 	case Level::Level_3: return 0.0006f;
-	case Level::Level_4: return 0.001f;
-	case Level::Level_5: return 0.0014f;
+	case Level::Level_4: return 0.0006f;
+	case Level::Level_5: return 0.0010f;
+	case Level::Level_6: return 0.0010f;
+	case Level::Level_7: return 0.0014f;
 	default: return 0.0f;
 	}
 }
 
-float CLevel::getTruckStep()
-{
+float CLevel::getTruckStep() {
 	switch (this->lev) {
-	case Level::Level_1: return -0.00017f;
-	case Level::Level_2: return -0.00034f;
-	case Level::Level_3: return -0.00068f;
-	case Level::Level_4: return -0.0012f;
-	case Level::Level_5: return -0.0015f;
+	case Level::Level_1: return -0.00022f;
+	case Level::Level_2: return -0.00033f;
+	case Level::Level_3: return -0.00066f;
+	case Level::Level_4: return -0.00066f;
+	case Level::Level_5: return -0.00130f;
+	case Level::Level_6: return -0.00130f;
+	case Level::Level_7: return -0.00160f;
 	default: return 0.0f;
 	}
 }
@@ -65,19 +72,36 @@ float CLevel::getBirdStep() {
 	case Level::Level_1: return -0.0001f;
 	case Level::Level_2: return -0.0002f;
 	case Level::Level_3: return -0.0004f;
-	case Level::Level_4: return -0.0008f;
-	case Level::Level_5: return -0.0012f;
+	case Level::Level_4: return -0.0004f;
+	case Level::Level_5: return -0.0008f;
+	case Level::Level_6: return -0.0008f;
+	case Level::Level_7: return -0.0012f;
 	default: return 0.0f;
 	}
 }
 
 float CLevel::getDinausorStep() {
 	switch (this->lev) {
-	case Level::Level_1: return 0.00013f;
-	case Level::Level_2: return 0.00026f;
-	case Level::Level_3: return 0.00052f;
-	case Level::Level_4: return 0.00104f;
-	case Level::Level_5: return 0.0011f;
+	case Level::Level_1: return 0.00015f;
+	case Level::Level_2: return 0.00025f;
+	case Level::Level_3: return 0.00050f;
+	case Level::Level_4: return 0.00050f;
+	case Level::Level_5: return 0.00075f;
+	case Level::Level_6: return 0.00075f;
+	case Level::Level_7: return 0.00100f;
+	default: return 0.0f;
+	}
+}
+
+bool CLevel::isActiveTrafficLight() {
+	switch (this->lev) {
+	case Level::Level_1: 
+	case Level::Level_2: return false;
+	case Level::Level_3: return true;
+	case Level::Level_4: return false;
+	case Level::Level_5: return true;
+	case Level::Level_6: return false;
+	case Level::Level_7: return true;
 	default: return 0.0f;
 	}
 }
@@ -108,11 +132,19 @@ void CLevel::setLevel(Level _lev) {
 		this->lev = Level::Level_5;
 		this->levelLabel.setString("LEVEL 5");
 		break;
+	case Level::Level_6:
+		this->lev = Level::Level_4;
+		this->levelLabel.setString("LEVEL 6");
+		break;
+	case Level::Level_7:
+		this->lev = Level::Level_5;
+		this->levelLabel.setString("LEVEL 7");
+		break;
 	}
 	sf::FloatRect textRect = this->levelLabel.getLocalBounds();
 	this->levelLabel.setOrigin(textRect.left + textRect.width / 2.0f,
 		textRect.top + textRect.height / 2.0f);
-	this->levelLabel.setPosition(sf::Vector2f(170, 340));
+	this->levelLabel.setPosition(sf::Vector2f(170, 380));
 }
 
 void CLevel::loadLevel(std::string str) {
@@ -132,6 +164,12 @@ void CLevel::loadLevel(std::string str) {
 		break;
 	case '5':
 		this->setLevel(Level::Level_5);
+		break;
+	case '6':
+		this->setLevel(Level::Level_6);
+		break;
+	case '7':
+		this->setLevel(Level::Level_7);
 		break;
 	default:
 		cout << "Wrong level !!" << endl;
@@ -153,7 +191,14 @@ bool CLevel::upLevel() {
 		break;
 	case Level::Level_4:
 		this->setLevel(Level::Level_5);
+		break;
 	case Level::Level_5:
+		this->setLevel(Level::Level_6);
+		break;
+	case Level::Level_6:
+		this->setLevel(Level::Level_7);
+		break;
+	case Level::Level_7:
 		return false;
 	}
 	return true;

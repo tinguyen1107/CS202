@@ -10,10 +10,12 @@ CFont::CFont() {
 }
 
 bool CFont::initFonts() {
-	std::string path = "Resource/Font/Montserrat-";
-	return Bold.loadFromFile(path + "Bold.ttf")
-		&& SemiBold.loadFromFile(path + "SemiBold.ttf")
-		&& Regular.loadFromFile(path + "Regular.ttf");
+	std::string path = "Resource/Font/";
+	std::string mon_path = path + "Montserrat-";
+	return Bold.loadFromFile(mon_path + "Bold.ttf")
+		&& SemiBold.loadFromFile(mon_path + "SemiBold.ttf")
+		&& Regular.loadFromFile(mon_path + "Regular.ttf")
+		&& ArialRounded.loadFromFile(path + "Arial Rounded MT Bold.ttf");
 }
 
 CFont* CFont::getInstance() {

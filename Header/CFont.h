@@ -17,6 +17,8 @@ public:
 	sf::Font Bold;
 	sf::Font SemiBold;
 	sf::Font Regular;
+
+	sf::Font ArialRounded;
 };
 
 #endif

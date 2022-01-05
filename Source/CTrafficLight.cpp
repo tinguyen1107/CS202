@@ -50,9 +50,15 @@ CTrafficLight::~CTrafficLight() {
 
 	delete carLight;
 	delete truckLight;
+	delete font;
+	delete label;
 }
 
-CTrafficLight::CTrafficLight() { 
+void CTrafficLight::drawLabelTo(sf::RenderWindow& window) {
+	this->label->drawTo(window);
+}
+
+CTrafficLight::CTrafficLight() {
 	bool truckTrafficLight();
 
 	this->isActive = false;
@@ -63,6 +69,8 @@ CTrafficLight::CTrafficLight() {
 
 	this->carLight = new sf::CircleShape(12.5f);
 	this->truckLight = new sf::CircleShape(12.5f);
+	this->label = new CCirclesAndText(sf::Vector2f(0, 0), font->getInstance()->ArialRounded, "Traffic light");
+	this->label->setPosition(sf::Vector2f(40.0f, 510.0f));
 
 	this->carLight->setPosition(945.0f, 325.0f);
 	this->truckLight->setPosition(350.0f, 445.0f);

@@ -3,6 +3,8 @@
 
 #include <SFML/Audio.hpp>
 #include <iostream>
+#include "CCirclesAndText.h"
+#include "CFont.h"
 
 using namespace std;
 
@@ -30,11 +32,21 @@ public:
 
 	static CSound* getInstance();
 	~CSound();
+
+	void setStateLabel(bool _isPlaying);
+
+	void toggleActive(bool _update = false);
+
+	void drawLabelTo(sf::RenderWindow& window);
 private:
 	bool isActive;
+	bool isPlaying;
 
 	static CSound* instance;
 	CSound();
+
+	CCirclesAndText* label;
+	CFont* localFont;
 };
 
 #endif

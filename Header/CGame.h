@@ -16,6 +16,7 @@
 #include "CImage.h"
 #include "CSound.h"
 #include "CTrafficLight.h"
+#include "CCirclesAndText.h"
 
 #include "CMenu.h"
 #include "CPeople.h"
@@ -81,6 +82,7 @@ private:
 	/* --- --- --- -- */
 	CPeople* people;
 	CTrafficLight* trafficLight;
+
 
 	// Vehicle
 	vector<CCar> cars;

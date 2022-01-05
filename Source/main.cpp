@@ -43,5 +43,6 @@ int main() {
     while (game->isRuning()) {
         game->update();
     }
+
     return 0;
 }

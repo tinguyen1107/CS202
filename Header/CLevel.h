@@ -31,6 +31,8 @@ public:
 	float getBirdStep();
 	float getDinausorStep();
 
+	bool isActiveTrafficLight();
+
 	void drawLevelLabel(sf::RenderWindow& window);
 
 	std::string getLevel();

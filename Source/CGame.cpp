@@ -7,7 +7,8 @@ void CGame::initVariable() {
 	this->pauseCars = this->pauseTrucks = false;
 	this->isInputing = false;
 
-	this->localSound->getInstance();
+	this->localSound->getInstance()->setStateLabel(true);
+
 	this->playground->getInstance();
 	this->trafficLight->getInstance();
 }
@@ -18,7 +19,7 @@ void CGame::initWindow() {
 
 	this->window = new sf::RenderWindow(
 		this->videoMode, 
-		"Crossing road", 
+		"Crossing road",
 		sf::Style::Titlebar | sf::Style::Close 
 	);
 
@@ -47,7 +48,7 @@ void CGame::initCars(int number) {
 	float carPosX = this->playground->getInstance().left - (float)carSize.x;
 	float carPosY = 80.0f + 120.0f * 3.0f - (float)carSize.y;
 
-	cout << "CAR WIDTH: " << carSize.x << "HEIGHT: " << carSize.y << endl;
+	cout << "CAR      w: " << carSize.x << ", h:  " << carSize.y << endl;
 
 	for (int i = 0; i < number; i++) {
 		CCar car(pCarTexture[i], carPosX, carPosY);
@@ -60,8 +61,8 @@ void CGame::initTrucks(int number) {
 	sf::Vector2u truckSize = localImage->getInstance()->getTruckImage().getSize();
 	float truckPosX = this->playground->getInstance().right;
 	float truckPosY = 80.0f + 120.0f * 4.0f - (float)truckSize.y;
-
-	cout << "TRUCK WIDTH: " << truckSize.x << "HEIGHT: " << truckSize.y << endl;
+	
+	cout << "TRUCK    w: " << truckSize.x << ", h:  " << truckSize.y << endl;
 
 	for (int i = 0; i < number; i++) {
 		CTruck truck(pTruckTexture[i], truckPosX, truckPosY);
@@ -74,8 +75,8 @@ void CGame::initBirds(int number) {
 	sf::Vector2u birdSize = localImage->getInstance()->getBirdImage().getSize();
 	float birdPosX = this->playground->getInstance().right;
 	float birdPosY = 80.0f + 120.0f * 1.0f - 40.0f - (float)birdSize.y;
-
-	cout << "TRUCK WIDTH: " << birdSize.x << "HEIGHT: " << birdSize.y << endl;
+	
+	cout << "BIRD     w:  " << birdSize.x << ", h:  " << birdSize.y << endl;
 
 	for (int i = 0; i < number; i++) {
 		CBird bird(pBirdTexture[i], birdPosX, birdPosY);
@@ -91,7 +92,7 @@ void CGame::initDinausors(int number) {
 	float dinausorPosX = this->playground->getInstance().left - dinausorSize.x;
 	float dinausorPosY = 80.0f + 120.0f * 2.0f - (float)dinausorSize.y;
 
-	cout << "TRUCK WIDTH: " << dinausorSize.x << "HEIGHT: " << dinausorSize.y << endl;
+	cout << "DINOSAUR w: " << dinausorSize.x << ", h: " << dinausorSize.y << endl;
 
 	for (int i = 0; i < number; i++) {
 		CDinosaur dinausor(pDinausorTexture[1], dinausorPosX, dinausorPosY);
@@ -122,7 +123,7 @@ CGame::CGame() {
 	this->people = new CPeople(*this->localImage->getInstance()->getPeopleTexture(), (float)random, this->playground->getInstance().y_start);
 
 	this->initWindow();
-	cout << "- - INITIALIZED - -" << endl;
+	cout << "--- INITIALIZED ---" << endl;
 }
 
 CGame::~CGame() {
@@ -152,11 +153,11 @@ void CGame::initMenu() {
 	vector<string> optInputMenu = { "Path", "Load", "Cancel" };
 	vector<string> optSettingMenu = { "Sound" };
 
-	introMenu = new CMenu(optIntroMenu, 80, 80, 150);
-	collisionMenu = new CMenu(optCollisionMenu, 80, 80, 150);
-	pauseMenu = new CMenu(optPauseMenu, 80, 80, 250);
-	inputMenu = new CMenu(optInputMenu, 80, 80, 150, true);
-	settingMenu = new CMenu(optSettingMenu, 80, 80, 50);
+	introMenu = new CMenu(optIntroMenu, 80, 80, 180);
+	collisionMenu = new CMenu(optCollisionMenu, 80, 80, 180);
+	pauseMenu = new CMenu(optPauseMenu, 80, 80, 300);
+	inputMenu = new CMenu(optInputMenu, 80, 80, 180, true);
+	settingMenu = new CMenu(optSettingMenu, 80, 80, 60);
 }
 
 void CGame::drawGame() {
@@ -165,6 +166,8 @@ void CGame::drawGame() {
 	this->localImage->getInstance()->playground_sImg->drawTo(*this->window);
 	this->trafficLight->getInstance().drawTo(*this->window);
 	this->level.drawLevelLabel(*this->window);
+	this->localSound->getInstance()->drawLabelTo(*this->window);
+	this->trafficLight->getInstance().drawLabelTo(*this->window);
 }
 
 void CGame::pollEvent() {
@@ -227,6 +230,7 @@ void CGame::handleIntroMenuState() {
 		if (choice == 0) { // start new game 
 			this->state = GameState::playing_state;
 			this->trafficLight->getInstance().setActive(true);
+			this->localSound->getInstance()->setStateLabel(true);
 		}
 		else if (choice == 1) { // load game
 			this->state = GameState::input_path_state;
@@ -238,6 +242,7 @@ void CGame::handleIntroMenuState() {
 			this->state = GameState::playing_state;
 		} else { // setting
 			this->state = GameState::setting_menu_state;
+			this->localSound->getInstance()->setStateLabel(false);
 		}
 		break;
 	}
@@ -324,6 +329,7 @@ void CGame::handlePauseState() {
 			break;
 		case 4: // Quit
 			this->window->close();
+			cout << "Close window" << endl;
 			break;
 		}
 		break;
@@ -396,10 +402,8 @@ void CGame::objMove() {
 			this->dinausors[i].move(dinausorStep, 0);
 	}
 
-	if (car_tl)
-		this->cars[0].move(carStep, 0);
-	if (truck_tl)
-		this->trucks[0].move(truckStep, 0);
+	if (car_tl) this->cars[0].move(carStep, 0);
+	if (truck_tl) this->trucks[0].move(truckStep, 0);
 	this->birds[0].move(birdStep, 0);
 	this->dinausors[0].move(dinausorStep, 0);
 }
@@ -498,6 +502,7 @@ void CGame::render() {
 		break;
 	case GameState::setting_menu_state:
 		this->settingMenu->draw(*this->window);
+		this->localSound->getInstance()->drawLabelTo(*this->window);
 	default:
 		break;
 	}
