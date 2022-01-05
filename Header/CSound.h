@@ -38,6 +38,7 @@ public:
 	void toggleActive(bool _update = false);
 
 	void drawLabelTo(sf::RenderWindow& window);
+	string getStateButton();
 private:
 	bool isActive;
 	bool isPlaying;

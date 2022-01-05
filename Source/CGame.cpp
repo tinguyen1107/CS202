@@ -151,13 +151,13 @@ void CGame::initMenu() {
 	vector<string> optCollisionMenu = { "Play again", "Back to menu", "Quit" };
 	vector<string> optPauseMenu = { "Continue", "Save game", "New game", "Back to menu", "Quit"};
 	vector<string> optInputMenu = { "Path", "Load", "Cancel" };
-	vector<string> optSettingMenu = { "Sound" };
+	vector<string> optSettingMenu = { this->localSound->getInstance()->getStateButton(), "Cancel"};
 
 	introMenu = new CMenu(optIntroMenu, 80, 80, 180);
 	collisionMenu = new CMenu(optCollisionMenu, 80, 80, 180);
 	pauseMenu = new CMenu(optPauseMenu, 80, 80, 300);
 	inputMenu = new CMenu(optInputMenu, 80, 80, 180, true);
-	settingMenu = new CMenu(optSettingMenu, 80, 80, 60);
+	settingMenu = new CMenu(optSettingMenu, 80, 80, 120);
 }
 
 void CGame::drawGame() {
@@ -196,6 +196,9 @@ void CGame::pollEvent() {
 			case GameState::input_path_state:
 				this->handleInputMenuState();
 				break;
+			case GameState::setting_menu_state:
+				this->handleSettingMenuState();
+				break;
 			}
 		default:
 			break;
@@ -229,7 +232,7 @@ void CGame::handleIntroMenuState() {
 		cout << "Choice: " << choice << endl;
 		if (choice == 0) { // start new game 
 			this->state = GameState::playing_state;
-			this->trafficLight->getInstance().setActive(true);
+			this->trafficLight->getInstance().setActive(this->level.isActiveTrafficLight());
 			this->localSound->getInstance()->setStateLabel(true);
 		}
 		else if (choice == 1) { // load game
@@ -239,10 +242,11 @@ void CGame::handleIntroMenuState() {
 			getline(cin, path);
 			cout << "Loading from " << path << "..." << endl;
 			this->readData(path);
+			this->trafficLight->getInstance().setActive(this->level.isActiveTrafficLight());
 			this->state = GameState::playing_state;
 		} else { // setting
 			this->state = GameState::setting_menu_state;
-			this->localSound->getInstance()->setStateLabel(false);
+			this->settingMenu->setOption(0, this->localSound->getInstance()->getStateButton());
 		}
 		break;
 	}
@@ -280,6 +284,7 @@ void CGame::handleCollisionMenuState() {
 		if (choice == 0 || choice == 1) {
 			this->reInitObj();
 			this->level.setLevel(Level::Level_1);
+			this->trafficLight->getInstance().setActive(this->level.isActiveTrafficLight());
 			if (choice == 0) // Play again
 				this->state = GameState::playing_state;
 			else // Back To Menu
@@ -320,6 +325,7 @@ void CGame::handlePauseState() {
 		case 2: // New game
 			this->reInitObj();
 			this->level.setLevel(Level::Level_1);
+			this->trafficLight->getInstance().setActive(this->level.isActiveTrafficLight());
 			this->state = GameState::playing_state;
 			break;
 		case 3: // Back to menu
@@ -345,6 +351,34 @@ void CGame::handleInputMenuState() {
 	}*/
 }
 
+void CGame::handleSettingMenuState() {
+	switch (this->event.key.code) {
+	case sf::Keyboard::W:
+	case sf::Keyboard::Up:
+		settingMenu->MoveUp();
+		break;
+	case sf::Keyboard::S:
+	case sf::Keyboard::Down:
+		settingMenu->MoveDown();
+		break;
+	case sf::Keyboard::Enter:
+		int choice = settingMenu->GetPressedItem();
+		cout << "Choice: " << choice << endl;
+
+		switch (choice) {
+		case 0:
+			this->localSound->getInstance()->toggleActive();
+			this->settingMenu->setOption(0, this->localSound->getInstance()->getStateButton());
+			this->state = GameState::intro_menu_state;
+			break;
+		case 1:
+			this->state = GameState::intro_menu_state;
+			break;
+		}
+		break;
+	}
+}
+
 void CGame::update() {
 	pollEvent();
 	if (this->state == GameState::playing_state) {
@@ -359,9 +393,10 @@ void CGame::update() {
 		if (this->people->isFinish(this->playground->getInstance().y_finish)) {
 			cout << "YOU HAVE FINISHED" << endl;
 			this->state = GameState::wait_for_level_up_state;
-			if (this->level.upLevel())
+			if (this->level.upLevel()) {
 				reInitObj();
-			else
+				this->trafficLight->getInstance().setActive(this->level.isActiveTrafficLight());
+			} else
 				cout << "YOU WIN!!" << endl;
 		}
 	}
@@ -502,7 +537,7 @@ void CGame::render() {
 		break;
 	case GameState::setting_menu_state:
 		this->settingMenu->draw(*this->window);
-		this->localSound->getInstance()->drawLabelTo(*this->window);
+		//this->localSound->getInstance()->drawLabelTo(*this->window);
 	default:
 		break;
 	}

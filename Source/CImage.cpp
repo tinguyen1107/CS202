@@ -50,6 +50,8 @@ CImage::CImage() {
 		this->playground_sImg = new CSingleImage(path + "playground.png");
 		this->road_sImg = new CSingleImage(path + "road.png");
 		this->menu_bg_sImg = new CSingleImage(path + "menu_bg.png");
+		this->lose_sImg = new CSingleImage(path + "lose.png");
+		this->win_sImg = new CSingleImage(path + "win.png");
 	}
 	catch (int x) {
 		if (x == -1) cout << "LOAD IMG FAILED" << endl;

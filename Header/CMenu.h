@@ -15,21 +15,18 @@ public:
 	CMenu(vector<string> optString, float x, float y, float height, bool inputPath = false);
 	~CMenu();
 
-	void draw(sf::RenderWindow& window);
+	void draw(sf::RenderWindow& window, int id = -1);
 	void MoveUp();
 	void MoveDown();
 	int GetPressedItem();
 
-	void updateTextField(sf::Event event);
-
+	void setOption(int index, string content);
 private:
 	int MAX_NUM_OF_OPT;
 	int selectedIndex;
 	CFont* localFont;
 	CImage* localImage;
 	vector<sf::Text> optText;
-
-	sf::Sprite sprite;
 
 	const sf::Color normalColor = sf::Color(0, 0, 0);
 	const sf::Color selectedColor = sf::Color(255, 0, 0);

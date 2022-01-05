@@ -120,6 +120,7 @@ private:
 	void handleCollisionMenuState();
 	void handlePauseState();
 	void handleInputMenuState();
+	void handleSettingMenuState();
 
 	/*------- UPDATE EVENT -------*/
 	void checkCollision();

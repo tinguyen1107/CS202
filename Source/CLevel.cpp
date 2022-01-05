@@ -6,7 +6,7 @@
 using namespace std;
 
 CLevel::CLevel(Level _lev) {
-	levelLabel.setFont(localFont->getInstance()->SemiBold);
+	levelLabel.setFont(localFont->getInstance()->ArialRounded);
 	levelLabel.setCharacterSize(60);
 	levelLabel.setFillColor(sf::Color::White);
 
@@ -20,10 +20,10 @@ float CLevel::getDistance() {
 	case Level::Level_1: return 400.0f + i % 300;
 	case Level::Level_2: return 350.0f + i % 300;
 	case Level::Level_3: return 300.0f + i % 300;
-	case Level::Level_4: return 200.0f + i % 300;
-	case Level::Level_5: return 150.0f + i % 300;
-	case Level::Level_6: return 150.0f + i % 200;
-	case Level::Level_7: return 130.0f + i % 100;
+	case Level::Level_4: return 250.0f + i % 300;
+	case Level::Level_5: return 230.0f + i % 300;
+	case Level::Level_6: return 210.0f + i % 250;
+	case Level::Level_7: return 190.0f + i % 200;
 	default: return 0.0f;
 	}
 }
@@ -31,12 +31,12 @@ float CLevel::getDistance() {
 float CLevel::getPeopleStep() {
 	switch (this->lev) {
 	case Level::Level_1: return 2.0f;
-	case Level::Level_2: return 2.2f;
-	case Level::Level_3: return 2.4f;
-	case Level::Level_4: return 2.6f;
-	case Level::Level_5: return 2.8f;
-	case Level::Level_6: return 3.0f;
-	case Level::Level_7: return 3.2f;
+	case Level::Level_2: return 2.3f;
+	case Level::Level_3: return 2.6f;
+	case Level::Level_4: return 2.9f;
+	case Level::Level_5: return 3.2f;
+	case Level::Level_6: return 3.5f;
+	case Level::Level_7: return 3.8f;
 	default: return 0.0f;
 	}
 }
@@ -45,11 +45,11 @@ float CLevel::getCarStep() {
 	switch (this->lev) {
 	case Level::Level_1: return 0.0002f;
 	case Level::Level_2: return 0.0003f;
-	case Level::Level_3: return 0.0006f;
-	case Level::Level_4: return 0.0006f;
-	case Level::Level_5: return 0.0010f;
-	case Level::Level_6: return 0.0010f;
-	case Level::Level_7: return 0.0014f;
+	case Level::Level_3: return 0.0005f;
+	case Level::Level_4: return 0.00045f;
+	case Level::Level_5: return 0.0007f;
+	case Level::Level_6: return 0.00065f;
+	case Level::Level_7: return 0.00085f;
 	default: return 0.0f;
 	}
 }
@@ -58,11 +58,11 @@ float CLevel::getTruckStep() {
 	switch (this->lev) {
 	case Level::Level_1: return -0.00022f;
 	case Level::Level_2: return -0.00033f;
-	case Level::Level_3: return -0.00066f;
-	case Level::Level_4: return -0.00066f;
-	case Level::Level_5: return -0.00130f;
-	case Level::Level_6: return -0.00130f;
-	case Level::Level_7: return -0.00160f;
+	case Level::Level_3: return -0.00055f;
+	case Level::Level_4: return -0.00050f;
+	case Level::Level_5: return -0.00077f;
+	case Level::Level_6: return -0.00070f;
+	case Level::Level_7: return -0.00090f;
 	default: return 0.0f;
 	}
 }
@@ -72,10 +72,10 @@ float CLevel::getBirdStep() {
 	case Level::Level_1: return -0.0001f;
 	case Level::Level_2: return -0.0002f;
 	case Level::Level_3: return -0.0004f;
-	case Level::Level_4: return -0.0004f;
-	case Level::Level_5: return -0.0008f;
-	case Level::Level_6: return -0.0008f;
-	case Level::Level_7: return -0.0012f;
+	case Level::Level_4: return -0.00035f;
+	case Level::Level_5: return -0.0006f;
+	case Level::Level_6: return -0.00055f;
+	case Level::Level_7: return -0.00075f;
 	default: return 0.0f;
 	}
 }
@@ -84,11 +84,11 @@ float CLevel::getDinausorStep() {
 	switch (this->lev) {
 	case Level::Level_1: return 0.00015f;
 	case Level::Level_2: return 0.00025f;
-	case Level::Level_3: return 0.00050f;
-	case Level::Level_4: return 0.00050f;
-	case Level::Level_5: return 0.00075f;
-	case Level::Level_6: return 0.00075f;
-	case Level::Level_7: return 0.00100f;
+	case Level::Level_3: return 0.00045f;
+	case Level::Level_4: return 0.00040f;
+	case Level::Level_5: return 0.00065f;
+	case Level::Level_6: return 0.00060f;
+	case Level::Level_7: return 0.0008f;
 	default: return 0.0f;
 	}
 }

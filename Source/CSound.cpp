@@ -59,6 +59,10 @@ void CSound::drawLabelTo(sf::RenderWindow& window) {
     this->label->drawTo(window);
 }
 
+string CSound::getStateButton() {
+    return isActive ? "Turn off sound." : "Turn on sound.";
+}
+
 CSound::CSound() {
     this->label = new CCirclesAndText(sf::Vector2f(0, 0), localFont->getInstance()->ArialRounded, "Sound");
     this->isPlaying = false;

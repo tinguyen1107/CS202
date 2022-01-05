@@ -18,7 +18,9 @@ void CTrafficLight::drawTo(sf::RenderWindow& window) {
 
 void CTrafficLight::setActive(bool _isAc) { 
 	this->isActive = _isAc; 
+	this->label->setColor(sf::Color::Red);
 	if (_isAc) {
+		this->label->setColor(sf::Color::Green);
 		this->start = time(0);
 		this->car_tl = this->truck_tl = true;
 	}
@@ -69,8 +71,10 @@ CTrafficLight::CTrafficLight() {
 
 	this->carLight = new sf::CircleShape(12.5f);
 	this->truckLight = new sf::CircleShape(12.5f);
+	
 	this->label = new CCirclesAndText(sf::Vector2f(0, 0), font->getInstance()->ArialRounded, "Traffic light");
 	this->label->setPosition(sf::Vector2f(40.0f, 510.0f));
+	this->label->setColor(sf::Color::Red);
 
 	this->carLight->setPosition(945.0f, 325.0f);
 	this->truckLight->setPosition(350.0f, 445.0f);

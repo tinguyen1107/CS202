@@ -48,6 +48,8 @@ public:
 	CSingleImage* playground_sImg;
 	CSingleImage* road_sImg;
 	CSingleImage* menu_bg_sImg;
+	CSingleImage* lose_sImg;
+	CSingleImage* win_sImg;
 
 	sf::Image getCarImage() const;
 	sf::Texture* getCarTexture() const;

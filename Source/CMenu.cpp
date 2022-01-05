@@ -1,9 +1,9 @@
 #include "../Header/CMenu.h"
 
-CMenu::CMenu(vector<string> optString, float x, float y, float height, bool inputPath) 
-	//: path(nullptr)
-	{
+CMenu::CMenu(vector<string> optString, float x, float y, float height, bool isSetting) {
 	MAX_NUM_OF_OPT = optString.size();
+	localFont = nullptr;
+	localImage = nullptr;
 
 	for (int i = 0; i < optString.size(); i++) {
 		sf::Text opt;
@@ -23,8 +23,6 @@ CMenu::CMenu(vector<string> optString, float x, float y, float height, bool inpu
 	}
 	optText[0].setFillColor(sf::Color::Red);
 	selectedIndex = 0;
-
-	//if (inputPath) path = new string("");
 }
 
 CMenu::~CMenu() {
@@ -32,11 +30,10 @@ CMenu::~CMenu() {
 	delete localImage;
 }
 
-void CMenu::draw(sf::RenderWindow& window) {
+void CMenu::draw(sf::RenderWindow& window, int id) {
 	this->localImage->getInstance()->menu_bg_sImg->drawTo(window);
 	for (int i = 0; i < MAX_NUM_OF_OPT; i++)
 		window.draw(optText[i]);
-	//window.draw(sprite, sf::RenderStates::Default);
 }
 
 void CMenu::MoveUp() {
@@ -55,15 +52,10 @@ void CMenu::MoveDown() {
 	}
 }
 
+
+
 int CMenu::GetPressedItem() { return selectedIndex; }
 
-void CMenu::updateTextField(sf::Event event) {
-	/*if (event.type == sf::Event::TextEntered)
-	{
-		if (event.text.unicode < 128)
-		{
-			*path += event.text.unicode;
-			optText[0].setString(*path);
-		}
-	}*/
+void CMenu::setOption(int index, string content) {
+	this->optText[index].setString(content);
 }
