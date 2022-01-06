@@ -28,7 +28,9 @@ CSound* CSound::getInstance() {
 
 CSound::~CSound() {
     delete instance;
+
     delete label;
+    delete localFont;
 
     delete intro;
     delete car_collision;
@@ -61,6 +63,37 @@ void CSound::drawLabelTo(sf::RenderWindow& window) {
 
 string CSound::getStateButton() {
     return isActive ? "Turn off sound." : "Turn on sound.";
+}
+
+void CSound::play(Sounds _sound) {
+    if (!this->isActive) return;
+   
+    switch (_sound) {
+    case Sounds::intro:
+        this->intro->playSound();
+        break;
+    case Sounds::car_collision:
+        this->car_collision->playSound();
+        break;
+    case Sounds::truck_collision:
+        this->truck_collision->playSound();
+        break;
+    case Sounds::bird_collision:
+        this->bird_collision->playSound();
+        break;
+    case Sounds::dinosaur_collision:
+        this->dinausor_collision->playSound();
+        break;
+    case Sounds::people_move:
+        this->people_move->playSound();
+        break;
+    case Sounds::playing:
+        this->playing->playSound();
+        break;
+    case Sounds::waiting:
+        this->waiting->playSound();
+        break;
+    }
 }
 
 CSound::CSound() {

@@ -18,12 +18,12 @@ float CLevel::getDistance() {
 
 	switch (this->lev) {
 	case Level::Level_1: return 400.0f + i % 300;
-	case Level::Level_2: return 350.0f + i % 300;
-	case Level::Level_3: return 300.0f + i % 300;
-	case Level::Level_4: return 250.0f + i % 300;
-	case Level::Level_5: return 230.0f + i % 300;
-	case Level::Level_6: return 210.0f + i % 250;
-	case Level::Level_7: return 190.0f + i % 200;
+	case Level::Level_2: return 350.0f + i % 295;
+	case Level::Level_3: return 310.0f + i % 285;
+	case Level::Level_4: return 280.0f + i % 270;
+	case Level::Level_5: return 260.0f + i % 250;
+	case Level::Level_6: return 255.0f + i % 230;
+	case Level::Level_7: return 245.0f + i % 220;
 	default: return 0.0f;
 	}
 }
@@ -47,9 +47,9 @@ float CLevel::getCarStep() {
 	case Level::Level_2: return 0.0003f;
 	case Level::Level_3: return 0.0005f;
 	case Level::Level_4: return 0.00045f;
-	case Level::Level_5: return 0.0007f;
-	case Level::Level_6: return 0.00065f;
-	case Level::Level_7: return 0.00085f;
+	case Level::Level_5: return 0.00060f;
+	case Level::Level_6: return 0.00055f;
+	case Level::Level_7: return 0.00065f;
 	default: return 0.0f;
 	}
 }
@@ -60,9 +60,9 @@ float CLevel::getTruckStep() {
 	case Level::Level_2: return -0.00033f;
 	case Level::Level_3: return -0.00055f;
 	case Level::Level_4: return -0.00050f;
-	case Level::Level_5: return -0.00077f;
-	case Level::Level_6: return -0.00070f;
-	case Level::Level_7: return -0.00090f;
+	case Level::Level_5: return -0.00065f;
+	case Level::Level_6: return -0.00060f;
+	case Level::Level_7: return -0.00070f;
 	default: return 0.0f;
 	}
 }
@@ -73,9 +73,9 @@ float CLevel::getBirdStep() {
 	case Level::Level_2: return -0.0002f;
 	case Level::Level_3: return -0.0004f;
 	case Level::Level_4: return -0.00035f;
-	case Level::Level_5: return -0.0006f;
-	case Level::Level_6: return -0.00055f;
-	case Level::Level_7: return -0.00075f;
+	case Level::Level_5: return -0.00050f;
+	case Level::Level_6: return -0.00045f;
+	case Level::Level_7: return -0.00055f;
 	default: return 0.0f;
 	}
 }
@@ -86,9 +86,9 @@ float CLevel::getDinausorStep() {
 	case Level::Level_2: return 0.00025f;
 	case Level::Level_3: return 0.00045f;
 	case Level::Level_4: return 0.00040f;
-	case Level::Level_5: return 0.00065f;
-	case Level::Level_6: return 0.00060f;
-	case Level::Level_7: return 0.0008f;
+	case Level::Level_5: return 0.00055f;
+	case Level::Level_6: return 0.00050f;
+	case Level::Level_7: return 0.00060f;
 	default: return 0.0f;
 	}
 }

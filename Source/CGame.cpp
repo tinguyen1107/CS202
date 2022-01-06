@@ -8,7 +8,6 @@ void CGame::initVariable() {
 	this->isInputing = false;
 
 	this->localSound->getInstance()->setStateLabel(true);
-
 	this->playground->getInstance();
 	this->trafficLight->getInstance();
 }
@@ -215,10 +214,6 @@ void CGame::handleWelcomeState() {
 
 void CGame::handleIntroMenuState() {
 	switch (this->event.key.code) {
-	case sf::Keyboard::P:
-		cout << "call" << endl;
-		this->localSound->getInstance()->car_collision->playSound();
-		break;
 	case sf::Keyboard::W:
 	case sf::Keyboard::Up:
 		introMenu->MoveUp();

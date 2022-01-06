@@ -2,6 +2,7 @@
 
 CPeople::CPeople(sf::Texture& texture, float x, float y)
 	: mX(x), mY(y), originPosition(sf::Vector2f(x, y)), mState(true) {
+	this->localSound = nullptr;
 	this->sprite.setTexture(texture);
 	sf::FloatRect localBounds = this->sprite.getLocalBounds();
 	this->sprite.setOrigin(localBounds.left + localBounds.width / 2.0f,
@@ -12,7 +13,7 @@ CPeople::CPeople(sf::Texture& texture, float x, float y)
 void CPeople::up(float x) {
 	if (this->mY - this->sprite.getLocalBounds().height - x < 20) return;
 	
-	this->localSound->getInstance()->people_move->playSound();
+	this->localSound->getInstance()->play(Sounds::people_move);
 	this->mY -= x;
 	sprite.setPosition(this->mX, this->mY);
 }
@@ -20,7 +21,7 @@ void CPeople::up(float x) {
 void CPeople::left(float x) {
 	if (this->mX - this->sprite.getLocalBounds().width/2.0f - x < 340) return;
 
-	this->localSound->getInstance()->people_move->playSound();
+	this->localSound->getInstance()->play(Sounds::people_move);
 	this->mX -= x;
 	sprite.setPosition(this->mX, this->mY);
 }
@@ -28,7 +29,7 @@ void CPeople::left(float x) {
 void CPeople::right(float x) {
 	if (this->mX + this->sprite.getLocalBounds().width/2.0f + x > 980) return;
 
-	this->localSound->getInstance()->people_move->playSound();
+	this->localSound->getInstance()->play(Sounds::people_move);
 	this->mX += x;
 	sprite.setPosition(this->mX, this->mY);
 }
@@ -36,7 +37,7 @@ void CPeople::right(float x) {
 void CPeople::down(float x) {
 	if (this->mY + x > 620) return;
 
-	this->localSound->getInstance()->people_move->playSound();
+	this->localSound->getInstance()->play(Sounds::people_move);
 	this->mY += x;
 	sprite.setPosition(this->mX, this->mY);
 }
@@ -68,7 +69,7 @@ bool CPeople::isImpact(vector<CCar> cars, CImage& img) {
 
 	for (int i = 0; i < cars.size(); ++i)
 		if (PixelPerfectCollision(sprite, cars[i].getSprite(), img.getPeopleImg(), img.getCarImage())) {
-			this->localSound->getInstance()->car_collision->playSound();
+			this->localSound->getInstance()->play(Sounds::car_collision);
 			return true;
 		}
 	return false;
@@ -81,7 +82,7 @@ bool CPeople::isImpact(vector<CTruck> trucks, CImage& img) {
 
 	for (int i = 0; i < trucks.size(); ++i)
 		if (PixelPerfectCollision(sprite, trucks[i].getSprite(), img.getPeopleImg(), img.getTruckImage())) {
-			this->localSound->getInstance()->truck_collision->playSound();
+			this->localSound->getInstance()->play(Sounds::truck_collision);
 			return true;
 		}
 	return false;
@@ -94,20 +95,20 @@ bool CPeople::isImpact(vector<CBird> birds, CImage& img) {
 
 	for (int i = 0; i < birds.size(); ++i)
 		if (PixelPerfectCollision(sprite, birds[i].getSprite(), img.getPeopleImg(), img.getBirdImage())) {
-			this->localSound->getInstance()->bird_collision->playSound();
+			this->localSound->getInstance()->play(Sounds::bird_collision);
 			return true;
 		}
 	return false;
 }
 
-bool CPeople::isImpact(vector<CDinosaur> dinausors, CImage& img) {
+bool CPeople::isImpact(vector<CDinosaur> dinosaurs, CImage& img) {
 	sf::FloatRect localBounds = this->sprite.getLocalBounds();
 	if ((this->mY - localBounds.height > 320.0f)
 		|| (this->mY < 200.0f)) return false;
 
-	for (int i = 0; i < dinausors.size(); ++i)
-		if (PixelPerfectCollision(sprite, dinausors[i].getSprite(), img.getPeopleImg(), img.getDinausorImage())) {
-			this->localSound->getInstance()->dinausor_collision->playSound();
+	for (int i = 0; i < dinosaurs.size(); ++i)
+		if (PixelPerfectCollision(sprite, dinosaurs[i].getSprite(), img.getPeopleImg(), img.getDinausorImage())) {
+			this->localSound->getInstance()->play(Sounds::dinosaur_collision);
 			return true;
 		}
 	return false;

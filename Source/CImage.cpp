@@ -12,7 +12,7 @@ CSingleImage::~CSingleImage() {
 	delete this->sprite;
 }
 
-void CSingleImage::drawTo(sf::RenderWindow& window){
+void CSingleImage::drawTo(sf::RenderWindow& window) {
 	window.draw(*this->sprite);
 }
 
@@ -76,6 +76,8 @@ CImage::~CImage() {
 	delete playground_sImg;
 	delete road_sImg;
 	delete menu_bg_sImg;
+	delete lose_sImg;
+	delete win_sImg;
 }
 
 sf::Image CImage::getCarImage() const { return carImg; }

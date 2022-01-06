@@ -2,8 +2,7 @@
 
 CAnimal::CAnimal(float x, float y) : mX(x), mY(y), originPosition(sf::Vector2f(x, y)) {}
 
-sf::Sprite CAnimal::getSprite()
-{
+sf::Sprite CAnimal::getSprite() {
 	return this->sprite;
 }
 

@@ -8,6 +8,17 @@
 
 using namespace std;
 
+enum Sounds {
+	intro,
+	car_collision,
+	truck_collision,
+	bird_collision,
+	dinosaur_collision,
+	people_move,
+	playing,
+	waiting
+};
+
 class CSoundEffect {
 protected:
 	sf::SoundBuffer *soundBuffer;
@@ -21,15 +32,6 @@ public:
 
 class CSound {
 public:
-	CSoundEffect* intro;
-	CSoundEffect* car_collision;
-	CSoundEffect* truck_collision;
-	CSoundEffect* bird_collision;
-	CSoundEffect* dinausor_collision;
-	CSoundEffect* people_move;
-	CSoundEffect* playing;
-	CSoundEffect* waiting;
-
 	static CSound* getInstance();
 	~CSound();
 
@@ -39,6 +41,8 @@ public:
 
 	void drawLabelTo(sf::RenderWindow& window);
 	string getStateButton();
+	void play(Sounds _sound);
+
 private:
 	bool isActive;
 	bool isPlaying;
@@ -48,6 +52,15 @@ private:
 
 	CCirclesAndText* label;
 	CFont* localFont;
+
+	CSoundEffect* intro;
+	CSoundEffect* car_collision;
+	CSoundEffect* truck_collision;
+	CSoundEffect* bird_collision;
+	CSoundEffect* dinausor_collision;
+	CSoundEffect* people_move;
+	CSoundEffect* playing;
+	CSoundEffect* waiting;
 };
 
 #endif
